@@ -1,8 +1,0 @@
-// === Common-tvOS ===
-
-TVOS_DEPLOYMENT_TARGET = 11.0
-INFOPLIST_FILE = MusicNotationCoreTV/Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = com.woolsoft.MusicNotationCoreTV
-PRODUCT_NAME = MusicNotationCoreTV
-SDKROOT = appletvos
-TARGETED_DEVICE_FAMILY = 3

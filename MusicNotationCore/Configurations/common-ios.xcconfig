@@ -1,9 +1,0 @@
-// === Common-iOS ===
-
-IPHONEOS_DEPLOYMENT_TARGET = 13.0
-WATCHOS_DEPLOYMENT_TARGET = 6.0
-TARGETED_DEVICE_FAMILY = 1,2
-INFOPLIST_FILE = MusicNotationCoreiOS/Info.plist
-PRODUCT_BUNDLE_IDENTIFIER = com.woolsoft.MusicNotationCoreiOS
-PRODUCT_NAME = MusicNotationCoreiOS
-SDKROOT = iphoneos
