@@ -6,7 +6,7 @@
 //  Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-@testable import MusicNotationCoreMac
+@testable import music_notation
 import XCTest
 
 class MeasureTests: XCTestCase {

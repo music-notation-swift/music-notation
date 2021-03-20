@@ -6,7 +6,7 @@
 //  Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-import MusicNotationCoreMac
+import music_notation
 import XCTest
 
 class SwiftHelpersTests: XCTestCase {
