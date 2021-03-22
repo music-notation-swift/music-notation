@@ -23,6 +23,8 @@ public struct Score: RandomAccessCollection {
 	// MARK: - Main Properties
 
 	internal private(set) var stavesHolders: [StavesHolder] = []
+
+	public init() {}
 }
 
 extension Score: CustomDebugStringConvertible {
