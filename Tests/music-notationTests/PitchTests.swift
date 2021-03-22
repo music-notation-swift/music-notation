@@ -6,7 +6,7 @@
 //  Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-import music_notation
+import MusicNotation
 import XCTest
 
 class PitchTests: XCTestCase {

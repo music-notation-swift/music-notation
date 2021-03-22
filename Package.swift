@@ -10,9 +10,9 @@ let package = Package(
         .watchOS(.v7)
     ],
     products: [
-    	.library(name: "music-notation", targets: ["music-notation"])],
+    	.library(name: "MusicNotation", targets: ["MusicNotation"])],
     targets: [
-        .target(name: "music-notation", path: "Sources", exclude: ["docs"]),
-        .testTarget(name: "music-notationTests", dependencies: ["music-notation"])
+        .target(name: "MusicNotation", path: "Sources", exclude: ["docs"]),
+        .testTarget(name: "MusicNotationTests", dependencies: ["MusicNotation"], path: "Tests")
     ]
 )
