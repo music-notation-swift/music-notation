@@ -12,24 +12,26 @@ public struct Score: RandomAccessCollection {
 	// MARK: - Collection Conformance
 
 	public typealias Index = Int
-	public var startIndex: Int								{ stavesHolders.startIndex }
-	public var endIndex: Int								{ stavesHolders.endIndex }
-	public subscript(position: Index) -> Iterator.Element	{ stavesHolders[position] }
-	public func index(after i: Int) -> Int					{ stavesHolders.index(after: i) }
-	public func index(before i: Int) -> Int 				{ stavesHolders.index(before: i) }
-	public typealias Iterator = IndexingIterator<[StavesHolder]>
-	public func makeIterator() -> Iterator 					{ stavesHolders.makeIterator() }
+	public var startIndex: Int								{ staves.startIndex }
+	public var endIndex: Int								{ staves.endIndex }
+	public subscript(position: Index) -> Iterator.Element	{ staves[position] }
+	public func index(after i: Int) -> Int					{ staves.index(after: i) }
+	public func index(before i: Int) -> Int 				{ staves.index(before: i) }
+	public typealias Iterator = IndexingIterator<[Staff]>
+	public func makeIterator() -> Iterator 					{ staves.makeIterator() }
 
 	// MARK: - Main Properties
 
-	internal private(set) var stavesHolders: [StavesHolder] = []
+	internal private(set) var staves: [Staff] = []
 
-	public init() {}
+	public init(staves: [Staff]) {
+		self.staves = staves
+	}
 }
 
 extension Score: CustomDebugStringConvertible {
 	public var debugDescription: String {
-		let stavesDescription = stavesHolders.map { $0.debugDescription }.joined(separator: ", ")
+		let stavesDescription = staves.map { $0.debugDescription }.joined(separator: ", ")
 
 		return "staves(\(stavesDescription))"
 	}
