@@ -8,6 +8,8 @@
 
 #if os(iOS) || os(watchOS) || os(tvOS) || os(OSX)
 import Foundation
+#else
+import Darwin
 #endif
 
 ///
