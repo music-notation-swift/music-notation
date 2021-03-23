@@ -2,6 +2,7 @@
 
 [![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Platform](https://img.shields.io/badge/Platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20|%20Linux-lightgrey.svg)](https://github.com/music-notation-swift/music-notation)
+[![Build & Test](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml/badge.svg)](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml)
 
 # music-notation
 
