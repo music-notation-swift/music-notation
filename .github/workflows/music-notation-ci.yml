@@ -1,4 +1,5 @@
-name: music-notation-ci
+name: Build & Test
+description: Build and test the code in the music-notation swift package.
 
 on:
   push:
