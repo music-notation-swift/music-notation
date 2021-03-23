@@ -10,9 +10,6 @@ on:
 
 jobs:
   macos:
-    strategy:
-      matrix:
-        xcode_version: ['12.4']
     runs-on: macos-latest
 
     steps:
