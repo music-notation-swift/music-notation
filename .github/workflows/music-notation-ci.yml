@@ -7,8 +7,10 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  macos:
+    strategy:
+      matrix:
+        xcode_version: ['12.4']
     runs-on: macos-latest
 
     steps:
@@ -17,3 +19,15 @@ jobs:
       run: swift build
     - name: Run tests
       run: swift test
+
+  linux:
+    strategy:
+      matrix:
+        tag: ['5.3']
+    runs-on: ubuntu-latest
+    container:
+      image: swift:${{ matrix.tag }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: swift test -c release -Xswiftc -enable-testing
