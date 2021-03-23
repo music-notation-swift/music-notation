@@ -13,6 +13,6 @@ let package = Package(
     	.library(name: "MusicNotation", targets: ["MusicNotation"])],
     targets: [
         .target(name: "MusicNotation", path: "Sources", exclude: ["docs"]),
-        .testTarget(name: "MusicNotationTests", dependencies: ["MusicNotation"], path: "Tests")
+        .testTarget(name: "MusicNotationTests", dependencies: ["MusicNotation"])
     ]
 )
