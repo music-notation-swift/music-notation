@@ -1,0 +1,29 @@
+codecov:
+  branch: main
+
+coverage:
+  precision: 2
+  round: nearest
+  range: "60...100"
+  ignore:
+  - Tests/*
+
+status:
+  project:
+    default:
+      target: auto
+      threshold: 2.0
+      branches:
+      - main
+
+    patch:
+      default:
+        target: auto
+        branches:
+        - main
+
+comment:
+  layout: "header, diff, changes, sunburst, uncovered"
+  branches:
+  - main
+  behavior: default
