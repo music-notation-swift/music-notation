@@ -20,13 +20,23 @@ jobs:
       - name: Gather test coverage 
         run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/debug/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/debug/codecov/default.profdata > .build/coverage.json
       - name: Get Coverage Total Percent  
-        run: echo "COVERAGE=$(cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]')" >> $GITHUB_ENV
+        run: |
+          # Push the coverage number into the COVERAGE environment variable
+          echo "COVERAGE=$(cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]')" >> $GITHUB_ENV
+
+          # Use this hack to get to the branch
+          REF=${{ github.ref }}
+          echo "github.ref: $REF"
+          IFS='/' read -ra PATHS <<< "$REF"
+          BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
+          echo $BRANCH_NAME
+          echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
       - name: Create The Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: e9c967d4e429f39f233c8e5f88d988cda82456b2
-          filename: music-notation__main.json
+          filename: music-notation__${{ env.BRANCH }}.json
           label: Coverage
           message: ${{ env.COVERAGE }}
           color: green
