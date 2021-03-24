@@ -15,10 +15,13 @@ jobs:
     steps:
       - name: Checkout the Git repository
         uses: actions/checkout@v2
+
       - name: Gather test coverage 
         run: swift test -c debug -Xswiftc -enable-testing --enable-code-coverage
+
       - name: Gather test coverage 
         run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/debug/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/debug/codecov/default.profdata > .build/coverage.json
+
       - name: Get Coverage Total Percent  
         run: |
           # Push the coverage number into the COVERAGE environment variable
@@ -31,6 +34,7 @@ jobs:
           BRANCH_NAME="${PATHS[1]}_${PATHS[2]}"
           echo $BRANCH_NAME
           echo "BRANCH=$(echo ${BRANCH_NAME})" >> $GITHUB_ENV
+
       - name: Create The Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
@@ -40,4 +44,3 @@ jobs:
           label: Coverage
           message: ${{ env.COVERAGE }}
           color: green
-
