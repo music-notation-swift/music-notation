@@ -4,6 +4,7 @@
 ![Swift 5.3](https://img.shields.io/badge/Swift-5.3-F28D00.svg)
 [![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Build & Test](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml/badge.svg)](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml)
+[![codecov](https://codecov.io/gh/music-notation/music-notation/branch/main/graph/badge.svg)](https://codecov.io/gh/music-notation/music-notation)
 
 # music-notation
 
