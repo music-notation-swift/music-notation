@@ -13,7 +13,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - run: swift test -c release -Xswiftc -enable-testing --enable-code-coverage
-      - run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/release/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/release/codecov/default.profdata > .build/coverage.json
-      - run: (cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]' | grep -Eq  "100") && { exit 0; } || { echo 'Please make sure that the test suite covers all framework code paths.'; exit 1; }
+      - name: Checkout the Git repository
+        uses: actions/checkout@v2
+      - name: Build and run tests
+        run: ./GitHubActions/build.sh tests
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.13
+
+#      - uses: actions/checkout@v2
+#      - run: swift test -c release -Xswiftc -enable-testing --enable-code-coverage
+#      - run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/release/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/release/codecov/default.profdata > .build/coverage.json
+#      - run: (cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]' | grep -Eq  "100") && { exit 0; } || { echo 'Please make sure that the test suite covers all framework code paths.'; exit 1; }
