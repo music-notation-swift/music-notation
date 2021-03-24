@@ -1,7 +1,9 @@
 ![music-notation](https://user-images.githubusercontent.com/62043/111560932-cf4d1180-8750-11eb-842e-3159015c61ab.png)
 
-[![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Platform](https://img.shields.io/badge/Platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20|%20Linux-lightgrey.svg)](https://github.com/music-notation-swift/music-notation)
+![Swift 5.3](https://img.shields.io/badge/Swift-5.3-F28D00.svg)
+[![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![Build & Test](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml/badge.svg)](https://github.com/music-notation-swift/music-notation/actions/workflows/build-test.yml)
 
 # music-notation
 
