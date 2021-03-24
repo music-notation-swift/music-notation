@@ -20,3 +20,14 @@ jobs:
       - name: Gather test coverage 
         run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/release/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/release/codecov/default.profdata > .build/coverage.json
       - run: cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]'; exit 0;
+      - name: Create The Badge
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: e9c967d4e429f39f233c8e5f88d988cda82456b2
+          filename: music-notation__${{ env.BRANCH }}.json
+          label: Coverage
+          message: 42
+          color: green
+          namedLogo: jest
+
