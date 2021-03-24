@@ -35,10 +35,9 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: e9c967d4e429f39f233c8e5f88d988cda82456b2
+          gistID: b9f858cfba09911bd1755bdc40dd5a35
           filename: music-notation__${{ env.BRANCH }}.json
           label: Coverage
           message: ${{ env.COVERAGE }}
           color: green
-          namedLogo: jest
 
