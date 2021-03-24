@@ -16,18 +16,19 @@ jobs:
       - name: Checkout the Git repository
         uses: actions/checkout@v2
       - name: Gather test coverage 
-        run: swift test -Xswiftc -enable-testing --enable-code-coverage
+        run: swift test -c debug -Xswiftc -enable-testing --enable-code-coverage
       - name: Gather test coverage 
-        run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/release/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/release/codecov/default.profdata > .build/coverage.json
-      - run: cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]'; exit 0;
+        run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/debug/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/debug/codecov/default.profdata > .build/coverage.json
+      - name: Get Coverage Total Percent  
+        run: echo "COVERAGE=$(cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]')" >> $GITHUB_ENV
       - name: Create The Badge
         uses: schneegans/dynamic-badges-action@v1.0.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: e9c967d4e429f39f233c8e5f88d988cda82456b2
-          filename: music-notation__${{ env.BRANCH }}.json
+          filename: music-notation__main.json
           label: Coverage
-          message: 42
+          message: ${{ env.COVERAGE }}
           color: green
           namedLogo: jest
 
