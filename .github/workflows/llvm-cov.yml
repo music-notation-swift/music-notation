@@ -19,4 +19,4 @@ jobs:
         run: swift test -c release -Xswiftc -enable-testing --enable-code-coverage
       - name: Gather test coverage 
         run: xcrun llvm-cov export -summary-only -ignore-filename-regex MusicNotationTests .build/release/music-notationPackageTests.xctest/Contents/MacOS/music-notationPackageTests -instr-profile .build/release/codecov/default.profdata > .build/coverage.json
-        run: cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]'; exit 0;
+      - run: cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]'; exit 0;
