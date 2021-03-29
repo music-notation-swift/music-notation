@@ -1,6 +1,9 @@
 # Xcode
 #
-.build/
+build/
+DerivedData/
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -9,13 +12,48 @@
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
-*.xccheckout
+xcuserdata/
+
+## Other
 *.moved-aside
-DerivedData
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
 *.hmap
 *.ipa
-*.xcuserstate
+*.dSYM.zip
+*.dSYM
 *.lcov
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+.build/
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
 
 .DS_Store
