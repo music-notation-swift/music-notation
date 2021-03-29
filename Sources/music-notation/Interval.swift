@@ -1,9 +1,9 @@
 //
-//  Interval.swift
-//  MusicNotationCore
+//	Interval.swift
+//	MusicNotationCore
 //
-//  Created by Rob Hudson on 8/1/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Rob Hudson on 2016-08-01.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 public enum IntervalQuality: String {

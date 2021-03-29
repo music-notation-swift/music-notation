@@ -1,9 +1,9 @@
 //
-//  PitchTests.swift
-//  MusicNotationCore
+//	PitchTests.swift
+//	MusicNotationCore
 //
-//  Created by Rob Hudson on 7/29/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Rob Hudson on 2016-07-29.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 import MusicNotation

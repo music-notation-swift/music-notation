@@ -1,14 +1,15 @@
 //
-//  StaffTests.swift
-//  MusicNotationCore
+//	StaffTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 9/5/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Steven Woolgar on 2021-01-30.
+//	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
 class ScoreTests: XCTestCase {
 	enum Constant {
 		static let standardClef: Clef = .treble
@@ -97,6 +98,7 @@ class ScoreTests: XCTestCase {
 		score = Score(staves: [staff])
 	}
 
+	// swiftlint:disable line_length
 	func testDescription() {
 		XCTAssertEqual(staff!.debugDescription, "staff(treble guitar6 |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1, 1/16c1, 1/16c1]|, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 2, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 3, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16a1, 3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1]|, |4/4: [3[1/16a1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|)")
 	}

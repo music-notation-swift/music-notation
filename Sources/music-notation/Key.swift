@@ -1,9 +1,9 @@
 //
-//  Key.swift
-//  MusicNotationCore
+//	Key.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 7/11/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-07-11.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 public struct Key {

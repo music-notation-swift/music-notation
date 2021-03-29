@@ -1,9 +1,9 @@
 //
-//  ImmutableMeasure.swift
-//  MusicNotationCore
+//	ImmutableMeasure.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 3/6/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-03-06.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 public protocol ImmutableMeasure: NotesHolder {
@@ -24,8 +24,8 @@ public protocol ImmutableMeasure: NotesHolder {
 	// Collection Conformance
 	var startIndex: Int { get }
 	var endIndex: Int { get }
-	func index(after i: Int) -> Int
-	func index(before i: Int) -> Int
+	func index(after index: Int) -> Int
+	func index(before index: Int) -> Int
 
 	init(timeSignature: TimeSignature, key: Key?)
 	init(timeSignature: TimeSignature, key: Key?, notes: [[NoteCollection]])
@@ -39,12 +39,11 @@ public func == <T: ImmutableMeasure>(lhs: T, rhs: T) -> Bool {
 		lhs.lastClef == rhs.lastClef else {
 		return false
 	}
-	for i in 0 ..< lhs.notes.count {
-		guard lhs.notes[i].count == rhs.notes[i].count else {
-			return false
-		}
-		for j in 0 ..< lhs.notes[i].count {
-			if lhs.notes[i][j] == rhs.notes[i][j] {
+	for index in 0 ..< lhs.notes.count {
+		guard lhs.notes[index].count == rhs.notes[index].count else { return false }
+
+		for inner in 0 ..< lhs.notes[index].count {
+			if lhs.notes[index][inner] == rhs.notes[index][inner] {
 				continue
 			} else {
 				return false
@@ -69,9 +68,8 @@ public struct MeasureSlice: Equatable {
 extension ImmutableMeasure {
 	public var startIndex: Int { 0 }
 	public var endIndex: Int { notes.map { $0.endIndex }.max() ?? 0	}
-	public func index(after i: Int) -> Int { notes.index(after: i) }
-
-	public func index(before i: Int) -> Int { notes.index(before: i) }
+	public func index(after index: Int) -> Int { notes.index(after: index) }
+	public func index(before index: Int) -> Int { notes.index(before: index) }
 
 	internal static func measureSlices(at position: Int, in notes: [[NoteCollection]]) -> [MeasureSlice]? {
 		notes.enumerated().compactMap { noteSetIndex, noteCollections in

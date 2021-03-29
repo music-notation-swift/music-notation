@@ -1,14 +1,18 @@
 //
-//  StaffTests.swift
-//  MusicNotationCore
+//	StaffTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 9/5/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-09-05.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
+// swiftlint:disable force_cast
+// swiftlint:disable line_length
+// swiftlint:disable type_body_length
 class StaffTests: XCTestCase {
 	enum Constant {
 		static let standardClef: Clef = .treble
@@ -940,11 +944,11 @@ class StaffTests: XCTestCase {
 				Measure(timeSignature: TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120),
 						notes: [
 							[
-								sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth,
+								sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth
 							],
 							[
-								quarter, quarter, quarter, quarter,
-							],
+								quarter, quarter, quarter, quarter
+							]
 						])
 			)
 
@@ -1019,21 +1023,25 @@ class StaffTests: XCTestCase {
 		}
 	}
 
-	private func verifyAndChangeClef(to clef: Clef,
-									 in measureIndex: Int,
-									 atNote noteIndex: Int,
-									 inSet setIndex: Int = 0,
-									 inFile file: StaticString = #file,
-									 atLine line: UInt = #line) throws {
+	private func verifyAndChangeClef(
+		to clef: Clef,
+		in measureIndex: Int,
+		atNote noteIndex: Int,
+		inSet setIndex: Int = 0,
+		inFile file: StaticString = #file,
+		atLine line: UInt = #line
+	) throws {
 		let newClef: Clef = .bass
 		try staff.changeClef(newClef, in: measureIndex, atNote: noteIndex, inSet: setIndex)
 		try verifyClefsUnchanged(before: measureIndex)
 		try verifyClefsChanged(to: newClef, after: measureIndex)
 	}
 
-	private func verifyClefsUnchanged(before measureIndex: Int,
-									  file: StaticString = #file,
-									  line: UInt = #line) throws {
+	private func verifyClefsUnchanged(
+		before measureIndex: Int,
+		file: StaticString = #file,
+		line: UInt = #line
+	) throws {
 		let notesHolderIndexPrevious = try? staff.notesHolderIndexFromMeasureIndex(measureIndex - 1)
 		if let notesHolderIndexPrevious = notesHolderIndexPrevious {
 			staff[0 ..< notesHolderIndexPrevious.notesHolderIndex].forEach { notesHolder in
@@ -1056,11 +1064,13 @@ class StaffTests: XCTestCase {
 	 - parameter endingIndex: if it is not specified, it will check to the end.
 	     Otherwise, it will check everything up to, but not including the measure at this index.
 	 */
-	private func verifyClefsChanged(to newClef: Clef,
-									after measureIndex: Int,
-									until endingIndex: Int? = nil,
-									file: StaticString = #file,
-									line: UInt = #line) throws {
+	private func verifyClefsChanged(
+		to newClef: Clef,
+		after measureIndex: Int,
+		until endingIndex: Int? = nil,
+		file: StaticString = #file,
+		line: UInt = #line
+	) throws {
 		let notesHolderIndexNext = try? staff.notesHolderIndexFromMeasureIndex(measureIndex + 1)
 		if let notesHolderIndexNext = notesHolderIndexNext {
 			staff[notesHolderIndexNext.notesHolderIndex ..< (endingIndex ?? staff.endIndex)].forEach { notesHolder in
@@ -1094,7 +1104,7 @@ class StaffTests: XCTestCase {
 			changedClef(of: measure6),
 			changedClef(of: measure3),
 			changedClef(of: measure7),
-			changedClef(of: measure8),
+			changedClef(of: measure8)
 		]
 		var count = 0
 		zip(mappedNotesHolders, expectedNotesHolders).forEach { actualNotesHolder, expectedNotesHolder in
@@ -1124,7 +1134,7 @@ class StaffTests: XCTestCase {
 			changedClef(of: measure6),
 			changedClef(of: measure3),
 			changedClef(of: measure7),
-			changedClef(of: measure8),
+			changedClef(of: measure8)
 		].reversed()
 		var count = 0
 		zip(reversedNotesHolders, expectedNotesHolders).forEach { actualNotesHolder, expectedNotesHolder in
@@ -1156,8 +1166,10 @@ class StaffTests: XCTestCase {
 		return mutatingMeasure
 	}
 
-	private func changedClef(ofAllMeasuresInRepeat measureRepeat: MeasureRepeat,
-							 toClef clef: Clef = Constant.standardClef) -> MeasureRepeat {
+	private func changedClef(
+		ofAllMeasuresInRepeat measureRepeat: MeasureRepeat,
+		toClef clef: Clef = Constant.standardClef
+	) -> MeasureRepeat {
 		let newMeasures = measureRepeat.measures.map { (measure: Measure) -> Measure in
 			var measureCopy = measure
 			_ = measureCopy.changeFirstClefIfNeeded(to: clef)

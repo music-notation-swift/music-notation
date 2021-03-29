@@ -1,9 +1,9 @@
 //
-//  KeyTests.swift
-//  MusicNotationCore
+//	KeyTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 11/27/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-11-27.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 import MusicNotation

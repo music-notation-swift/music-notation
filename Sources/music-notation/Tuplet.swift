@@ -1,9 +1,9 @@
 //
-//  Tuplet.swift
-//  MusicNotationCore
+//	Tuplet.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 6/15/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-06-15.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 /// Represents Duplet, Triplet, ... Septuplet, etc.
@@ -56,23 +56,23 @@ public struct Tuplet: NoteCollection {
 		6: 4,
 		7: 4,
 		8: 6,
-		9: 8,
+		9: 8
 	]
 
 	///
 	/// There are two ways you can initialize a `Tuplet`:
 	///
 	/// 1) If you would like to create a tuplet with a count between
-	///    2 and 9, inclusive, and wish to use the standard ratio associated with that count, then you can specify only the
-	///    `count`, `baseDuration` and `notes`. Example:
-	///    ````
-	///    Tuplet(3, .quarter, [quarterNote1, quarterNote2, quarterNote3])
-	///    ````
+	///	  2 and 9, inclusive, and wish to use the standard ratio associated with that count, then you can specify only the
+	///	  `count`, `baseDuration` and `notes`. Example:
+	///	  ````
+	///	  Tuplet(3, .quarter, [quarterNote1, quarterNote2, quarterNote3])
+	///	  ````
 	/// 2) If you would like specify a non-standard ratio or a `count` larger than 9, then you must specify the
-	///    `baseCount` parameter. Example:
-	///    ````
-	///    Tuplet(35, .sixteenth, inSpaceOf: 25, notes: [sixteenth1, ... sixteenth35])
-	///    ````
+	///	  `baseCount` parameter. Example:
+	///	  ````
+	///	  Tuplet(35, .sixteenth, inSpaceOf: 25, notes: [sixteenth1, ... sixteenth35])
+	///	  ````
 	///
 	public init(_ count: Int, _ baseNoteDuration: NoteDuration, inSpaceOf baseCount: Int? = nil, notes: [NoteCollection]) throws {
 		guard count > 1 else {
@@ -110,7 +110,7 @@ public struct Tuplet: NoteCollection {
 		}
 		let fullIndexes = flatIndexes[index]
 		var finalTuplet: Tuplet? = self
-		guard fullIndexes.count != 0 else {
+		guard !fullIndexes.isEmpty else {
 			assertionFailure("one of the index arrays was empty")
 			throw TupletError.internalError
 		}
@@ -224,13 +224,17 @@ public struct Tuplet: NoteCollection {
 	/// Returns a modified `NoteCollection` with the tie states correct for preserving the original tie states of the notes
 	/// being replaced. The range may also include notes with tie states that represent an invalid state for modification.
 	///
-	private func preserveTieStateForReplacement(in range: CountableClosedRange<Int>,
-												with newCollection: NoteCollection) throws -> NoteCollection {
+	private func preserveTieStateForReplacement(
+		in range: CountableClosedRange<Int>,
+		with newCollection: NoteCollection
+	) throws -> NoteCollection {
 		try preserveTieStateForReplacement(in: range, with: [newCollection])[0]
 	}
 
-	private func preserveTieStateForReplacement(in range: CountableClosedRange<Int>,
-												with newCollections: [NoteCollection]) throws -> [NoteCollection] {
+	private func preserveTieStateForReplacement(
+		in range: CountableClosedRange<Int>,
+		with newCollections: [NoteCollection]
+	) throws -> [NoteCollection] {
 		var modifiedCollections = newCollections
 
 		func modifyCollections(atFirst first: Bool, with note: Note) throws {
@@ -345,8 +349,10 @@ public struct Tuplet: NoteCollection {
 		notes[flatIndex[0]] = tuplet
 	}
 
-	private mutating func replaceNotes(at flatIndexes: [[Int]], with noteCollections: [NoteCollection],
-									   firstNoteIndex: Int) throws {
+	private mutating func replaceNotes(
+		at flatIndexes: [[Int]], with noteCollections: [NoteCollection],
+		firstNoteIndex: Int
+	) throws {
 		var toModify = self
 
 		try toModify.removeNotes(at: flatIndexes)
@@ -474,13 +480,10 @@ extension Tuplet: Equatable {
 			lhs.noteCount == rhs.noteCount else {
 			return false
 		}
-		guard lhs.notes.count == rhs.notes.count else {
+		guard lhs.notes.count == rhs.notes.count else { return false }
+
+		for (index, collection) in lhs.notes.enumerated() where collection != rhs.notes[index] {
 			return false
-		}
-		for (index, collection) in lhs.notes.enumerated() {
-			if collection != rhs.notes[index] {
-				return false
-			}
 		}
 		return true
 	}

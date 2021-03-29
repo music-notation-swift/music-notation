@@ -1,14 +1,18 @@
 //
-//  MeasureTests.swift
-//  MusicNotationCore
+//	MeasureTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 7/13/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-07-13.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
+// swiftlint:disable force_cast
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class MeasureTests: XCTestCase {
 	var measure: Measure!
 	var timeSignature: TimeSignature!
@@ -48,7 +52,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			let tuplet = try Tuplet(3, .sixteenth, notes: notes)
@@ -129,9 +133,9 @@ class MeasureTests: XCTestCase {
 			XCTAssertEqual(measure.noteCount[0], 4)
 
 			// Make sure we end up with 2 separate ties now.
-			for i in [0, 2] {
-				resultNote1 = try measure.note(at: i, inSet: 0)
-				resultNote2 = try measure.note(at: i + 1, inSet: 0)
+			for index in [0, 2] {
+				resultNote1 = try measure.note(at: index, inSet: 0)
+				resultNote2 = try measure.note(at: index + 1, inSet: 0)
 				XCTAssertEqual(resultNote1.tie, .begin)
 				XCTAssertEqual(resultNote2.tie, .end)
 			}
@@ -140,11 +144,11 @@ class MeasureTests: XCTestCase {
 
 	func testReplaceNoteWithTupletPreservingTie() {
 		XCTAssertEqual(measure.notes[0].count, 0)
-		let note = Note(noteDuration: .whole,  pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+		let note = Note(noteDuration: .whole, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		let notes = [
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		measure.append(note)
 		measure.append(note)
@@ -174,7 +178,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.tupletNotCompletelyCovered) {
 			let tuplet = try Tuplet(3, .sixteenth, notes: notes)
@@ -222,7 +226,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.tupletNotCompletelyCovered) {
 			let tuplet = try Tuplet(3, .sixteenth, notes: notes)
@@ -293,7 +297,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.invalidTupletIndex) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
@@ -333,13 +337,13 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
 			try measure.insert(tuplet, at: 1)
 			let resultNote1 = try measure.note(at: 0)
-			let resultTuplet = measure.notes[0][1]  as! Tuplet
+			let resultTuplet = measure.notes[0][1] as! Tuplet
 			let resultNote2 = try measure.note(at: 4)
 			XCTAssertEqual(measure.noteCount[0], 5)
 			XCTAssertEqual(note1, resultNote1)
@@ -450,7 +454,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.tupletNotCompletelyCovered) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
@@ -464,7 +468,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.tupletNotCompletelyCovered) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
@@ -519,7 +523,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
@@ -721,7 +725,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			// setup
@@ -745,7 +749,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			// setup
@@ -767,7 +771,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			// setup
@@ -790,7 +794,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertNoErrorThrown {
 			// setup
@@ -856,7 +860,7 @@ class MeasureTests: XCTestCase {
 		let notes = [
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
 			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
-			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1)),
+			Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		]
 		assertThrowsError(MeasureError.notesMustHaveSamePitchesToTie) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
@@ -1334,8 +1338,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertNoErrorThrown {
 			let newClef: Clef = .bass
@@ -1351,8 +1355,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		let originalClef: Clef = .treble
 		testMeasure.originalClef = originalClef
@@ -1370,8 +1374,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertNoErrorThrown {
 			let newClef1: Clef = .bass
@@ -1391,8 +1395,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		let originalClef: Clef = .treble
 		testMeasure.originalClef = originalClef
@@ -1414,11 +1418,11 @@ class MeasureTests: XCTestCase {
 
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth,
+				sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth
 			],
 			[
-				eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth
+			]
 		])
 		let originalClef: Clef = .treble
 		testMeasure.originalClef = originalClef
@@ -1454,11 +1458,11 @@ class MeasureTests: XCTestCase {
 
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth,
+				sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth
 			],
 			[
-				eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			let newClef1: Clef = .bass
@@ -1496,8 +1500,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		let testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		(0 ..< testMeasure.noteCount[0]).forEach { index in
 			assertThrowsError(MeasureError.noClefSpecified) {
@@ -1510,8 +1514,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		let newClef: Clef = .alto
 		assertNoErrorThrown {
@@ -1533,8 +1537,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		let testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertThrowsError(MeasureError.noteIndexOutOfRange) {
 			_ = try testMeasure.clef(at: 17, inSet: 0)
@@ -1545,8 +1549,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		let testMeasure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertThrowsError(MeasureError.noteIndexOutOfRange) {
 			_ = try testMeasure.clef(at: 0, inSet: 3)
@@ -1561,8 +1565,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertThrowsError(MeasureError.noteIndexOutOfRange) {
 			try measure.changeClef(.bass, at: 5)
@@ -1576,8 +1580,8 @@ class MeasureTests: XCTestCase {
 		let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				note, note, note, note,
-			],
+				note, note, note, note
+			]
 		])
 		assertThrowsError(MeasureError.noteIndexOutOfRange) {
 			try measure.changeClef(.bass, at: 3, inSet: 1)
@@ -1594,11 +1598,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 0, inSet: 0)
@@ -1613,11 +1617,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 0, inSet: 1)
@@ -1632,11 +1636,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 0, inSet: 1)
@@ -1652,11 +1656,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 3, inSet: 1)
@@ -1671,11 +1675,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.treble, at: 0, inSet: 1)
@@ -1691,11 +1695,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		print(measure.debugDescription)
 		assertNoErrorThrown {
@@ -1712,11 +1716,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.treble, at: 0, inSet: 1)
@@ -1756,11 +1760,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 0)
@@ -1781,11 +1785,11 @@ class MeasureTests: XCTestCase {
 		let quarter = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		var measure = Measure(timeSignature: timeSignature, notes: [
 			[
-				quarter, quarter, quarter, quarter,
+				quarter, quarter, quarter, quarter
 			],
 			[
-				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
-			],
+				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth
+			]
 		])
 		// Test
 		XCTAssertEqual(measure.changeFirstClefIfNeeded(to: .treble), true)
@@ -1823,8 +1827,8 @@ class MeasureTests: XCTestCase {
 					Note(restDuration: .quarter),
 					Note(restDuration: .eighth),
 					Note(restDuration: .eighth),
-					Note(restDuration: .quarter),
-				],
+					Note(restDuration: .quarter)
+				]
 			]
 		)
 		let repeatedMappedMeasureSlices = repeatedMeasure.map { $0 }
@@ -1835,7 +1839,7 @@ class MeasureTests: XCTestCase {
 			[MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter))],
 			[MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .eighth))],
 			[MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .eighth))],
-			[MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter))],
+			[MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter))]
 		]
 		var count = 0
 		zip(mappedMeasureSlices, expectedMeasureSlices).forEach {
@@ -1874,7 +1878,7 @@ class MeasureTests: XCTestCase {
 					Note(restDuration: .quarter),
 					Note(restDuration: .eighth),
 					Note(restDuration: .eighth),
-					Note(restDuration: .quarter),
+					Note(restDuration: .quarter)
 
 				],
 				[
@@ -1884,8 +1888,8 @@ class MeasureTests: XCTestCase {
 					Note(restDuration: .quarter),
 					Note(restDuration: .quarter),
 					Note(restDuration: .whole),
-					Note(restDuration: .whole),
-				],
+					Note(restDuration: .whole)
+				]
 			]
 		)
 		let repeatedMappedMeasureSlices = repeatedMeasure.map { $0 }
@@ -1894,31 +1898,31 @@ class MeasureTests: XCTestCase {
 		let expectedMeasureSlices: [[MeasureSlice]] = [
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .sixteenth)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .sixteenth))
 
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .eighth)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .eighth)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .quarter))
 			],
 			[
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .whole)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .whole))
 			],
 			[
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .whole)),
-			],
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .whole))
+			]
 		]
 		var count = 0
 		zip(mappedMeasureSlices, expectedMeasureSlices).forEach {
@@ -1952,14 +1956,14 @@ class MeasureTests: XCTestCase {
 					Note(restDuration: .whole),
 					Note(restDuration: .quarter),
 					Note(restDuration: .eighth),
-					Note(restDuration: .sixteenth),
+					Note(restDuration: .sixteenth)
 				],
 				[
 					Note(restDuration: .thirtySecond),
 					Note(restDuration: .sixtyFourth),
 					Note(restDuration: .oneTwentyEighth),
-					Note(restDuration: .twoFiftySixth),
-				],
+					Note(restDuration: .twoFiftySixth)
+				]
 			]
 		)
 		let repeatedReversedMeasureSlices = repeatedMeasure.reversed()
@@ -1968,20 +1972,20 @@ class MeasureTests: XCTestCase {
 		let expectedMeasureSlices: [[MeasureSlice]] = [
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .sixteenth)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .twoFiftySixth)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .twoFiftySixth))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .eighth)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .oneTwentyEighth)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .oneTwentyEighth))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .sixtyFourth)),
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .sixtyFourth))
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .whole)),
-				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond)),
-			],
+				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond))
+			]
 		]
 
 		var count = 0
@@ -2010,22 +2014,22 @@ class MeasureTests: XCTestCase {
 			notes: [
 				[
 					Note(restDuration: .whole),
-					Note(restDuration: .quarter),
+					Note(restDuration: .quarter)
 				],
 				[
 					Note(restDuration: .thirtySecond),
-					Note(restDuration: .eighth),
-				],
+					Note(restDuration: .eighth)
+				]
 			]
 		)
 
 		let expectedMeasureSlice1: [MeasureSlice] = [
 			MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .whole)),
-			MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond)),
+			MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .thirtySecond))
 		]
 		let expectedMeasureSlice2: [MeasureSlice] = [
 			MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
-			MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .eighth)),
+			MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .eighth))
 		]
 		let expectedMeasureSlices = [expectedMeasureSlice1, expectedMeasureSlice2]
 		var iterator = measure.makeIterator()

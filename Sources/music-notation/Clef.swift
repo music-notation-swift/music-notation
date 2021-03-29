@@ -1,9 +1,9 @@
 //
-//  Clef.swift
-//  MusicNotationCore
+//	Clef.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 10/16/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-10-16.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 #if os(iOS) || os(watchOS) || os(tvOS) || os(OSX)
@@ -59,8 +59,8 @@ public struct Clef {
 	/// - parameter location: The location on the staff for which you would like to know the pitch.
 	/// - returns: The pitch at the given staff location or nil if the `Clef` is un-pitched.
 	/// - throws:
-	///    - `ClefError.internal`: Logic error with math
-	///    - `ClefError.octaveOutOfRange`
+	///	  - `ClefError.internal`: Logic error with math
+	///	  - `ClefError.octaveOutOfRange`
 	///
 	internal func pitch(at location: StaffLocation) throws -> SpelledPitch? {
 		guard let pitch = pitch else { return nil }

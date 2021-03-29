@@ -1,9 +1,9 @@
 //
-//  SpelledPitch.swift
-//  MusicNotationCore
+//	SpelledPitch.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 6/15/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2015-06-15.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 ///

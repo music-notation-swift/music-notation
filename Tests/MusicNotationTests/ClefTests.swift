@@ -1,9 +1,9 @@
 //
-//  ClefTests.swift
-//  MusicNotationCore
+//	ClefTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 10/16/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-10-16.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation

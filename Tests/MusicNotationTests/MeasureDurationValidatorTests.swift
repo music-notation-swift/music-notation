@@ -1,14 +1,15 @@
 //
-//  MeasureDurationValidatorTests.swift
-//  MusicNotationCore
+//	MeasureDurationValidatorTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 8/6/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-08-06.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
 class MeasureDurationValidatorTests: XCTestCase {
 	static let standardTimeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
 	static let oddTimeSignature = TimeSignature(topNumber: 11, bottomNumber: 16, tempo: 86)

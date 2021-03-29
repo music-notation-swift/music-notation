@@ -1,9 +1,9 @@
 //
-//  NoteDurationTests.swift
-//  MusicNotationCore
+//	NoteDurationTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 8/21/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-08-21.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
@@ -22,7 +22,7 @@ class NoteDurationTests: XCTestCase {
 		.thirtySecond,
 		.sixtyFourth,
 		.oneTwentyEighth,
-		.twoFiftySixth,
+		.twoFiftySixth
 	]
 
 	// MARK: - init(value:dotCount:)
@@ -206,10 +206,12 @@ class NoteDurationTests: XCTestCase {
 		XCTAssertEqual(NoteDuration.twoFiftySixth.debugDescription, "1/256")
 	}
 
+	// swiftlint:disable force_try
 	func testDebugDescriptionSingleDot() {
 		XCTAssertEqual(try! NoteDuration(value: .quarter, dotCount: 1).debugDescription, "1/4.")
 	}
 
+	// swiftlint:disable force_try
 	func testDebugDescriptionMultipleDots() {
 		XCTAssertEqual(try! NoteDuration(value: .sixtyFourth, dotCount: 3).debugDescription, "1/64...")
 	}

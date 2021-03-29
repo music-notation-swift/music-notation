@@ -1,29 +1,32 @@
 //
-//  TestHelpers.swift
-//  MusicNotationCore
+//	TestHelpers.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 7/12/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-07-12.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 import XCTest
 
 extension XCTestCase {
-	func assertThrowsError<T: Error>(_ expectedError: T,
-									 inFile file: String = #file, atLine line: UInt = #line,
-									 expression: () throws -> Void) where T: Equatable {
+	func assertThrowsError<T: Error>(
+		_ expectedError: T,
+		inFile file: String = #file, atLine line: UInt = #line,
+		expression: () throws -> Void) where T: Equatable {
+
 		let location = XCTSourceCodeLocation(filePath: file, lineNumber: Int(line))
 		let context = XCTSourceCodeContext(location: location)
 
 		do {
 			try expression()
 
-			let issue = XCTIssue(type: .assertionFailure,
-								 compactDescription: "Expected error \(expectedError), but got no error.",
-								 detailedDescription: nil,
-								 sourceCodeContext: context,
-								 associatedError: nil,
-								 attachments: [])
+			let issue = XCTIssue(
+				type: .assertionFailure,
+				compactDescription: "Expected error \(expectedError), but got no error.",
+				detailedDescription: nil,
+				sourceCodeContext: context,
+				associatedError: nil,
+				attachments: [])
 			record(issue)
 		} catch {
 			if error as? T != expectedError {

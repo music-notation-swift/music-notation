@@ -1,9 +1,9 @@
 //
-//  Staff.swift
-//  MusicNotationCore
+//	Staff.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 6/15/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2015-06-15.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 public struct Staff: RandomAccessCollection {
@@ -22,13 +22,8 @@ public struct Staff: RandomAccessCollection {
 		notesHolders[position]
 	}
 
-	public func index(after i: Int) -> Int {
-		notesHolders.index(after: i)
-	}
-
-	public func index(before i: Int) -> Int {
-		notesHolders.index(before: i)
-	}
+	public func index(after index: Int) -> Int { notesHolders.index(after: index) }
+	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
 
 	public typealias Iterator = IndexingIterator<[NotesHolder]>
 	public func makeIterator() -> Iterator {
@@ -81,14 +76,16 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter noteIndex: The index of the note at which you want the clef to change
 	/// - parameter setIndex: The index of the note set in which the note resides where you want to change the clef
 	/// - throws:
-	///    - `StaffError.measureIndexOutOfRange`
-	///    - `StaffError.repeatedMeasureCannotBeModified` if the measure is a repeated measure.
-	///    - `StaffError.internalError` if the function has an internal implementation error.
+	///	  - `StaffError.measureIndexOutOfRange`
+	///	  - `StaffError.repeatedMeasureCannotBeModified` if the measure is a repeated measure.
+	///	  - `StaffError.internalError` if the function has an internal implementation error.
 	///
-	public mutating func changeClef(_ clef: Clef,
-									in measureIndex: Int,
-									atNote noteIndex: Int,
-									inSet setIndex: Int = 0) throws {
+	public mutating func changeClef(
+		_ clef: Clef,
+		in measureIndex: Int,
+		atNote noteIndex: Int,
+		inSet setIndex: Int = 0
+	) throws {
 		guard var measure = try measure(at: measureIndex) as? Measure else { throw StaffError.repeatedMeasureCannotBeModified }
 		try measure.changeClef(clef, at: noteIndex, inSet: setIndex)
 		try replaceMeasure(at: measureIndex, with: measure)
@@ -117,12 +114,12 @@ public struct Staff: RandomAccessCollection {
 	/// the beginning of a repeat. True if you want the measure to be inserted before the repeat. False
 	/// when you want the measure to be inserted into the repeat at the given index.
 	/// - throws:
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.noRepeatToInsertInto`
-	///     - `StaffError.hasToInsertIntoRepeatIfIndexIsNotFirstMeasureOfRepeat`
-	///     - `StaffError.internalError`
-	///     - `MeasureRepeatError.indexOutOfRange`
-	///     - `MeasureRepeatError.cannotModifyRepeatedMeasures`
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.noRepeatToInsertInto`
+	///	   - `StaffError.hasToInsertIntoRepeatIfIndexIsNotFirstMeasureOfRepeat`
+	///	   - `StaffError.internalError`
+	///	   - `MeasureRepeatError.indexOutOfRange`
+	///	   - `MeasureRepeatError.cannotModifyRepeatedMeasures`
 	///
 	public mutating func insertMeasure(_ measure: Measure, at index: Int, beforeRepeat: Bool = true) throws {
 		var measure = measure
@@ -162,8 +159,8 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter measureRepeat: The repeat to insert.
 	/// - parameter index: The index where the repeat should be inserted.
 	/// - throws:
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.cannotInsertRepeatWhereOneAlreadyExists`
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.cannotInsertRepeatWhereOneAlreadyExists`
 	///
 	public mutating func insertRepeat(_ measureRepeat: MeasureRepeat, at index: Int) throws {
 		var measureRepeat = measureRepeat
@@ -190,8 +187,8 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter measureIndex: The index of the measure to replace.
 	/// - parameter newMeasure: The new measure to replace the old one.
 	/// - throws:
-	///     - `StaffError.repeatedMeasureCannotBeModified` if the measure is a repeated measure.
-	///     - `StaffError.internalError` if index translation doesn't work properly.
+	///	   - `StaffError.repeatedMeasureCannotBeModified` if the measure is a repeated measure.
+	///	   - `StaffError.internalError` if index translation doesn't work properly.
 	///
 	public mutating func replaceMeasure(at measureIndex: Int, with newMeasure: Measure) throws {
 		try replaceMeasure(at: measureIndex, with: newMeasure, shouldChangeClef: true)
@@ -205,13 +202,13 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter setIndex: The index of the set of notes you want to modify. There can be multiple sets of notes
 	/// that make up a full measure on their own. i.e. bass drum notes and hi-hat notes. See `Measure` for more info.
 	/// - throws:
-	///     - `StaffError.noteIndexoutOfRange`
-	///     - `StaffError.noNextNoteToTie` if the note specified is the last note in the staff.
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.repeatedMeasureCannotHaveTie` if the index for the measure specified refers to a measure that is
-	///     a repeat of another measure.
-	///     - `StaffError.internalError`, `MeasureError.internalError` if the function has an internal implementation error.
-	///     - `MeasureError.noteIndexOutOfRange`
+	///	   - `StaffError.noteIndexoutOfRange`
+	///	   - `StaffError.noNextNoteToTie` if the note specified is the last note in the staff.
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.repeatedMeasureCannotHaveTie` if the index for the measure specified refers to a measure that is
+	///	   a repeat of another measure.
+	///	   - `StaffError.internalError`, `MeasureError.internalError` if the function has an internal implementation error.
+	///	   - `MeasureError.noteIndexOutOfRange`
 	///
 	public mutating func startTieFromNote(at noteIndex: Int, inMeasureAt measureIndex: Int, inSet setIndex: Int = 0) throws {
 		try modifyTieForNote(at: noteIndex, inMeasureAt: measureIndex, removeTie: false, inSet: setIndex)
@@ -225,13 +222,13 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter setIndex: The index of the set of notes you want to modify. There can be multiple sets of notes
 	/// that make up a full measure on their own. i.e. bass drum notes and hi-hat notes. See `Measure` for more info.
 	/// - throws:
-	///     - `StaffError.noteIndexoutOfRange`
-	///     - `StaffError.noNextNoteToTie` if the note specified is the last note in the staff.
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.repeatedMeasureCannotHaveTie` if the index for the measure specified refers to a measure that is
-	///     a repeat of another measure.
-	///     - `MeasureError.noteIndexOutOfRange`
-	///     - `StaffError.internalError`, `MeasureError.internalError` if the function has an internal implementation error.
+	///	   - `StaffError.noteIndexoutOfRange`
+	///	   - `StaffError.noNextNoteToTie` if the note specified is the last note in the staff.
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.repeatedMeasureCannotHaveTie` if the index for the measure specified refers to a measure that is
+	///	   a repeat of another measure.
+	///	   - `MeasureError.noteIndexOutOfRange`
+	///	   - `StaffError.internalError`, `MeasureError.internalError` if the function has an internal implementation error.
 	///
 	public mutating func removeTieFromNote(at noteIndex: Int, inMeasureAt measureIndex: Int, inSet setIndex: Int = 0) throws {
 		try modifyTieForNote(at: noteIndex, inMeasureAt: measureIndex, removeTie: true, inSet: setIndex)
@@ -241,8 +238,8 @@ public struct Staff: RandomAccessCollection {
 	/// - parameter measureIndex: The index of the measure to return.
 	/// - returns An `ImmutableMeasure` at the given index within the staff.
 	/// - throws:
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.internalError` if the function has an internal implementation error.
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.internalError` if the function has an internal implementation error.
 	///
 	public func measure(at measureIndex: Int) throws -> ImmutableMeasure {
 		let (notesHolderIndex, repeatMeasureIndex) = try notesHolderIndexFromMeasureIndex(measureIndex)
@@ -260,8 +257,8 @@ public struct Staff: RandomAccessCollection {
 	/// - returns A `MeasureRepeat` that contains the measure(s) that are repeated as well as the repeat count. Returns nil
 	/// if the measure at the specified index is not part of repeat.
 	/// - throws:
-	///     - `StaffError.measureIndexOutOfRange`
-	///     - `StaffError.internalError` if the function has an internal implementation error.
+	///	   - `StaffError.measureIndexOutOfRange`
+	///	   - `StaffError.internalError` if the function has an internal implementation error.
 	///
 	public func measureRepeat(at measureIndex: Int) throws -> MeasureRepeat? {
 		let (notesHolderIndex, _) = try notesHolderIndexFromMeasureIndex(measureIndex)
@@ -354,13 +351,13 @@ public struct Staff: RandomAccessCollection {
 
 	private mutating func recomputeMeasureIndexes() {
 		measureIndexes = []
-		for (i, notesHolder) in notesHolders.enumerated() {
+		for (index, notesHolder) in notesHolders.enumerated() {
 			switch notesHolder {
 			case is Measure:
-				measureIndexes.append((notesHolderIndex: i, repeatMeasureIndex: nil))
+				measureIndexes.append((notesHolderIndex: index, repeatMeasureIndex: nil))
 			case let measureRepeat as MeasureRepeat:
-				for j in 0 ..< measureRepeat.measureCount {
-					measureIndexes.append((notesHolderIndex: i, repeatMeasureIndex: j))
+				for innerIndex in 0 ..< measureRepeat.measureCount {
+					measureIndexes.append((notesHolderIndex: index, repeatMeasureIndex: innerIndex))
 				}
 			default:
 				assertionFailure("NotesHolders should only be Measure or MeasureRepeat")

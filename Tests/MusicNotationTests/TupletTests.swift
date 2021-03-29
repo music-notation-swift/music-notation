@@ -1,14 +1,16 @@
 //
-//  TupletTests.swift
-//  MusicNotationCore
+//	TupletTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 6/19/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-06-19.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
+// swiftlint:disable type_body_length
 class TupletTests: XCTestCase {
 	let pitch1 = SpelledPitch(noteLetter: .a, octave: .octave1)
 	let pitch2 = SpelledPitch(noteLetter: .b, accidental: .sharp, octave: .octave1)
@@ -59,7 +61,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2,
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2
 				]
 			)
 		}
@@ -102,7 +104,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				inSpaceOf: 2,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1
 				]
 			)
 		}
@@ -123,7 +125,7 @@ class TupletTests: XCTestCase {
 				notes: [
 					eighthNote, eighthNote,
 					eighthNote, eighthNote,
-					quarterNote3,
+					quarterNote3
 				]
 			)
 		}
@@ -136,7 +138,7 @@ class TupletTests: XCTestCase {
 				4,
 				.quarter,
 				notes: [
-					eighthNote, eighthNote, eighthNote, eighthNote, quarterNote1, quarterNote2, quarterNote3,
+					eighthNote, eighthNote, eighthNote, eighthNote, quarterNote1, quarterNote2, quarterNote3
 				]
 			)
 		}
@@ -149,7 +151,7 @@ class TupletTests: XCTestCase {
 				inSpaceOf: 2,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3,
-					eighthNote, eighthNote, quarterNote1, eighthNote,
+					eighthNote, eighthNote, quarterNote1, eighthNote
 				]
 			)
 		}
@@ -174,7 +176,7 @@ class TupletTests: XCTestCase {
 				5,
 				.eighth,
 				notes: [
-					eighthNote, quarterNote1, eighthNote, quarterNote2,
+					eighthNote, quarterNote1, eighthNote, quarterNote2
 				]
 			)
 		}
@@ -186,7 +188,7 @@ class TupletTests: XCTestCase {
 				.eighth,
 				inSpaceOf: 2,
 				notes: [
-					eighthNote, quarterNote1, eighthNote, quarterNote2,
+					eighthNote, quarterNote1, eighthNote, quarterNote2
 				]
 			)
 		}
@@ -211,7 +213,7 @@ class TupletTests: XCTestCase {
 				5,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2
 				]
 			)
 			XCTAssertNotNil(quintuplet)
@@ -221,7 +223,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3, quarterNote1,
-					quintuplet!,
+					quintuplet!
 				]
 			)
 		}
@@ -233,7 +235,7 @@ class TupletTests: XCTestCase {
 				3,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3,
+					quarterNote1, quarterNote2, quarterNote3
 				]
 			)
 			XCTAssertNotNil(triplet)
@@ -242,7 +244,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3,
-					triplet!,
+					triplet!
 				]
 			)
 		}
@@ -257,42 +259,42 @@ class TupletTests: XCTestCase {
 				2,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2,
+					quarterNote1, quarterNote2
 				]
 			)
 			_ = try Tuplet(
 				3,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3,
+					quarterNote1, quarterNote2, quarterNote3
 				]
 			)
 			_ = try Tuplet(
 				4,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1
 				]
 			)
 			_ = try Tuplet(
 				5,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2
 				]
 			)
 			_ = try Tuplet(
 				6,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3
 				]
 			)
 			_ = try Tuplet(
 				7,
 				.quarter,
 				notes: [
-					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1,
+					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1
 				]
 			)
 			_ = try Tuplet(
@@ -300,7 +302,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1,
-					quarterNote2,
+					quarterNote2
 				]
 			)
 			_ = try Tuplet(
@@ -308,7 +310,7 @@ class TupletTests: XCTestCase {
 				.quarter,
 				notes: [
 					quarterNote1, quarterNote2, quarterNote3, quarterNote1, quarterNote2, quarterNote3, quarterNote1,
-					quarterNote2, quarterNote3,
+					quarterNote2, quarterNote3
 				]
 			)
 			// Test with a chord
@@ -316,7 +318,7 @@ class TupletTests: XCTestCase {
 				2,
 				.quarter,
 				notes: [
-					quarterNote1, quarterChord,
+					quarterNote1, quarterChord
 				]
 			)
 		}
@@ -328,7 +330,7 @@ class TupletTests: XCTestCase {
 				5,
 				.quarter,
 				notes: [
-					quarterNote1, eighthNote, eighthNote, quarterNote2, quarterNote3, eighthNote, eighthNote,
+					quarterNote1, eighthNote, eighthNote, quarterNote2, quarterNote3, eighthNote, eighthNote
 				]
 			)
 		}
@@ -342,7 +344,7 @@ class TupletTests: XCTestCase {
 				3,
 				baseDuration!,
 				notes: [
-					dottedQuarterNote, dottedQuarterNote, dottedQuarterNote,
+					dottedQuarterNote, dottedQuarterNote, dottedQuarterNote
 				]
 			)
 		}
@@ -356,7 +358,7 @@ class TupletTests: XCTestCase {
 				3,
 				baseDuration!,
 				notes: [
-					dottedQuarterNote, quarterNote1, eighthNote, dottedQuarterNote,
+					dottedQuarterNote, quarterNote1, eighthNote, dottedQuarterNote
 				]
 			)
 		}
@@ -370,7 +372,7 @@ class TupletTests: XCTestCase {
 				5,
 				.eighth,
 				notes: [
-					triplet!, eighthNote, eighthNote, eighthNote,
+					triplet!, eighthNote, eighthNote, eighthNote
 				]
 			)
 		}
@@ -390,7 +392,7 @@ class TupletTests: XCTestCase {
 				inSpaceOf: 6,
 				notes: [
 					eighthNote, eighthNote, eighthNote, eighthNote,
-					eighthNote, eighthNote, eighthNote,
+					eighthNote, eighthNote, eighthNote
 				]
 			)
 		}
@@ -403,7 +405,7 @@ class TupletTests: XCTestCase {
 				NoteDuration(value: .quarter, dotCount: 1),
 				inSpaceOf: 2,
 				notes: [
-					dottedQuarterNote, dottedQuarterNote, dottedQuarterNote, dottedQuarterNote,
+					dottedQuarterNote, dottedQuarterNote, dottedQuarterNote, dottedQuarterNote
 				]
 			)
 		}
@@ -420,7 +422,7 @@ class TupletTests: XCTestCase {
 				inSpaceOf: 9,
 				notes: [
 					quintuplet!, eighthNote, eighthNote, eighthNote,
-					eighthNote, eighthNote, eighthNote, eighthNote,
+					eighthNote, eighthNote, eighthNote, eighthNote
 				]
 			)
 		}
@@ -439,7 +441,7 @@ class TupletTests: XCTestCase {
 				inSpaceOf: 9,
 				notes: [
 					quintuplet, eighthNote, eighthNote, eighthNote,
-					eighthNote, eighthNote, eighthNote, eighthNote,
+					eighthNote, eighthNote, eighthNote, eighthNote
 				]
 			)
 		}
@@ -453,7 +455,7 @@ class TupletTests: XCTestCase {
 				inSpaceOf: 6,
 				notes: [
 					quarterNote1, quarterNote2, quarterRest, quarterNote3,
-					quarterRest, quarterRest, quarterNote1,
+					quarterRest, quarterRest, quarterNote1
 				]
 			)
 		}
@@ -510,7 +512,7 @@ class TupletTests: XCTestCase {
 			let triplet = try? Tuplet(3, .quarter, notes: [quarterNote1, quarterNote2, quarterNote3])
 			XCTAssertNotNil(triplet)
 			var tuplet = try Tuplet(5, .quarter, notes: [
-				triplet!, quarterNote1, quarterNote2, quarterNote3,
+				triplet!, quarterNote1, quarterNote2, quarterNote3
 			])
 			try tuplet.replaceNote(at: 1, with: eighthNote)
 		}
@@ -521,7 +523,7 @@ class TupletTests: XCTestCase {
 			let triplet = try? Tuplet(3, .eighth, notes: [eighthNote, eighthNote, eighthNote])
 			XCTAssertNotNil(triplet)
 			var tuplet = try Tuplet(5, .eighth, notes: [
-				triplet!, eighthNote, eighthNote, eighthNote,
+				triplet!, eighthNote, eighthNote, eighthNote
 			])
 			try tuplet.replaceNote(at: 1, with: quarterNote1)
 		}
@@ -552,7 +554,7 @@ class TupletTests: XCTestCase {
 			let triplet = try? Tuplet(3, .quarter, notes: [quarterNote1, quarterNote2, quarterNote3])
 			XCTAssertNotNil(triplet)
 			var tuplet = try Tuplet(5, .quarter, notes: [
-				triplet!, quarterNote1, quarterNote2, quarterNote3,
+				triplet!, quarterNote1, quarterNote2, quarterNote3
 			])
 			try tuplet.replaceNote(at: 1, with: quarterRest)
 			XCTAssertEqual(try tuplet.note(at: 0), quarterNote1)
@@ -1210,7 +1212,7 @@ class TupletTests: XCTestCase {
 				5,
 				.eighth,
 				notes: [
-					triplet!, eighthNote, eighthNote, eighthNote,
+					triplet!, eighthNote, eighthNote, eighthNote
 				]
 			)
 			XCTAssertTrue(compound.isCompound)

@@ -1,9 +1,9 @@
 //
-//  Score.swift
-//  MusicNotationCore
+//	Score.swift
+//	MusicNotationCore
 //
-//  Created by Steven Woolgar on 2021-01-30.
-//  Copyright © 2021 Steven Woolgar. All rights reserved.
+//	Created by Steven Woolgar on 2021-01-30.
+//	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
 /// A `score` can contain 0 or more staves. Each staff can have a name, color, and position within the score.
@@ -15,8 +15,8 @@ public struct Score: RandomAccessCollection {
 	public var startIndex: Int								{ staves.startIndex }
 	public var endIndex: Int								{ staves.endIndex }
 	public subscript(position: Index) -> Iterator.Element	{ staves[position] }
-	public func index(after i: Int) -> Int					{ staves.index(after: i) }
-	public func index(before i: Int) -> Int 				{ staves.index(before: i) }
+	public func index(after index: Int) -> Int				{ staves.index(after: index) }
+	public func index(before index: Int) -> Int 			{ staves.index(before: index) }
 	public typealias Iterator = IndexingIterator<[Staff]>
 	public func makeIterator() -> Iterator 					{ staves.makeIterator() }
 

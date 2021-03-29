@@ -1,9 +1,9 @@
 //
-//  Enharmonic.swift
-//  MusicNotationCore
+//	Enharmonic.swift
+//	MusicNotationCore
 //
-//  Created by Rob Hudson on 9/16/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Rob Hudson on 2016-09-16.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 public protocol Enharmonic: Equatable {

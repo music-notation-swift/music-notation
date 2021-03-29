@@ -1,9 +1,9 @@
 //
-//  MeasureRepeat.swift
-//  MusicNotationCore
+//	MeasureRepeat.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 6/15/15.
-//  Copyright © 2015 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-06-15.
+//	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
 /// This represents a set of one or more measures that is repeated `repeatCount` times.
@@ -24,7 +24,7 @@ public struct MeasureRepeat {
 	public private(set) var measureCount: Int
 
 	public init(measures: [Measure], repeatCount: Int = 1) throws {
-		guard measures.count > 0 else { throw MeasureRepeatError.noMeasures }
+		guard !measures.isEmpty else { throw MeasureRepeatError.noMeasures }
 		guard repeatCount > 0 else { throw MeasureRepeatError.invalidRepeatCount }
 		self.measures = measures
 		self.repeatCount = repeatCount
@@ -39,8 +39,8 @@ public struct MeasureRepeat {
 	/// - parameter measure: The measure to be inserted.
 	/// - parameter index: The index at which to insert the measure within the measures to be repeated.
 	/// - throws:
-	///    - `MeasureRepeatError.indexOutOfRange`
-	///    - `MeasureRepeatError.cannotModifyRepeatedMeasures`
+	///	  - `MeasureRepeatError.indexOutOfRange`
+	///	  - `MeasureRepeatError.cannotModifyRepeatedMeasures`
 	///
 	public mutating func insertMeasure(_ measure: Measure, at index: Int) throws {
 		guard index >= 0 else { throw MeasureRepeatError.indexOutOfRange }

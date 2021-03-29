@@ -1,14 +1,15 @@
 //
-//  IntervalTests.swift
-//  MusicNotationCore
+//	IntervalTests.swift
+//	MusicNotationCore
 //
-//  Created by Rob Hudson on 8/1/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Rob Hudson on 2016-08-01.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 import MusicNotation
 import XCTest
 
+// swiftlint:disable force_try
 class IntervalTests: XCTestCase {
 	func testUnison() {
 		let interval = try! Interval(quality: .perfect, number: 1)

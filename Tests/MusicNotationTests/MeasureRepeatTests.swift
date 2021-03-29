@@ -1,9 +1,9 @@
 //
-//  MeasureRepeatTests.swift
-//  MusicNotationCore
+//	MeasureRepeatTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 3/9/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-03-09.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 @testable import MusicNotation
@@ -62,7 +62,7 @@ class MeasureRepeatTests: XCTestCase {
 			let expected = [measure1, RepeatedMeasure(immutableMeasure: measure1)] as [ImmutableMeasure]
 			let actual = measureRepeat.expand()
 			guard actual.count == expected.count else {
-				XCTFail()
+				XCTFail("Unexpected count")
 				return
 			}
 			XCTAssertTrue(compareImmutableMeasureArrays(actual: actual, expected: expected))
@@ -77,7 +77,7 @@ class MeasureRepeatTests: XCTestCase {
 			let expected = [measure1, repeatedMeasure, repeatedMeasure, repeatedMeasure] as [ImmutableMeasure]
 			let actual = measureRepeat.expand()
 			guard actual.count == expected.count else {
-				XCTFail()
+				XCTFail("Unexpected count")
 				return
 			}
 			XCTAssertTrue(compareImmutableMeasureArrays(actual: actual, expected: expected))
@@ -93,7 +93,7 @@ class MeasureRepeatTests: XCTestCase {
 			let expected = [measure1, measure2, repeatedMeasure1, repeatedMeasure2] as [ImmutableMeasure]
 			let actual = measureRepeat.expand()
 			guard actual.count == expected.count else {
-				XCTFail()
+				XCTFail("Unexpected count")
 				return
 			}
 			XCTAssertTrue(compareImmutableMeasureArrays(actual: actual, expected: expected))
@@ -110,11 +110,11 @@ class MeasureRepeatTests: XCTestCase {
 				measure1, measure2,
 				repeatedMeasure1, repeatedMeasure2,
 				repeatedMeasure1, repeatedMeasure2,
-				repeatedMeasure1, repeatedMeasure2,
+				repeatedMeasure1, repeatedMeasure2
 			] as [ImmutableMeasure]
 			let actual = measureRepeat.expand()
 			guard actual.count == expected.count else {
-				XCTFail()
+				XCTFail("Unexpected count")
 				return
 			}
 			XCTAssertTrue(compareImmutableMeasureArrays(actual: actual, expected: expected))

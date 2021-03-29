@@ -1,9 +1,9 @@
 //
-//  RepeatedMeasure.swift
-//  MusicNotationCore
+//	RepeatedMeasure.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 3/9/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-03-09.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 ///
@@ -13,7 +13,7 @@
 ///
 /// i.e. If we want to repeat measure A 2 times, you would have
 ///
-///    | A, repeated A, repeated A |
+///	  | A, repeated A, repeated A |
 ///
 /// This structure represents those repeated measures "repeated A", so that they can be differentiated from the
 /// original measure "A".
@@ -44,12 +44,14 @@ public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollecti
 	public let lastClef: Clef?
 	public let originalClef: Clef?
 
-	public init(timeSignature: TimeSignature,
-				key: Key? = nil,
-				notes: [[NoteCollection]] = [],
-				lastClef: Clef? = nil,
-				originalClef: Clef? = nil,
-				clefs: [Double: Clef] = [:]) {
+	public init(
+		timeSignature: TimeSignature,
+		key: Key? = nil,
+		notes: [[NoteCollection]] = [],
+		lastClef: Clef? = nil,
+		originalClef: Clef? = nil,
+		clefs: [Double: Clef] = [:]
+	) {
 		self.lastClef = lastClef
 		self.originalClef = originalClef
 		self.clefs = clefs

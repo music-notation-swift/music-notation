@@ -1,28 +1,26 @@
 //
-//  SwiftHelpers.swift
-//  MusicNotationCore
+//	SwiftHelpers.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 10/15/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-10-15.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 extension Collection {
 	public var lastIndex: Self.Index {
-		guard endIndex != startIndex else {
-			return startIndex
-		}
+		guard endIndex != startIndex else { return startIndex }
 		return index(endIndex, offsetBy: -1)
 	}
 
 	public func isValidIndex(_ index: Self.Index) -> Bool {
-		if count == 0 {
+		if isEmpty {
 			return false
 		}
 		return index >= startIndex && index < endIndex
 	}
 
 	public func isValidIndexRange(_ range: Range<Self.Index>) -> Bool {
-		if count == 0 {
+		if isEmpty {
 			return false
 		}
 		let upperBound = range ~= range.upperBound ? range.upperBound : index(range.upperBound, offsetBy: -1)

@@ -1,9 +1,9 @@
 //
-//  SwiftHelpersTests.swift
-//  MusicNotationCore
+//	SwiftHelpersTests.swift
+//	MusicNotationCore
 //
-//  Created by Kyle Sherman on 10/30/16.
-//  Copyright © 2016 Kyle Sherman. All rights reserved.
+//	Created by Kyle Sherman on 2016-10-30.
+//	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
 import MusicNotation
