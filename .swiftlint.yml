@@ -10,7 +10,7 @@ opt_in_rules:
 
 excluded:
   - SwiftLint/Common/3rdPartyLib
-  - build
+  - .build
   - Package.swift
   - Tests/LinuxMain.swift
   - Tests/MusicNotationTests/XCTestManifests.swift
