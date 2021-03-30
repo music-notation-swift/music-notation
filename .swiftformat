@@ -1,5 +1,0 @@
---ifdef no-indent
---indent tabs
---disable blankLinesAroundMark,consecutiveSpaces,unusedArguments
---tabwidth 4
---modifierorder public,private,static,private(set)
