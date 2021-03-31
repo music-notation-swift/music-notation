@@ -1,6 +1,6 @@
 //
 //	RepeatedMeasure.swift
-//	MusicNotationCore
+//	music-notation
 //
 //	Created by Kyle Sherman on 2016-03-09.
 //	Copyright © 2016 Kyle Sherman. All rights reserved.

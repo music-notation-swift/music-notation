@@ -1,6 +1,6 @@
 //
 //	Staff.swift
-//	MusicNotationCore
+//	music-notation
 //
 //	Created by Kyle Sherman on 2015-06-15.
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
@@ -10,36 +10,27 @@ public struct Staff: RandomAccessCollection {
 	// MARK: - Collection Conformance
 
 	public typealias Index = Int
-	public var startIndex: Int {
-		notesHolders.startIndex
-	}
-
-	public var endIndex: Int {
-		notesHolders.endIndex
-	}
-
-	public subscript(position: Index) -> Iterator.Element {
-		notesHolders[position]
-	}
+	public var startIndex: Int { notesHolders.startIndex }
+	public var endIndex: Int { notesHolders.endIndex }
+	public subscript(position: Index) -> Iterator.Element { notesHolders[position] }
 
 	public func index(after index: Int) -> Int { notesHolders.index(after: index) }
 	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
 
 	public typealias Iterator = IndexingIterator<[NotesHolder]>
-	public func makeIterator() -> Iterator {
-		notesHolders.makeIterator()
-	}
+	public func makeIterator() -> Iterator { notesHolders.makeIterator() }
 
 	// MARK: - Main Properties
+
+	public let name: String = ""
+	public let shortName: String = ""
 
 	public let clef: Clef
 	public let instrument: Instrument
 	public private(set) var measureCount: Int = 0
 
 	internal private(set) var notesHolders: [NotesHolder] = [] {
-		didSet {
-			recomputeMeasureIndexes()
-		}
+		didSet { recomputeMeasureIndexes() }
 	}
 
 	private var measureIndexes: [(notesHolderIndex: Int, repeatMeasureIndex: Int?)] = []

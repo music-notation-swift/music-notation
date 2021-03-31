@@ -95,7 +95,7 @@ class ScoreTests: XCTestCase {
 		staff.appendMeasure(measure7)
 		staff.appendMeasure(measure8)
 
-		score = Score(staves: [staff])
+		score = Score(parts: [Part(staves: [staff])])
 	}
 
 	// swiftlint:disable line_length

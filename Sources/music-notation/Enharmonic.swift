@@ -1,6 +1,6 @@
 //
 //	Enharmonic.swift
-//	MusicNotationCore
+//	music-notation
 //
 //	Created by Rob Hudson on 2016-09-16.
 //	Copyright © 2016 Kyle Sherman. All rights reserved.

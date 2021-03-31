@@ -1,6 +1,6 @@
 //
 //	Tuplet.swift
-//	MusicNotationCore
+//	music-notation
 //
 //	Created by Kyle Sherman on 2016-06-15.
 //	Copyright © 2015 Kyle Sherman. All rights reserved.

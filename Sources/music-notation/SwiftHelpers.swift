@@ -1,6 +1,6 @@
 //
 //	SwiftHelpers.swift
-//	MusicNotationCore
+//	music-notation
 //
 //	Created by Kyle Sherman on 2016-10-15.
 //	Copyright © 2016 Kyle Sherman. All rights reserved.

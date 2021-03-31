@@ -56,11 +56,6 @@ public enum NoteLetter: Int {
 	case b
 }
 
-public enum Instrument {
-	case guitar6
-	case drums
-}
-
 public enum Accent {
 	case standard
 	case strong
