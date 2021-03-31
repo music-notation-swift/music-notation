@@ -7,11 +7,11 @@
 //
 
 public struct Instrument {
-	public let name: String
+	public let name: String = ""
 
-	public let lineCount: Int
+	public let lineCount: Int = 0
 
 	/// Number of steps that this instrument is transposed.
-	public let chromaticTransposition: Int
-	public let octaveTransposition: Int
+	public let chromaticTransposition: Int = 0
+	public let octaveTransposition: Int = 0
 }

@@ -36,7 +36,7 @@ class MeasureDurationValidatorTests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 		let key = Key(noteLetter: .c)
-		var staff = Staff(clef: .treble, instrument: .guitar6)
+		var staff = Staff(clef: .treble, instrument: Instrument())
 		let dotted16: Note = {
 			Note(
 				noteDuration: try! NoteDuration(value: .sixteenth, dotCount: 1),

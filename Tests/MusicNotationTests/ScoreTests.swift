@@ -31,7 +31,7 @@ class ScoreTests: XCTestCase {
 
 	override func setUp() {
 		super.setUp()
-		staff = Staff(clef: Constant.standardClef, instrument: .guitar6)
+		staff = Staff(clef: Constant.standardClef, instrument: Instrument())
 		let timeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
 		let key = Key(noteLetter: .c)
 		let note = Note(noteDuration: .sixteenth,
