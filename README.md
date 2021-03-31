@@ -29,6 +29,7 @@ There is a Slack channel you can join if you want to see more into the developme
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
 - [Examples](#examples)
+- [Definitions](#definitions)
 - [FAQ](#faq)
 - [Notes](#notes)
 - [License](#license)
@@ -45,13 +46,13 @@ There is a Slack channel you can join if you want to see more into the developme
 ## Requirements
 
 - macOS 10.15+ / iOS 13+ / tvOS 13+ / watchOS 7+
-- Swift 5.4+
+- Swift 5.3+
 
 > Note please see [Package.swift](Package.swift) for the latest Requirements
 
 ## Installation
 
-**WIP** This will be either SPM or manual install
+**WIP** This is be either SPM or manual install
 
 ### Swift Package Manager
 
@@ -63,12 +64,49 @@ There is a Slack channel you can join if you want to see more into the developme
 
 ## Getting Started
 
-**WIP** `music-notation-import` is currently the first real client and usage example for the package.
+**WIP** [music-notation-import](https://github.com/music-notation-swift/music-notation-import) is currently the first real client and usage example for the package.
 It isn't on github yet, but as soon as it starts working, I will be selecting snippets to show here.
 
 ## Configuration
 
 **WIP** Since much of the concrete implementation will be in packages, this will be the main avenue for configuration.
+
+## Definitions
+
+For the purpose of describing music and the parts that are modelled by this library, some definitions will be required.
+This will inform the name of the classes and structs that model these components.
+
+### Score
+
+A score is description in standard notation of a piece of music which contains one or more parts. It also contains descriptions which pertain to the score overall.
+
+Examples include:
+- Name of the score
+- Name of the Artist
+- Subtitle of the piece of music that the score describes.
+
+Here is an example of (part of) a score (Beethoven - Symphony No. 9 Op. 125, downloaded from Musescore.com).
+
+![Example Score](docs/symphony-9.png)
+
+In the example you can see elements of the score as well as the staves that make up each of the individual parts.
+
+### Parts
+
+A part models a single instrument in the score and as such describes the attributes of the Instrument, as well as part specific data, including one or more staves.
+
+Examples include:
+- Transposition data
+- Which staves are present
+
+Here are some examples of a part. In this case they are all a Piano part of a score made for illustration purposes.
+
+- A part with a single staff (**note**: this shows the title, subtitle, and more)
+	![Single staff](docs/single-staff.png)
+- A part with a grand staff (treble and bass clef staves)
+	![Example Score](docs/grand-staff.png)
+- A part with a single staff, as well as a slash notation staff and a Tablature staff
+	![Example Score](docs/single-tab-stash.png)
 
 ## Examples
 ## FAQ
@@ -80,6 +118,7 @@ It isn't on github yet, but as soon as it starts working, I will be selecting sn
 - [MusicNotationKit](https://github.com/drumnkyle/music-notation-kit)
 
 `music-notation` and the add-on packages are first and foremost designed as Swift Package Manager packages and as such will not provide Xcode projects.
+A notable exception is [music-notation-import](https://github.com/music-notation-swift/music-notation-import) which is a macOS command line utility to parse various other formats and convert them into `music-notation` data structures.
 
 ## Contributing
 
