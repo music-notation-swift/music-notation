@@ -63,6 +63,11 @@ identifier_name:
     - uri
     - URI
     - URL
+    - b5
+    - a3
+    - a4
+    - b4
+    - c5
 
 reporter: "xcode"
 

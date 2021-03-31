@@ -42,7 +42,6 @@ public enum ColumnsLayout {
 	case horizontally
 }
 
-
 /// Placeholder for eventual staff layout description of a page header.
 public struct Stylesheet {
 	///	Page & Score format
