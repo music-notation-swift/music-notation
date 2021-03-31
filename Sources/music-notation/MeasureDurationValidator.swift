@@ -7,7 +7,7 @@
 //
 
 #if os(iOS) || os(watchOS) || os(tvOS) || os(OSX)
-import Foundation
+import Darwin.C.math
 #else
 import Glibc
 #endif
