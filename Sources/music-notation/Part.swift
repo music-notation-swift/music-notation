@@ -21,9 +21,16 @@ public struct Part {
 
 	// MARK: - Main Properties
 
+	public let name: String = ""
+	public let shortName: String = ""
+
 	internal private(set) var staves: [Staff] = []
 
-	public init(staves: [Staff]) {
+	public init(
+		name: String = "",
+		shortName: String = "",
+		staves: [Staff]
+	) {
 		self.staves = staves
 	}
 }

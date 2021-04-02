@@ -22,9 +22,6 @@ public struct Staff: RandomAccessCollection {
 
 	// MARK: - Main Properties
 
-	public let name: String = ""
-	public let shortName: String = ""
-
 	public let clef: Clef
 	public let instrument: Instrument
 	public private(set) var measureCount: Int = 0
@@ -35,7 +32,10 @@ public struct Staff: RandomAccessCollection {
 
 	private var measureIndexes: [(notesHolderIndex: Int, repeatMeasureIndex: Int?)] = []
 
-	public init(clef: Clef, instrument: Instrument) {
+	public init(
+		clef: Clef = .treble,
+		instrument: Instrument
+	) {
 		self.clef = clef
 		self.instrument = instrument
 	}
