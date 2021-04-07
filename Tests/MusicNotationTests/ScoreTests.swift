@@ -10,6 +10,7 @@
 import XCTest
 
 // swiftlint:disable force_try
+// swiftlint:disable implicitly_unwrapped_optional
 class ScoreTests: XCTestCase {
 	enum Constant {
 		static let standardClef: Clef = .treble
@@ -34,10 +35,8 @@ class ScoreTests: XCTestCase {
 		staff = Staff(clef: Constant.standardClef, instrument: Instrument())
 		let timeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
 		let key = Key(noteLetter: .c)
-		let note = Note(noteDuration: .sixteenth,
-						pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
-		let note2 = Note(noteDuration: .sixteenth,
-						 pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
+		let note = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+		let note2 = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		let tuplet = try! Tuplet(3, .sixteenth, notes: [note, note, note])
 		let tuplet2 = try! Tuplet(3, .sixteenth, notes: [note2, note, note])
 

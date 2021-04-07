@@ -1,5 +1,5 @@
 //
-//	TestHelpers.swift
+//	XCTestCase+Helpers.swift
 //	MusicNotationCore
 //
 //	Created by Kyle Sherman on 2016-07-12.
@@ -12,8 +12,8 @@ extension XCTestCase {
 	func assertThrowsError<T: Error>(
 		_ expectedError: T,
 		inFile file: String = #file, atLine line: UInt = #line,
-		expression: () throws -> Void) where T: Equatable {
-
+		expression: () throws -> Void
+	) where T: Equatable {
 		let location = XCTSourceCodeLocation(filePath: file, lineNumber: Int(line))
 		let context = XCTSourceCodeContext(location: location)
 
@@ -30,12 +30,14 @@ extension XCTestCase {
 			record(issue)
 		} catch {
 			if error as? T != expectedError {
-				let issue = XCTIssue(type: .assertionFailure,
-									 compactDescription: "Expected error \(expectedError), but got: \(error).",
-									 detailedDescription: nil,
-									 sourceCodeContext: context,
-									 associatedError: nil,
-									 attachments: [])
+				let issue = XCTIssue(
+					type: .assertionFailure,
+					compactDescription: "Expected error \(expectedError), but got: \(error).",
+					detailedDescription: nil,
+					sourceCodeContext: context,
+					associatedError: nil,
+					attachments: []
+				)
 				record(issue)
 			}
 		}
@@ -47,12 +49,13 @@ extension XCTestCase {
 		} catch {
 			let location = XCTSourceCodeLocation(filePath: file, lineNumber: Int(line))
 			let context = XCTSourceCodeContext(location: location)
-			let issue = XCTIssue(type: .assertionFailure,
-								 compactDescription: "Expected no error, but got: \(error)",
-								 detailedDescription: nil,
-								 sourceCodeContext: context,
-								 associatedError: nil,
-								 attachments: [])
+			let issue = XCTIssue(
+				type: .assertionFailure,
+				compactDescription: "Expected no error, but got: \(error)",
+				detailedDescription: nil,
+				sourceCodeContext: context,
+				associatedError: nil,
+				attachments: [])
 			record(issue)
 		}
 	}

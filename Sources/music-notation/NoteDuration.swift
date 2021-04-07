@@ -98,13 +98,13 @@ public struct NoteDuration: Hashable {
 		var ticks: Double = 0
 		let baseTicks: Double = {
 			switch value {
-			case .large: return 65536
-			case .long: return 32768
-			case .doubleWhole: return 16384
-			case .whole: return 8192
-			case .half: return 4096
-			case .quarter: return 2048
-			case .eighth: return 1024
+			case .large: return 65_536
+			case .long: return 32_768
+			case .doubleWhole: return 16_384
+			case .whole: return 8_192
+			case .half: return 4_096
+			case .quarter: return 2_048
+			case .eighth: return 1_024
 			case .sixteenth: return 512
 			case .thirtySecond: return 256
 			case .sixtyFourth: return 128

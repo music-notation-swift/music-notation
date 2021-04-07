@@ -156,7 +156,7 @@ public struct Staff: RandomAccessCollection {
 	public mutating func insertRepeat(_ measureRepeat: MeasureRepeat, at index: Int) throws {
 		var measureRepeat = measureRepeat
 		let measureBefore = try? measure(at: index - 1)
-		var didChangeClef: Bool = true
+		var didChangeClef = true
 		for index in measureRepeat.measures.indices {
 			didChangeClef = measureRepeat.measures[index].changeFirstClefIfNeeded(to: measureBefore?.lastClef ?? clef)
 		}

@@ -9,6 +9,7 @@
 @testable import MusicNotation
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
 class NoteTests: XCTestCase {
 	var note: Note!
 

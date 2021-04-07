@@ -15,26 +15,34 @@ class ClefTests: XCTestCase {
 	// MARK: Successes
 
 	func testInitForCustomOnLine() throws {
-		let clef = Clef(pitch: SpelledPitch(noteLetter: .c, octave: .octave4),
-						location: StaffLocation(type: .line, number: 0))
+		let clef = Clef(
+			pitch: SpelledPitch(noteLetter: .c, octave: .octave4),
+			location: StaffLocation(type: .line, number: 0)
+		)
 		XCTAssertEqual(clef.staffLocation.halfSteps, 0)
 	}
 
 	func testInitForCustomOnSpace() {
-		let clef = Clef(pitch: SpelledPitch(noteLetter: .g, octave: .octave4),
-						location: StaffLocation(type: .space, number: 1))
+		let clef = Clef(
+			pitch: SpelledPitch(noteLetter: .g, octave: .octave4),
+			location: StaffLocation(type: .space, number: 1)
+		)
 		XCTAssertEqual(clef.staffLocation.halfSteps, 3)
 	}
 
 	func testInitForCustomNegativeLedger() {
-		let clef = Clef(pitch: SpelledPitch(noteLetter: .g, octave: .octave3),
-						location: StaffLocation(type: .line, number: -2))
+		let clef = Clef(
+			pitch: SpelledPitch(noteLetter: .g, octave: .octave3),
+			location: StaffLocation(type: .line, number: -2)
+		)
 		XCTAssertEqual(clef.staffLocation.halfSteps, -4)
 	}
 
 	func testInitForCustomPositiveLedger() {
-		let clef = Clef(pitch: SpelledPitch(noteLetter: .a, octave: .octave4),
-						location: StaffLocation(type: .line, number: 7))
+		let clef = Clef(
+			pitch: SpelledPitch(noteLetter: .a, octave: .octave4),
+			location: StaffLocation(type: .line, number: 7)
+		)
 		XCTAssertEqual(clef.staffLocation.halfSteps, 14)
 	}
 
@@ -71,58 +79,45 @@ class ClefTests: XCTestCase {
 
 	func testPitchAtLocationWithinStaffIncrease() {
 		assertNoErrorThrown {
-			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .space, number: 2)),
-						   SpelledPitch(noteLetter: .c, octave: .octave5))
-			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 2)),
-						   SpelledPitch(noteLetter: .b, octave: .octave4))
-			XCTAssertEqual(try Clef.bass.pitch(at: StaffLocation(type: .space, number: 3)),
-						   SpelledPitch(noteLetter: .g, octave: .octave3))
-			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: 4)),
-						   SpelledPitch(noteLetter: .g, octave: .octave4))
-			XCTAssertEqual(try Clef.soprano.pitch(at: StaffLocation(type: .space, number: 3)),
-						   SpelledPitch(noteLetter: .c, octave: .octave5))
+			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .space, number: 2)), SpelledPitch(noteLetter: .c, octave: .octave5))
+			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 2)), SpelledPitch(noteLetter: .b, octave: .octave4))
+			XCTAssertEqual(try Clef.bass.pitch(at: StaffLocation(type: .space, number: 3)), SpelledPitch(noteLetter: .g, octave: .octave3))
+			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: 4)), SpelledPitch(noteLetter: .g, octave: .octave4))
+			XCTAssertEqual(try Clef.soprano.pitch(at: StaffLocation(type: .space, number: 3)), SpelledPitch(noteLetter: .c, octave: .octave5))
 
 			let customBClef = Clef(
 				pitch: SpelledPitch(noteLetter: .b, octave: .octave3),
 				location: StaffLocation(type: .line, number: 2)
 			)
-			XCTAssertEqual(try customBClef.pitch(at: StaffLocation(type: .space, number: 2)),
-						   SpelledPitch(noteLetter: .c, octave: .octave4))
+			XCTAssertEqual(try customBClef.pitch(at: StaffLocation(type: .space, number: 2)), SpelledPitch(noteLetter: .c, octave: .octave4))
 		}
 	}
 
 	func testPitchAtLocationDecrease() {
 		assertNoErrorThrown {
-			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 0)),
-						   SpelledPitch(noteLetter: .e, octave: .octave4))
-			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .space, number: -1)),
-						   SpelledPitch(noteLetter: .d, octave: .octave4))
-			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: -3)),
-						   SpelledPitch(noteLetter: .g, octave: .octave2))
-			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: -2)),
-						   SpelledPitch(noteLetter: .b, octave: .octave2))
-			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .space, number: 1)),
-						   SpelledPitch(noteLetter: .b, octave: .octave3))
-			XCTAssertEqual(try Clef.bass.pitch(at: StaffLocation(type: .line, number: 1)),
-						   SpelledPitch(noteLetter: .b, octave: .octave2))
+			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 0)), SpelledPitch(noteLetter: .e, octave: .octave4))
+			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .space, number: -1)), SpelledPitch(noteLetter: .d, octave: .octave4))
+			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: -3)), SpelledPitch(noteLetter: .g, octave: .octave2))
+			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .line, number: -2)), SpelledPitch(noteLetter: .b, octave: .octave2))
+			XCTAssertEqual(try Clef.alto.pitch(at: StaffLocation(type: .space, number: 1)), SpelledPitch(noteLetter: .b, octave: .octave3))
+			XCTAssertEqual(try Clef.bass.pitch(at: StaffLocation(type: .line, number: 1)), SpelledPitch(noteLetter: .b, octave: .octave2))
 		}
 	}
 
 	func testPitchAtSamePitchAsClef() {
 		assertNoErrorThrown {
-			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 1)),
-						   SpelledPitch(noteLetter: .g, octave: .octave4))
-			XCTAssertEqual(try Clef.soprano.pitch(at: StaffLocation(type: .line, number: 0)),
-						   SpelledPitch(noteLetter: .c, octave: .octave4))
+			XCTAssertEqual(try Clef.treble.pitch(at: StaffLocation(type: .line, number: 1)), SpelledPitch(noteLetter: .g, octave: .octave4))
+			XCTAssertEqual(try Clef.soprano.pitch(at: StaffLocation(type: .line, number: 0)), SpelledPitch(noteLetter: .c, octave: .octave4))
 		}
 	}
 
 	func testPitchAtNegativeClefDecrease() {
 		assertNoErrorThrown {
-			let negativeClef = Clef(pitch: SpelledPitch(noteLetter: .d, octave: .octave3),
-									location: StaffLocation(type: .line, number: -1))
-			XCTAssertEqual(try negativeClef.pitch(at: StaffLocation(type: .line, number: -2)),
-						   SpelledPitch(noteLetter: .b, octave: .octave2))
+			let negativeClef = Clef(
+				pitch: SpelledPitch(noteLetter: .d, octave: .octave3),
+				location: StaffLocation(type: .line, number: -1)
+			)
+			XCTAssertEqual(try negativeClef.pitch(at: StaffLocation(type: .line, number: -2)), SpelledPitch(noteLetter: .b, octave: .octave2))
 		}
 	}
 
@@ -161,7 +156,9 @@ class ClefTests: XCTestCase {
 	// MARK: Successes
 
 	func testEqualityStandard() {
-		XCTAssertTrue(Clef.treble == Clef.treble)
+		let lhs = Clef.treble
+		let rhs = Clef.treble
+		XCTAssertTrue(lhs == rhs)
 	}
 
 	func testEqualityCustom() {

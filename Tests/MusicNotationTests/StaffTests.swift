@@ -13,6 +13,7 @@ import XCTest
 // swiftlint:disable force_cast
 // swiftlint:disable line_length
 // swiftlint:disable type_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class StaffTests: XCTestCase {
 	enum Constant {
 		static let standardClef: Clef = .treble
@@ -36,10 +37,8 @@ class StaffTests: XCTestCase {
 		staff = Staff(clef: Constant.standardClef, instrument: Instrument())
 		let timeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
 		let key = Key(noteLetter: .c)
-		let note = Note(noteDuration: .sixteenth,
-						pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
-		let note2 = Note(noteDuration: .sixteenth,
-						 pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
+		let note = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+		let note2 = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
 		let tuplet = try! Tuplet(3, .sixteenth, notes: [note, note, note])
 		let tuplet2 = try! Tuplet(3, .sixteenth, notes: [note2, note, note])
 
@@ -936,20 +935,17 @@ class StaffTests: XCTestCase {
 
 	func testChangeClefTwiceAcross2NoteSetsIn1Measure() {
 		assertNoErrorThrown {
-			let sixteenth = Note(noteDuration: .sixteenth,
-								 pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
-			let quarter = Note(noteDuration: .quarter,
-							   pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+			let sixteenth = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+			let quarter = Note(noteDuration: .quarter, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 			staff.appendMeasure(
-				Measure(timeSignature: TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120),
-						notes: [
-							[
-								sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth
-							],
-							[
-								quarter, quarter, quarter, quarter
-							]
-						])
+				Measure(
+					timeSignature: TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120),
+					notes:
+						[
+							[sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth, sixteenth],
+							[quarter, quarter, quarter, quarter]
+						]
+				)
 			)
 
 			let newLastMeasureIndex = 17
@@ -1091,6 +1087,7 @@ class StaffTests: XCTestCase {
 
 	// MARK: - Collection Conformance
 
+	// swiftlint:disable array_init
 	func testMap() {
 		let mappedNotesHolders: [NotesHolder] = staff.map { $0 }
 		let expectedNotesHolders: [NotesHolder] = [

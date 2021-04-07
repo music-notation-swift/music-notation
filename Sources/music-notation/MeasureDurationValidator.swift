@@ -161,8 +161,10 @@ public enum MeasureDurationValidator {
 	// TODO: Refactor - move allDurations and function findLargest(start:, end:) -> NoteDuration out of this function
 	// https://github.com/drumnkyle/music-notation-core/issues/141
 	private static func findLargestDuration(lessThan ticks: Double) -> NoteDuration {
-		let allDurations: [NoteDuration] = [.large, .long, .doubleWhole, .whole, .half, .quarter, .eighth, .sixteenth,
-											.thirtySecond, .sixtyFourth, .oneTwentyEighth, .twoFiftySixth]
+		let allDurations: [NoteDuration] = [
+			.large, .long, .doubleWhole, .whole, .half, .quarter, .eighth, .sixteenth,
+			.thirtySecond, .sixtyFourth, .oneTwentyEighth, .twoFiftySixth
+		]
 		let allTicks = allDurations.map { $0.ticks }
 		func findLargest(start: Int, end: Int) -> NoteDuration {
 			guard end - start > 1 else { return allDurations[end] }

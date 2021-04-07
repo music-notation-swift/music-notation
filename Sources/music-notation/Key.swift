@@ -6,6 +6,11 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
+public enum KeyType {
+	case major
+	case minor
+}
+
 public struct Key {
 	fileprivate let type: KeyType
 	fileprivate let noteLetter: NoteLetter

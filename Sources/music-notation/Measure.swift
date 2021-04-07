@@ -10,7 +10,9 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	// MARK: - Collection Conformance
 
 	public typealias Index = Int
-	public subscript(position: Index) -> Iterator.Element { Measure.measureSlices(at: position, in: notes)!	}
+	public subscript(position: Index) -> Iterator.Element {
+		Measure.measureSlices(at: position, in: notes)!
+	}
 
 	public typealias Iterator = MeasureIterator
 	public func makeIterator() -> Iterator { MeasureIterator(self) }
@@ -537,7 +539,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 			}
 			newMeasure.notes[setIndex].remove(at: collectionIndex.noteIndex)
 		}
-		self  = newMeasure
+		self = newMeasure
 	}
 
 	///

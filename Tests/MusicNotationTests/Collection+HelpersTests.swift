@@ -1,5 +1,5 @@
 //
-//	SwiftHelpersTests.swift
+//	Collection+HelpersTests.swift
 //	MusicNotationCore
 //
 //	Created by Kyle Sherman on 2016-10-30.
@@ -9,7 +9,8 @@
 import MusicNotation
 import XCTest
 
-class SwiftHelpersTests: XCTestCase {
+// swiftlint:disable implicitly_unwrapped_optional
+class CollectionHelpersTests: XCTestCase {
 	var emptyArray: [Int]!
 	var singleElementArray: [Int]!
 	var multipleElementArray: [Int]!

@@ -10,6 +10,7 @@
 import XCTest
 
 // swiftlint:disable force_try
+// swiftlint:disable implicitly_unwrapped_optional
 class MeasureDurationValidatorTests: XCTestCase {
 	static let standardTimeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
 	static let oddTimeSignature = TimeSignature(topNumber: 11, bottomNumber: 16, tempo: 86)
@@ -57,8 +58,7 @@ class MeasureDurationValidatorTests: XCTestCase {
 		fullMeasure = Measure(
 			timeSignature: MeasureDurationValidatorTests.standardTimeSignature,
 			key: key,
-			notes: [[quarter, quarter, thirtySecond, thirtySecond, thirtySecond, thirtySecond, quarter, dotted16,
-					 thirtySecond]]
+			notes: [[quarter, quarter, thirtySecond, thirtySecond, thirtySecond, thirtySecond, quarter, dotted16, thirtySecond]]
 		)
 		// Missing 1 3/4 beats
 		notFullMeasure = Measure(
@@ -76,15 +76,13 @@ class MeasureDurationValidatorTests: XCTestCase {
 		overfilledMeasure = Measure(
 			timeSignature: MeasureDurationValidatorTests.standardTimeSignature,
 			key: key,
-			notes: [[halfRest, quarter, dotted16, thirtySecond, thirtySecond, thirtySecond, thirtySecond, thirtySecond,
-					 quarter, quarter]]
+			notes: [[halfRest, quarter, dotted16, thirtySecond, thirtySecond, thirtySecond, thirtySecond, thirtySecond, quarter, quarter]]
 		)
 		// The last sixteenth fills the measure, but the dot puts it over the edge
 		overfilledWithDotMeasure = Measure(
 			timeSignature: MeasureDurationValidatorTests.standardTimeSignature,
 			key: key,
-			notes: [[halfRest, quarter, thirtySecond, thirtySecond, thirtySecond, thirtySecond, thirtySecond,
-					 thirtySecond, dotted16]]
+			notes: [[halfRest, quarter, thirtySecond, thirtySecond, thirtySecond, thirtySecond, thirtySecond, thirtySecond, dotted16]]
 		)
 		// Quarter is too much, but when removed, the measure is not full
 		overfilledWithTooLargeMeasure = Measure(
@@ -304,27 +302,18 @@ class MeasureDurationValidatorTests: XCTestCase {
 		XCTAssertEqual(MeasureDurationValidator.number(of: .quarter, fittingIn: fullMeasureIrrationalTimeSignature), 0)
 		XCTAssertEqual(MeasureDurationValidator.number(of: .eighth, fittingIn: fullMeasureIrrationalTimeSignature), 0)
 		XCTAssertEqual(MeasureDurationValidator.number(of: .sixteenth, fittingIn: fullMeasureIrrationalTimeSignature), 0)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .thirtySecond,
-													   fittingIn: fullMeasureIrrationalTimeSignature), 0)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .sixtyFourth,
-													   fittingIn: fullMeasureIrrationalTimeSignature), 0)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .thirtySecond, fittingIn: fullMeasureIrrationalTimeSignature), 0)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .sixtyFourth, fittingIn: fullMeasureIrrationalTimeSignature), 0)
 	}
 
 	func testNumberOfFittingInForNotFullIrrationalTimeSignature() {
-		XCTAssertEqual(MeasureDurationValidator.number(of: .whole,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 0)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .half,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 0)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .quarter,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 1)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .eighth,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 2)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .sixteenth,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 4)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .thirtySecond,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 8)
-		XCTAssertEqual(MeasureDurationValidator.number(of: .sixtyFourth,
-													   fittingIn: notFullMeasureIrrationalTimeSignature), 16)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .whole, fittingIn: notFullMeasureIrrationalTimeSignature), 0)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .half, fittingIn: notFullMeasureIrrationalTimeSignature), 0)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .quarter, fittingIn: notFullMeasureIrrationalTimeSignature), 1)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .eighth, fittingIn: notFullMeasureIrrationalTimeSignature), 2)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .sixteenth, fittingIn: notFullMeasureIrrationalTimeSignature), 4)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .thirtySecond, fittingIn: notFullMeasureIrrationalTimeSignature), 8)
+		XCTAssertEqual(MeasureDurationValidator.number(of: .sixtyFourth, fittingIn: notFullMeasureIrrationalTimeSignature), 16)
 	}
 
 	// MARK: - baseNoteDuration(from:)

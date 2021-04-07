@@ -13,6 +13,7 @@ import XCTest
 // swiftlint:disable force_cast
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
+// swiftlint:disable implicitly_unwrapped_optional
 class MeasureTests: XCTestCase {
 	var measure: Measure!
 	var timeSignature: TimeSignature!
@@ -811,8 +812,7 @@ class MeasureTests: XCTestCase {
 
 	func testStartTieLastNoteOfTupletNextNoteTuplet() {
 		assertNoErrorThrown {
-			let note = Note(noteDuration: .sixteenth,
-							pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+			let note = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 			let tuplet1 = try Tuplet(3, .sixteenth, notes: [note, note, note])
 			let tuplet2 = try Tuplet(5, .sixteenth, notes: [note, note, note, note, note])
 			measure.append(tuplet1)
@@ -827,8 +827,7 @@ class MeasureTests: XCTestCase {
 
 	func testStartTieInNestedTuplet() {
 		assertNoErrorThrown {
-			let note = Note(noteDuration: .eighth,
-							pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+			let note = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 			let triplet = try Tuplet(3, .eighth, notes: [note, note, note])
 			let tuplet = try Tuplet(3, .eighth, notes: [triplet, note])
 			measure.append(tuplet)
@@ -940,8 +939,7 @@ class MeasureTests: XCTestCase {
 		measure.append(Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)))
 		measure.append(Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1)))
 
-		let note = Note(noteDuration: .sixteenth,
-						pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+		let note = Note(noteDuration: .sixteenth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 		assertNoErrorThrown {
 			let tuplet = try Tuplet(3, .sixteenth, notes: [note, note, note])
 			measure.append(tuplet)
@@ -1054,12 +1052,9 @@ class MeasureTests: XCTestCase {
 		// within the tuplet
 		measure.append(Note(restDuration: .quarter))
 		assertNoErrorThrown {
-			let note1 = Note(noteDuration: .eighth,
-							 pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
-			let note2 = Note(noteDuration: .eighth,
-							 pitch: SpelledPitch(noteLetter: .b, octave: .octave1))
-			let note3 = Note(noteDuration: .eighth,
-							 pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
+			let note1 = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .a, octave: .octave1))
+			let note2 = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .b, octave: .octave1))
+			let note3 = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
 			measure.append(try Tuplet(3, .eighth, notes: [note1, note2, note3]))
 			let index = try measure.noteCollectionIndex(fromNoteIndex: 2, inSet: 0)
 			XCTAssertEqual(index.noteIndex, 1)
@@ -1807,7 +1802,7 @@ class MeasureTests: XCTestCase {
 		XCTAssertTrue(expectedMeasureSlices.isEmpty)
 
 		let repeatedMeasure = RepeatedMeasure(timeSignature: timeSignature)
-		let repeatedMappedMeasureSlices = repeatedMeasure.map { $0 }
+		let repeatedMappedMeasureSlices = repeatedMeasure[...]
 		XCTAssertTrue(repeatedMappedMeasureSlices.isEmpty)
 		XCTAssertTrue(expectedMeasureSlices.isEmpty)
 	}
@@ -1831,7 +1826,7 @@ class MeasureTests: XCTestCase {
 				]
 			]
 		)
-		let repeatedMappedMeasureSlices = repeatedMeasure.map { $0 }
+		let repeatedMappedMeasureSlices = repeatedMeasure[...]
 
 		let mappedMeasureSlices = measure.compactMap { $0 }
 		let expectedMeasureSlices: [[MeasureSlice]] = [
@@ -1879,7 +1874,6 @@ class MeasureTests: XCTestCase {
 					Note(restDuration: .eighth),
 					Note(restDuration: .eighth),
 					Note(restDuration: .quarter)
-
 				],
 				[
 					Note(restDuration: .sixteenth),
@@ -1892,14 +1886,13 @@ class MeasureTests: XCTestCase {
 				]
 			]
 		)
-		let repeatedMappedMeasureSlices = repeatedMeasure.map { $0 }
+		let repeatedMappedMeasureSlices = repeatedMeasure[...]
 
 		let mappedMeasureSlices = measure.compactMap { $0 }
 		let expectedMeasureSlices: [[MeasureSlice]] = [
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
 				MeasureSlice(noteSetIndex: 1, noteCollection: Note(restDuration: .sixteenth))
-
 			],
 			[
 				MeasureSlice(noteSetIndex: 0, noteCollection: Note(restDuration: .quarter)),
@@ -2056,14 +2049,10 @@ class MeasureTests: XCTestCase {
 			try measure.startTie(at: index, inSet: 0)
 			let noteCollectionIndex1 = try measure.noteCollectionIndex(fromNoteIndex: index, inSet: 0)
 			let noteCollectionIndex2 = try measure.noteCollectionIndex(fromNoteIndex: index + 1, inSet: 0)
-			let firstNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex1.noteIndex,
-											tupletIndex: noteCollectionIndex1.tupletIndex)
-			let secondNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex2.noteIndex,
-											 tupletIndex: noteCollectionIndex2.tupletIndex)
-			XCTAssert(firstNote.tie == .begin || firstNote.tie == .beginAndEnd,
-					  "\(functionName): \(lineNum)")
-			XCTAssert(secondNote.tie == .end || secondNote.tie == .beginAndEnd,
-					  "\(functionName): \(lineNum)")
+			let firstNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex1.noteIndex, tupletIndex: noteCollectionIndex1.tupletIndex)
+			let secondNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex2.noteIndex, tupletIndex: noteCollectionIndex2.tupletIndex)
+			XCTAssert(firstNote.tie == .begin || firstNote.tie == .beginAndEnd, "\(functionName): \(lineNum)")
+			XCTAssert(secondNote.tie == .end || secondNote.tie == .beginAndEnd, "\(functionName): \(lineNum)")
 		}
 	}
 

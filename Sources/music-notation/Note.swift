@@ -20,7 +20,7 @@ public struct Note: NoteCollection {
 	public let isRest: Bool
 
 	public var accent: Accent?
-	public var isStaccato: Bool = false
+	public var isStaccato = false
 	public var dynamics: Dynamics?
 	public var striking: Striking?
 

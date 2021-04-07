@@ -1,5 +1,5 @@
 //
-//	SwiftHelpers.swift
+//	Collection+Helpers.swift
 //	music-notation
 //
 //	Created by Kyle Sherman on 2016-10-15.
