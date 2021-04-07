@@ -35,11 +35,13 @@ There is a Slack channel you can join if you want to see more into the developme
 	- [7.1 Score](#71-score)
 	- [7.2 Parts](#72-parts)
 	- [7.3 Staves](#73-staves)
+	- [7.4 Notes](#74-notes)
 		- [7.4.1 Duration](#741-duration)
 		- [7.4.2 Pitch](#742-pitch)
 		- [7.4.3 Rests](#743-rests)
+	- [7.5 Measures](#75-measures)
 - [8. FAQ](#8-faq)
-- [9. Notes](#9-development-notes)
+- [9. Development Notes](#9-development-notes)
 - [10. Contributing](#10-contributing)
 - [11. License](#11-license)
 - [12. Attributions](#12-attributions)
@@ -173,7 +175,7 @@ Silence can be notated using rests. A rest works like a note, except that the mu
 
 The vertical position of a rest has no significance, and unlike notes, rests can not be typeset upside down.
 
-### Measures
+### 7.5 Measures
 
 Notes are played in sequence, from left to right. Time is split into measures of equal duration, separated by bar lines. The duration of each measure is defined by the time signature, which denotes a fraction of a whole note and the meter at which these are accentuated. Until a new time signature is annotated, all the following measures are of the same time signature.
 
