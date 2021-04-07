@@ -26,7 +26,7 @@ jobs:
         run: |
           # Push the coverage number into the COVERAGE environment variable
           RAW_COVERAGE=$(cat .build/coverage.json|jq '.data[0]["totals"]["lines"]["percent"]')
-          echo "COVERAGE=$(awk 'BEGIN { rounded = sprintf("%.2f", '$RAW_COVERAGE'); print rounded }')" >> $GITHUB_ENV
+          echo "COVERAGE=$(awk 'BEGIN { rounded = sprintf("%.1f", '$RAW_COVERAGE'); print rounded }')" >> $GITHUB_ENV
 
           # Use this hack to get to the branch
           REF=${{ github.ref }}
