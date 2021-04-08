@@ -181,6 +181,28 @@ Notes are played in sequence, from left to right. Time is split into measures of
 
 ![Measure](docs/images/measure.png)
 
+### 7.6 Multiples Notes and Time
+
+When multiple notes are being played at the same time, it can occur because the notes are played as chords (harmony, as played by instruments that can play multiple notes at the same time, for instance a piano). It can also occur when two instruments are playing notes in different [parts](#72-parts) or even when they are being played from different staves in the same part.
+
+#### 7.6.1 More than one staff
+
+A score normally consists of several connected staves, where each staff contains the music played by one instruments. Notes that are played at the same time, are always written in the same horizontal position:
+
+![Multi Staff](docs/images/multi-staff.png)
+
+Not only scores use several connected staves: For example, piano music normally uses two staves, containing the notes for the left and right hand, respectively. This can also be seen in guitar music, which needs two staves to be played accurately. One standard notation staff and one tablature staff.
+
+#### 7.6.1 Multiple voices within a staff
+
+Sometimes multiple independant voices of an instrument appear in one staff; in this case, the stem direction decides which notes that should be played by which instrument. The notes with up and down stems are often called the upper and lower voice, respectively. The term “voice” originates from choral music, where this notation is common. Many software notation editors support 4 voices, and during editing are differentiated using colors for each voice.
+
+![Multi Voice](docs/images/multi-voice.png)
+
+As mentioned above, a single instrument can also play a chord, consisting of many simultaneous tones. This is notated by adding many note heads to the same stem:
+
+![Chord](docs/images/chord.png)
+
 ## 8. FAQ
 
 ## 9. Development Notes
