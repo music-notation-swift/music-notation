@@ -203,6 +203,17 @@ As mentioned above, a single instrument can also play a chord, consisting of man
 
 ![Chord](docs/images/chord.png)
 
+#### 7.7 Lyrics
+
+Vocal music, such as songs, can be notated using music notation. This is done by writing the song text, or lyrics, below the staff that represents the melody to be sung. Each syllable is written right below the note it belongs to:
+
+![Lyrics](docs/images/lyrics.png)
+
+#### 7.8 Clefs
+
+#### 7.9 Time Signatures
+
+
 ## 8. FAQ
 
 ## 9. Development Notes
