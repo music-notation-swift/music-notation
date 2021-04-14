@@ -15,7 +15,7 @@ Cross-Platform Music Notation API written in Swift. It is written so that it can
 
 See `music-notation-render` and `music-notation-io` as well as `music-notation-import`.
 
-The goal is to provide these as Swift Package Manager based packages. Cocoapods and Carthage will no longer be supported. Manually adding the package into Xcode projects will still be supported.
+The goal is to provide these as [Swift Package Manager](https://github.com/apple/swift-package-manager) based packages. Cocoapods and Carthage will no longer be supported. Manually adding the package into Xcode projects will still be supported.
 
 Please consult this [Swift style guide](https://github.com/music-notation-swift/swift-style-guide) for coding style guidelines used in this repo and be sure to adhere to them.
 
@@ -40,8 +40,18 @@ There is a Slack channel you can join if you want to see more into the developme
 		- [7.4.2 Pitch](#742-pitch)
 		- [7.4.3 Rests](#743-rests)
 	- [7.5 Measures](#75-measures)
+	- [7.6 Multiple Notes and Time](#76-multiple-notes-and-time)
+		- [7.6.1 More than one staff]()
+		- [7.6.2 Multiple voices within a staff]()
+	- [7.7 Lyrics](#77-lyrics)
+	- [7.8 Clefs](#78-clefs)
+	- [7.9 Time Signatures]()
+	- [7.10 Cue Notes]()
 - [8. FAQ](#8-faq)
 - [9. Development Notes](#9-development-notes)
+	- [9.1 Code formatting and Linting](#91-code-formatting-and-linting)
+		- [9.1.1 Github actions](#911-github-actions)
+	- [9.2 Time & Note Chronology](#92-time-note-chronology)
 - [10. Contributing](#10-contributing)
 - [11. License](#11-license)
 - [12. Attributions](#12-attributions)
@@ -68,7 +78,7 @@ There is a Slack channel you can join if you want to see more into the developme
 
 ### 3.1 Swift Package Manager
 
-Swift Package Manager requires Swift version 4.0 or higher. First, create a `Package.swift` file. It should look like:
+[Swift Package Manager](https://github.com/apple/swift-package-manager) requires Swift version 4.0 or higher. First, create a `Package.swift` file. It should look like:
 
 ```swift
 dependencies: [
@@ -181,7 +191,7 @@ Notes are played in sequence, from left to right. Time is split into measures of
 
 ![Measure](docs/images/measure.png)
 
-### 7.6 Multiples Notes and Time
+### 7.6 Multiple Notes and Time
 
 When multiple notes are being played at the same time, it can occur because the notes are played as chords (harmony, as played by instruments that can play multiple notes at the same time, for instance a piano). It can also occur when two instruments are playing notes in different [parts](#72-parts) or even when they are being played from different staves in the same part.
 
@@ -193,7 +203,7 @@ A score normally consists of several connected staves, where each staff contains
 
 Not only scores use several connected staves: For example, piano music normally uses two staves, containing the notes for the left and right hand, respectively. This can also be seen in guitar music, which needs two staves to be played accurately. One standard notation staff and one tablature staff.
 
-#### 7.6.1 Multiple voices within a staff
+#### 7.6.2 Multiple voices within a staff
 
 Sometimes multiple independant voices of an instrument appear in one staff; in this case, the stem direction decides which notes that should be played by which instrument. The notes with up and down stems are often called the upper and lower voice, respectively. The term “voice” originates from choral music, where this notation is common. Many software notation editors support 4 voices, and during editing are differentiated using colors for each voice.
 
@@ -211,8 +221,27 @@ Vocal music, such as songs, can be notated using music notation. This is done by
 
 #### 7.8 Clefs
 
+Music notation has a variety of clefs to indicate what notes the staff lines represent. They all have a symbol within which a point is designated as the note choice.
+
+For instance, the treble clef is a stylized letter G and the curly-cue of the G represents where the G note is on the staff line. See below where the stylized G points to the G staff line (note: this is a French Violin treble clefn).
+
+![G Clef](docs/images/g-clef.png)
+
+The bass clef is similar and represents a stylized letter F and the two dots surround the staff line for F.
+
+![Bass Clef](docs/images/bass-clef.png)
+
+The alto clef is not similar but represents a stylized way of pointing to the staff in question.
+
+![Alto Clef](docs/images/alto-clef.png)
+
+And here a few of them on a staff for comparison.
+
+![All clefs](docs/images/all-clefs.png)
+
 #### 7.9 Time Signatures
 
+#### 7.10 Cue Notes
 
 ## 8. FAQ
 
@@ -222,13 +251,48 @@ Vocal music, such as songs, can be notated using music notation. This is done by
 - [MusicNotationCore](https://github.com/drumnkyle/music-notation-core)
 - [MusicNotationKit](https://github.com/drumnkyle/music-notation-kit)
 
-`music-notation` and the add-on packages are first and foremost designed as Swift Package Manager packages and as such will not provide Xcode projects.
-A notable exception is [music-notation-import](https://github.com/music-notation-swift/music-notation-import) which is a macOS command line utility to parse various other formats and convert them into `music-notation` data structures.
+`music-notation` and the add-on packages are first and foremost designed as [Swift Package Manager](https://github.com/apple/swift-package-manager) packages and as such will not provide Xcode projects.
+
+A notable exception is [music-notation-import](https://github.com/music-notation-swift/music-notation-import) which is a macOS command line utility to parse various other formats and convert them into `music-notation` data structures. Import is primarily a consumer of the packages, which explains the choice of an Xcode project.
+
+### 9.1 Code formatting and Linting
+
+To avoid any conflicts with code formatting, a complete style guide has been provided, as well as project wide linting settings. Please use the base `music-notation` settings, and copy them into any sub-packages intact.
+
+Each project should copy the Github Actions format of: `build & test`, `code coverage`, as well as `linting` badges so that developers can see at a glance whether the project is in a good state.
+
+#### 9.1.1 Github actions
+
+`music-notation` as well as the sub-packages use Github Actions as a Continuous Integration system. Note the provided `workflows`. Each contributing repository should have at least the following actions:
+
+- build-test.yml
+This action checks out the code and build it, as well as runs the tests.
+A badge appears on the repository indicating `Pass`/`Fail`.
+
+- `llvm-cov.yml`
+This action checks out the code and runs the tests while capturing the code coverage.
+A badge appears on the repository indicating a coverage percentage.
+
+- `swiftlint.yml`
+This action runs `swiftlint` on the code using the settings in the repository's `.swiftlint.yml` settings. These settings should be the same in every package and constitute the base code settings for all packages and projects in the `music-notation` family.
+A badge appears on the repository indicating `Pass`/`Fail`.
+
+### 9.2 Time & Note Chronology
+
+Since the `music-notation` allows for the entering of notes in any old order (within API constraints), and musical interpretation of those notes requires some sort of chronological ordering, which path to take?
+
+Do we sort each note chronologically as they are added, or do we provide API for chronologically correct ordering.
+
+If the latter course is taken, do we provide the ordering with a provided granularity?
+
+For instance, do we provide an API that provides all of the notes in order per `score`, `part`, `measure`, `staff`, `voice`?
+
+For now, an on demand note stream is the path `music-notation` is aiming for. It will provide the best path towards fulfilling the needs to the target audience for rendering and for semantic analysis.
 
 ## 10. Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md) for guidelines to contribute back to
-music-notation. This might be a bit premature, but once things start working, please feel free to ask.
+`music-notation`. This might be a bit premature, but once things start working, please feel free to ask.
 
 ## 11. License
 
