@@ -1659,7 +1659,7 @@ class MeasureTests: XCTestCase {
 		])
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 3, inSet: 1)
-			XCTAssertEqual(measure.clefs, [3072: .bass])
+			XCTAssertEqual(measure.clefs, [3_072: .bass])
 			XCTAssertEqual(measure.lastClef, .bass)
 			XCTAssertEqual(measure.originalClef, nil)
 		}
@@ -1679,7 +1679,7 @@ class MeasureTests: XCTestCase {
 		assertNoErrorThrown {
 			try measure.changeClef(.treble, at: 0, inSet: 1)
 			try measure.changeClef(.bass, at: 3, inSet: 1)
-			XCTAssertEqual(measure.clefs, [0: .treble, 3072: .bass])
+			XCTAssertEqual(measure.clefs, [0: .treble, 3_072: .bass])
 			XCTAssertEqual(measure.lastClef, .bass)
 			XCTAssertEqual(measure.originalClef, nil)
 		}
@@ -1700,7 +1700,7 @@ class MeasureTests: XCTestCase {
 		assertNoErrorThrown {
 			try measure.changeClef(.bass, at: 3, inSet: 1)
 			try measure.changeClef(.treble, at: 7, inSet: 1)
-			XCTAssertEqual(measure.clefs, [3072: .bass, 7168: .treble])
+			XCTAssertEqual(measure.clefs, [3_072: .bass, 7_168: .treble])
 			XCTAssertEqual(measure.lastClef, .treble)
 			XCTAssertEqual(measure.originalClef, nil)
 		}
@@ -1721,7 +1721,7 @@ class MeasureTests: XCTestCase {
 			try measure.changeClef(.treble, at: 0, inSet: 1)
 			try measure.changeClef(.bass, at: 3, inSet: 1)
 			try measure.changeClef(.treble, at: 7, inSet: 1)
-			XCTAssertEqual(measure.clefs, [0: .treble, 3072: .bass, 7168: .treble])
+			XCTAssertEqual(measure.clefs, [0: .treble, 3_072: .bass, 7_168: .treble])
 			XCTAssertEqual(measure.lastClef, .treble)
 			XCTAssertEqual(measure.originalClef, nil)
 		}
@@ -1739,7 +1739,7 @@ class MeasureTests: XCTestCase {
 			measure.append(eighth)
 			measure.append(eighth)
 			try measure.changeClef(.bass, at: 5, inSet: 0)
-			XCTAssertEqual(measure.clefs, [6144: .bass])
+			XCTAssertEqual(measure.clefs, [6_144: .bass])
 			XCTAssertEqual(measure.lastClef, .bass)
 			XCTAssertEqual(measure.originalClef, nil)
 		}
