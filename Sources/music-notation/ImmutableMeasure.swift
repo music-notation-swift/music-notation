@@ -67,7 +67,7 @@ public struct MeasureSlice: Equatable {
 
 public extension ImmutableMeasure {
 	var startIndex: Int { 0 }
-	public var endIndex: Int { notes.map { $0.endIndex }.max() ?? 0 }
+	var endIndex: Int { notes.map { $0.endIndex }.max() ?? 0 }
 	func index(after index: Int) -> Int { notes.index(after: index) }
 	func index(before index: Int) -> Int { notes.index(before: index) }
 
