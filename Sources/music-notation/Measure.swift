@@ -56,7 +56,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		let tupletIndex: Int?
 	}
 
-	private var noteCollectionIndexes: [[NoteCollectionIndex]] = [[NoteCollectionIndex]]()
+	private var noteCollectionIndexes = [[NoteCollectionIndex]]()
 
 	// MARK: - Initializers
 
@@ -927,7 +927,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 extension Measure: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let notesString = notes.map { "\($0)" }.joined(separator: ",")
-		return "|\(timeSignature): \(notesString)|\(clefs.isEmpty ? "" :" \(clefs)")"
+		return "|\(timeSignature): \(notesString)|\(clefs.isEmpty ? "" : " \(clefs)")"
 	}
 }
 

@@ -36,7 +36,7 @@ public struct Tuplet: NoteCollection {
 	}
 
 	/// A 2-dimensional array that can be used to index into every note in the tuplet within compound tuplets as well.
-	internal var flatIndexes: [[Int]] = [[Int]]()
+	internal var flatIndexes = [[Int]]()
 
 	/// True if the tuplet is a compound tuplet; false otherwise.
 	/// A tuplet is compound if at least 1 other tuplet is inside of it.

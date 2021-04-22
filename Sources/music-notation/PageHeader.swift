@@ -7,5 +7,4 @@
 //
 
 /// Placeholder for eventual staff layout description of a page header.
-public struct PageHeader {
-}
+public struct PageHeader {}

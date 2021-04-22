@@ -36,8 +36,8 @@ public protocol NoteCollection {
 	func note(at index: Int) throws -> Note
 }
 
-extension NoteCollection {
-	public var ticks: Double { Double(noteTimingCount) * noteDuration.ticks }
+public extension NoteCollection {
+	var ticks: Double { Double(noteTimingCount) * noteDuration.ticks }
 }
 
 public func == (lhs: NoteCollection, rhs: NoteCollection) -> Bool {

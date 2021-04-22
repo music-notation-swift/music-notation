@@ -7,5 +7,4 @@
 //
 
 /// Placeholder for eventual staff layout description of a page footer.
-public struct PageFooter {
-}
+public struct PageFooter {}
