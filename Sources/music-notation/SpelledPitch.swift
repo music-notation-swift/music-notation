@@ -48,8 +48,8 @@ extension SpelledPitch: Equatable {
 	}
 }
 
-extension SpelledPitch {
-	public var midiNoteNumber: Int {
+public extension SpelledPitch {
+	var midiNoteNumber: Int {
 		var result = (octave.rawValue + 1) * 12
 
 		switch noteLetter {
