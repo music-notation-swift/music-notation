@@ -65,11 +65,11 @@ public struct MeasureSlice: Equatable {
 	}
 }
 
-extension ImmutableMeasure {
-	public var startIndex: Int { 0 }
+public extension ImmutableMeasure {
+	var startIndex: Int { 0 }
 	public var endIndex: Int { notes.map { $0.endIndex }.max() ?? 0 }
-	public func index(after index: Int) -> Int { notes.index(after: index) }
-	public func index(before index: Int) -> Int { notes.index(before: index) }
+	func index(after index: Int) -> Int { notes.index(after: index) }
+	func index(before index: Int) -> Int { notes.index(before: index) }
 
 	internal static func measureSlices(at position: Int, in notes: [[NoteCollection]]) -> [MeasureSlice]? {
 		notes.enumerated().compactMap { noteSetIndex, noteCollections in
