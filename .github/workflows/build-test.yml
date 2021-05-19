@@ -23,7 +23,7 @@ jobs:
   linux:
     strategy:
       matrix:
-        tag: ['5.3']
+        tag: ['5.4']
     runs-on: ubuntu-latest
 
     container:
