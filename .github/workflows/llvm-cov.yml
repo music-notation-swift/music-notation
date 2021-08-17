@@ -10,7 +10,7 @@ on:
 
 jobs:
   Coverage:
-    runs-on: macos-latest
+    runs-on: macos-11
 
     steps:
       - name: Checkout the Git repository
