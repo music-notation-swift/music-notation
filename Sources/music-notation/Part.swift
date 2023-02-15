@@ -21,8 +21,8 @@ public struct Part {
 
 	// MARK: - Main Properties
 
-	public let name: String = ""
-	public let shortName: String = ""
+	public let name: String
+	public let shortName: String
 
 	internal private(set) var staves: [Staff] = []
 
@@ -31,6 +31,8 @@ public struct Part {
 		shortName: String = "",
 		staves: [Staff]
 	) {
+        self.name = name
+        self.shortName = shortName
 		self.staves = staves
 	}
 }
