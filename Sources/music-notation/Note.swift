@@ -6,7 +6,7 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-public struct Note: NoteCollection {
+public struct Note: NoteCollection, Sendable {
 	// NoteCollection
 	public let noteCount = 1
 	public let noteDuration: NoteDuration
@@ -27,21 +27,21 @@ public struct Note: NoteCollection {
 	internal var tie: Tie?
 
 	/// Initialize a rest.
-	public init(restDuration: NoteDuration) {
+	public init(_ restDuration: NoteDuration) {
 		noteDuration = restDuration
 		pitches = []
 		isRest = true
 	}
 
 	/// Initialize a note with a single pitch.
-	public init(noteDuration: NoteDuration, pitch: SpelledPitch) {
+	public init(_ noteDuration: NoteDuration, pitch: SpelledPitch) {
 		self.noteDuration = noteDuration
 		pitches = [pitch]
 		isRest = false
 	}
 
 	/// Initialize a note with multiple pitches (chord).
-	public init(noteDuration: NoteDuration, pitches: [SpelledPitch]) {
+	public init(_ noteDuration: NoteDuration, pitches: [SpelledPitch]) {
 		isRest = false
 		self.noteDuration = noteDuration
 		self.pitches = pitches

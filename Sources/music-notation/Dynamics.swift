@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Dynamics {
+public enum Dynamics: Sendable {
 	case ppp
 	case pp
 	case p

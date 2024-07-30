@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Octave: Int {
+public enum Octave: Int, Sendable {
 	case octaveNegative1 = -1
 	case octave0 = 0
 	case octave1 = 1

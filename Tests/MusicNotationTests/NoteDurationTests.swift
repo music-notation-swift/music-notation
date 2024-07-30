@@ -7,229 +7,198 @@
 //
 
 @testable import MusicNotation
-import XCTest
+import Testing
 
-class NoteDurationTests: XCTestCase {
-	let allValues: [NoteDuration.Value] = [
-		.large,
-		.long,
-		.doubleWhole,
-		.whole,
-		.half,
-		.quarter,
-		.eighth,
-		.sixteenth,
-		.thirtySecond,
-		.sixtyFourth,
-		.oneTwentyEighth,
-		.twoFiftySixth
-	]
+@Suite final class NoteDurationTests {
+    let allValues: [NoteDuration.Value] = [
+        .large,
+        .long,
+        .doubleWhole,
+        .whole,
+        .half,
+        .quarter,
+        .eighth,
+        .sixteenth,
+        .thirtySecond,
+        .sixtyFourth,
+        .oneTwentyEighth,
+        .twoFiftySixth,
+    ]
 
-	// MARK: - init(value:dotCount:)
+    // MARK: - init(value:dotCount:)
 
-	// MARK: Failures
+    // MARK: Failures
 
-	func testInitNegativeDotCount() {
-		assertThrowsError(NoteDurationError.negativeDotCountInvalid) {
-			_ = try NoteDuration(value: .quarter, dotCount: -1)
-		}
-	}
+    @Test func initNegativeDotCount() async throws {
+        #expect(throws: NoteDurationError.negativeDotCountInvalid) {
+            _ = try NoteDuration(value: .quarter, dotCount: -1)
+        }
+    }
 
-	// MARK: Successes
+    // MARK: Successes
 
-	func testInitDotCountZero() {
-		let dotCount = 0
+    @Test func initDotCountZero() async throws {
+        let dotCount = 0
 
-		assertNoErrorThrown {
-			try allValues.forEach {
-				let duration = try NoteDuration(value: $0, dotCount: dotCount)
-				XCTAssertEqual(duration.value, $0)
-				XCTAssertEqual(duration.dotCount, dotCount)
-			}
-		}
-	}
+        try allValues.forEach {
+            let duration = try NoteDuration(value: $0, dotCount: dotCount)
+            #expect(duration.value == $0)
+            #expect(duration.dotCount == dotCount)
+        }
+    }
 
-	func testInitDotCountNonZero() {
-		let dotCount = 2
+    @Test func initDotCountNonZero() async throws {
+        let dotCount = 2
 
-		assertNoErrorThrown {
-			try allValues.forEach {
-				let duration = try NoteDuration(value: $0, dotCount: dotCount)
-				XCTAssertEqual(duration.value, $0)
-				XCTAssertEqual(duration.dotCount, dotCount)
-			}
-		}
-	}
+        try allValues.forEach {
+            let duration = try NoteDuration(value: $0, dotCount: dotCount)
+            #expect(duration.value == $0)
+            #expect(duration.dotCount == dotCount)
+        }
+    }
 
-	func testInitDotCountLargerThan4() {
-		let dotCount = 5
+    @Test func initDotCountLargerThan4() async throws {
+        let dotCount = 5
 
-		assertNoErrorThrown {
-			try allValues.forEach {
-				let duration = try NoteDuration(value: $0, dotCount: dotCount)
-				XCTAssertEqual(duration.value, $0)
-				XCTAssertEqual(duration.dotCount, dotCount)
-			}
-		}
-	}
+        try allValues.forEach {
+            let duration = try NoteDuration(value: $0, dotCount: dotCount)
+            #expect(duration.value == $0)
+            #expect(duration.dotCount == dotCount)
+        }
+    }
 
-	// MARK: - init(timeSignatureValue:)
+    // MARK: - init(timeSignatureValue:)
 
-	// Cannot fail
+    // Cannot fail
 
-	func testInitTimeSignatureValue() {
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .whole)!),
-			.whole
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .half)!),
-			.half
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .quarter)!),
-			.quarter
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .eighth)!),
-			.eighth
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .sixteenth)!),
-			.sixteenth
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .thirtySecond)!),
-			.thirtySecond
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .sixtyFourth)!),
-			.sixtyFourth
-		)
-		XCTAssertEqual(
-			NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .oneTwentyEighth)!),
-			.oneTwentyEighth
-		)
-	}
+    func initTimeSignatureValue() async throws {
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .whole)!) ==
+            .whole
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .half)!) ==
+            .half
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .quarter)!) ==
+            .quarter
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .eighth)!) ==
+            .eighth
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .sixteenth)!) ==
+            .sixteenth
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .thirtySecond)!) ==
+            .thirtySecond
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .sixtyFourth)!) ==
+            .sixtyFourth
+        )
+        #expect(
+            NoteDuration(timeSignatureValue: NoteDuration.TimeSignatureValue(value: .oneTwentyEighth)!) ==
+            .oneTwentyEighth
+        )
+    }
 
-	// MARK: - number(of:equalTo:)
+    // MARK: - number(of:equalTo:)
 
-	// MARK: Successes
+    // MARK: Successes
 
-	func testEqualToForSameDuration() {
-		XCTAssertEqual(NoteDuration.number(of: .large, within: .large), 1)
-		XCTAssertEqual(NoteDuration.number(of: .long, within: .long), 1)
-		XCTAssertEqual(NoteDuration.number(of: .doubleWhole, within: .doubleWhole), 1)
-		XCTAssertEqual(NoteDuration.number(of: .whole, within: .whole), 1)
-		XCTAssertEqual(NoteDuration.number(of: .half, within: .half), 1)
-		XCTAssertEqual(NoteDuration.number(of: .quarter, within: .quarter), 1)
-		XCTAssertEqual(NoteDuration.number(of: .eighth, within: .eighth), 1)
-		XCTAssertEqual(NoteDuration.number(of: .sixteenth, within: .sixteenth), 1)
-		XCTAssertEqual(NoteDuration.number(of: .thirtySecond, within: .thirtySecond), 1)
-		XCTAssertEqual(NoteDuration.number(of: .sixtyFourth, within: .sixtyFourth), 1)
-		XCTAssertEqual(NoteDuration.number(of: .oneTwentyEighth, within: .oneTwentyEighth), 1)
-		XCTAssertEqual(NoteDuration.number(of: .twoFiftySixth, within: .twoFiftySixth), 1)
-	}
+    func equalToForSameDuration() async throws {
+        #expect(NoteDuration.number(of: .large, within: .large) == 1)
+        #expect(NoteDuration.number(of: .long, within: .long) == 1)
+        #expect(NoteDuration.number(of: .doubleWhole, within: .doubleWhole) == 1)
+        #expect(NoteDuration.number(of: .whole, within: .whole) == 1)
+        #expect(NoteDuration.number(of: .half, within: .half) == 1)
+        #expect(NoteDuration.number(of: .quarter, within: .quarter) == 1)
+        #expect(NoteDuration.number(of: .eighth, within: .eighth) == 1)
+        #expect(NoteDuration.number(of: .sixteenth, within: .sixteenth) == 1)
+        #expect(NoteDuration.number(of: .thirtySecond, within: .thirtySecond) == 1)
+        #expect(NoteDuration.number(of: .sixtyFourth, within: .sixtyFourth) == 1)
+        #expect(NoteDuration.number(of: .oneTwentyEighth, within: .oneTwentyEighth) == 1)
+        #expect(NoteDuration.number(of: .twoFiftySixth, within: .twoFiftySixth) == 1)
+    }
 
-	func testEqualToForSameDurationSingleDot() {
-		assertNoErrorThrown {
-			let noteDuration = try NoteDuration(value: .quarter, dotCount: 1)
-			XCTAssertEqual(
-				NoteDuration.number(of: try NoteDuration(value: .quarter, dotCount: 1), within: noteDuration),
-				1
-			)
-		}
-	}
+    @Test func equalToForSameDurationSingleDot() async throws {
+        let noteDuration = try NoteDuration(value: .quarter, dotCount: 1)
+        #expect(NoteDuration.number(of: try NoteDuration(value: .quarter, dotCount: 1), within: noteDuration) == 1)
+    }
 
-	func testEqualToForSameDurationMultipleDot() {
-		assertNoErrorThrown {
-			let noteDuration = try NoteDuration(value: .quarter, dotCount: 3)
-			XCTAssertEqual(
-				NoteDuration.number(of: try NoteDuration(value: .quarter, dotCount: 3), within: noteDuration),
-				1
-			)
-		}
-	}
+    @Test func equalToForSameDurationMultipleDot() async throws {
+        let noteDuration = try NoteDuration(value: .quarter, dotCount: 3)
+        #expect(NoteDuration.number(of: try NoteDuration(value: .quarter, dotCount: 3), within: noteDuration) == 1)
+    }
 
-	func testEqualToForSmallerDuration() {
-		let noteDuration = NoteDuration.sixteenth
-		XCTAssertEqual(NoteDuration.number(of: .sixtyFourth, within: noteDuration), 4)
-	}
+    @Test func equalToForSmallerDuration() async throws {
+        let noteDuration = NoteDuration.sixteenth
+        #expect(NoteDuration.number(of: .sixtyFourth, within: noteDuration) == 4)
+    }
 
-	func testEqualToForLargerDuration() {
-		let noteDuration = NoteDuration.quarter
-		XCTAssertEqual(NoteDuration.number(of: .whole, within: noteDuration), 0.25)
-	}
+    @Test func equalToForLargerDuration() async throws {
+        let noteDuration = NoteDuration.quarter
+        #expect(NoteDuration.number(of: .whole, within: noteDuration) == 0.25)
+    }
 
-	func testEqualToForSmallerDurationSingleDotFromNoDot() {
-		let noteDuration = NoteDuration.quarter
-		XCTAssertEqual(
-			NoteDuration.number(of: try NoteDuration(value: .eighth, dotCount: 1), within: noteDuration),
-			Double(4) / 3
-		)
-	}
+    @Test func equalToForSmallerDurationSingleDotFromNoDot() async throws {
+        let noteDuration = NoteDuration.quarter
+        #expect(NoteDuration.number(of: try NoteDuration(value: .eighth, dotCount: 1), within: noteDuration) == Double(4) / 3)
+    }
 
-	func testEqualToForSmallerDurationSingleDotFromSingleDot() {
-		assertNoErrorThrown {
-			let noteDuration = try NoteDuration(value: .quarter, dotCount: 1)
-			XCTAssertEqual(
-				NoteDuration.number(of: try NoteDuration(value: .sixteenth, dotCount: 1), within: noteDuration),
-				4
-			)
-		}
-	}
+    @Test func equalToForSmallerDurationSingleDotFromSingleDot() async throws {
+        let noteDuration = try NoteDuration(value: .quarter, dotCount: 1)
+        #expect(NoteDuration.number(of: try NoteDuration(value: .sixteenth, dotCount: 1), within: noteDuration) == 4)
+    }
 
-	func testEqualToForSmallerDurationDoubleDotFromDoubleDot() {
-		assertNoErrorThrown {
-			let noteDuration = try NoteDuration(value: .quarter, dotCount: 2)
-			XCTAssertEqual(
-				NoteDuration.number(of: try NoteDuration(value: .thirtySecond, dotCount: 2), within: noteDuration),
-				8
-			)
-		}
-	}
+    @Test func equalToForSmallerDurationDoubleDotFromDoubleDot() async throws {
+        let noteDuration = try NoteDuration(value: .quarter, dotCount: 2)
+        #expect(NoteDuration.number(of: try NoteDuration(value: .thirtySecond, dotCount: 2), within: noteDuration) == 8)
+    }
 
-	// MARK: - debugDescription
+    // MARK: - debugDescription
 
-	func testDebugDescriptionNoDot() {
-		XCTAssertEqual(NoteDuration.large.debugDescription, "8")
-		XCTAssertEqual(NoteDuration.long.debugDescription, "4")
-		XCTAssertEqual(NoteDuration.doubleWhole.debugDescription, "2")
-		XCTAssertEqual(NoteDuration.whole.debugDescription, "1")
-		XCTAssertEqual(NoteDuration.half.debugDescription, "1/2")
-		XCTAssertEqual(NoteDuration.quarter.debugDescription, "1/4")
-		XCTAssertEqual(NoteDuration.eighth.debugDescription, "1/8")
-		XCTAssertEqual(NoteDuration.sixteenth.debugDescription, "1/16")
-		XCTAssertEqual(NoteDuration.thirtySecond.debugDescription, "1/32")
-		XCTAssertEqual(NoteDuration.sixtyFourth.debugDescription, "1/64")
-		XCTAssertEqual(NoteDuration.oneTwentyEighth.debugDescription, "1/128")
-		XCTAssertEqual(NoteDuration.twoFiftySixth.debugDescription, "1/256")
-	}
+    @Test func debugDescriptionNoDot() async throws {
+        #expect(NoteDuration.large.debugDescription == "8")
+        #expect(NoteDuration.long.debugDescription == "4")
+        #expect(NoteDuration.doubleWhole.debugDescription == "2")
+        #expect(NoteDuration.whole.debugDescription == "1")
+        #expect(NoteDuration.half.debugDescription == "1/2")
+        #expect(NoteDuration.quarter.debugDescription == "1/4")
+        #expect(NoteDuration.eighth.debugDescription == "1/8")
+        #expect(NoteDuration.sixteenth.debugDescription == "1/16")
+        #expect(NoteDuration.thirtySecond.debugDescription == "1/32")
+        #expect(NoteDuration.sixtyFourth.debugDescription == "1/64")
+        #expect(NoteDuration.oneTwentyEighth.debugDescription == "1/128")
+        #expect(NoteDuration.twoFiftySixth.debugDescription == "1/256")
+    }
 
-	// swiftlint:disable force_try
-	func testDebugDescriptionSingleDot() {
-		XCTAssertEqual(try! NoteDuration(value: .quarter, dotCount: 1).debugDescription, "1/4.")
-	}
+    @Test func debugDescriptionSingleDot() async throws {
+        #expect(try! NoteDuration(value: .quarter, dotCount: 1).debugDescription == "1/4.")
+    }
 
-	// swiftlint:disable force_try
-	func testDebugDescriptionMultipleDots() {
-		XCTAssertEqual(try! NoteDuration(value: .sixtyFourth, dotCount: 3).debugDescription, "1/64...")
-	}
+    @Test func debugDescriptionMultipleDots() async throws {
+        #expect(try! NoteDuration(value: .sixtyFourth, dotCount: 3).debugDescription == "1/64...")
+    }
 
-	// MARK: - timeSignatureValue
+    // MARK: - timeSignatureValue
 
-	func testTimeSignatureValue() {
-		XCTAssertNil(NoteDuration.large.timeSignatureValue)
-		XCTAssertNil(NoteDuration.long.timeSignatureValue)
-		XCTAssertNil(NoteDuration.doubleWhole.timeSignatureValue)
-		XCTAssertEqual(NoteDuration.whole.timeSignatureValue?.rawValue, 1)
-		XCTAssertEqual(NoteDuration.half.timeSignatureValue?.rawValue, 2)
-		XCTAssertEqual(NoteDuration.quarter.timeSignatureValue?.rawValue, 4)
-		XCTAssertEqual(NoteDuration.eighth.timeSignatureValue?.rawValue, 8)
-		XCTAssertEqual(NoteDuration.sixteenth.timeSignatureValue?.rawValue, 16)
-		XCTAssertEqual(NoteDuration.thirtySecond.timeSignatureValue?.rawValue, 32)
-		XCTAssertEqual(NoteDuration.sixtyFourth.timeSignatureValue?.rawValue, 64)
-		XCTAssertEqual(NoteDuration.oneTwentyEighth.timeSignatureValue?.rawValue, 128)
-		XCTAssertNil(NoteDuration.twoFiftySixth.timeSignatureValue?.rawValue)
-	}
+    @Test func timeSignatureValue() async throws {
+        #expect(NoteDuration.large.timeSignatureValue == nil)
+        #expect(NoteDuration.long.timeSignatureValue == nil)
+        #expect(NoteDuration.doubleWhole.timeSignatureValue == nil)
+        #expect(NoteDuration.whole.timeSignatureValue?.rawValue == 1)
+        #expect(NoteDuration.half.timeSignatureValue?.rawValue == 2)
+        #expect(NoteDuration.quarter.timeSignatureValue?.rawValue == 4)
+        #expect(NoteDuration.eighth.timeSignatureValue?.rawValue == 8)
+        #expect(NoteDuration.sixteenth.timeSignatureValue?.rawValue == 16)
+        #expect(NoteDuration.thirtySecond.timeSignatureValue?.rawValue == 32)
+        #expect(NoteDuration.sixtyFourth.timeSignatureValue?.rawValue == 64)
+        #expect(NoteDuration.oneTwentyEighth.timeSignatureValue?.rawValue == 128)
+        #expect(NoteDuration.twoFiftySixth.timeSignatureValue?.rawValue == nil)
+    }
 }

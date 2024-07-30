@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public struct Instrument {
+public struct Instrument: Sendable {
 	public let name: String
 
 	public let lineCount: Int

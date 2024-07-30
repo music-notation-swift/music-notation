@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Tie {
+public enum Tie: Sendable {
 	case begin
 	case end
 	case beginAndEnd

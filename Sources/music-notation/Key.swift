@@ -6,12 +6,12 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-public enum KeyType {
+public enum KeyType: Sendable {
 	case major
 	case minor
 }
 
-public struct Key {
+public struct Key: Sendable {
 	fileprivate let type: KeyType
 	fileprivate let noteLetter: NoteLetter
 	fileprivate let accidental: Accidental

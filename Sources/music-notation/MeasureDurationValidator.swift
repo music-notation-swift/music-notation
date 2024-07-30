@@ -66,7 +66,7 @@ public enum MeasureDurationValidator {
 		} catch {
 			return [.invalid]
 		}
-		let fullMeasureTicksBudget = Double(measure.timeSignature.topNumber) * baseDuration.ticks
+        let fullMeasureTicksBudget = Double(measure.timeSignature.numerator) * baseDuration.ticks
 
 		// Validate each set separately
 		return measure.notes.enumerated().map { setIndex, noteCollection in
@@ -108,7 +108,7 @@ public enum MeasureDurationValidator {
 			// TODO: Write TimeSignature validation, so this isn't possible
 			return 0
 		}
-		let fullMeasureTicksBudget = Double(measure.timeSignature.topNumber) * baseDuration.ticks
+		let fullMeasureTicksBudget = Double(measure.timeSignature.numerator) * baseDuration.ticks
 		let alreadyFilledTicks = measure.notes[setIndex].reduce(0.0) { prev, currentCollection in
 			prev + currentCollection.ticks
 		}
@@ -130,16 +130,16 @@ public enum MeasureDurationValidator {
 	///	  - MeasureDurationValidatorError.invalidBottomNumber
 	///
 	internal static func baseNoteDuration(from measure: ImmutableMeasure) throws -> NoteDuration {
-		let bottomNumber = measure.timeSignature.bottomNumber
+		let denominator = measure.timeSignature.denominator
 
 		// TODO: Replace `pow`, `floor`, and `log`
 		// https://github.com/drumnkyle/music-notation-core/issues/146
-		let rationalizedBottomNumber = Int(pow(2, floor(log(Double(bottomNumber)) / log(2))))
+		let rationalizedDenominator = Int(pow(2, floor(log(Double(denominator)) / log(2))))
 
 		// TODO: (Kyle) We should validate in TimeSignature to make sure the number
 		// isn't too large. Then I guess we can make this a force unwrap, because the math above
 		// means it will always be a power of 2 and NoteDuration is always power of 2.
-		if let timeSignatureValue = NoteDuration.TimeSignatureValue(rawValue: rationalizedBottomNumber) {
+		if let timeSignatureValue = NoteDuration.TimeSignatureValue(rawValue: rationalizedDenominator) {
 			return NoteDuration(timeSignatureValue: timeSignatureValue)
 		} else {
 			throw MeasureDurationValidatorError.invalidBottomNumber

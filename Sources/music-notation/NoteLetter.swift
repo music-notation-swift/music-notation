@@ -7,7 +7,7 @@
 //
 
 // swiftlint:disable identifier_name
-public enum NoteLetter: Int {
+public enum NoteLetter: Int, Sendable {
 	case c = 1
 	case d
 	case e

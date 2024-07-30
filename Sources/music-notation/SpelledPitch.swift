@@ -13,12 +13,12 @@
 /// This struct represents a pitch that is already in the desired spelling.
 /// So, this assumes the user of this struct knows which spelling to pick.
 ///
-public struct SpelledPitch {
+public struct SpelledPitch: Sendable {
 	public let noteLetter: NoteLetter
 	public let accidental: Accidental
 	public let octave: Octave
 
-	public init(noteLetter: NoteLetter, accidental: Accidental = .natural, octave: Octave) {
+	public init(_ noteLetter: NoteLetter, accidental: Accidental = .natural, _ octave: Octave) {
 		self.noteLetter = noteLetter
 		self.accidental = accidental
 		self.octave = octave

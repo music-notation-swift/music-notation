@@ -6,13 +6,9 @@
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-#if os(iOS) || os(watchOS) || os(tvOS) || os(OSX)
-import Darwin.C.math
-#else
-import Glibc
-#endif
+import Foundation
 
-public struct Clef {
+public struct Clef: Sendable {
 	///
 	/// The pitch that defines the clef. This pitch is specified to be at a
 	/// certain `StaffLocation` using the `staffLocation` property.
@@ -33,25 +29,25 @@ public struct Clef {
 		staffLocation = location
 	}
 
-	public static let treble = Clef(pitch: SpelledPitch(noteLetter: .g, octave: .octave4), location: StaffLocation(type: .line, number: 1))
-	public static let bass = Clef(pitch: SpelledPitch(noteLetter: .f, octave: .octave3), location: StaffLocation(type: .line, number: 3))
-	public static let tenor = Clef(pitch: SpelledPitch(noteLetter: .c, octave: .octave4), location: StaffLocation(type: .line, number: 3))
-	public static let alto = Clef(pitch: SpelledPitch(noteLetter: .c, octave: .octave4), location: StaffLocation(type: .line, number: 2))
+	public static let treble = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 1))
+	public static let bass = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 3))
+	public static let tenor = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 3))
+	public static let alto = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 2))
 
 	/// Un-pitched (drums, percussion, etc.)
-	public static let neutral = Clef(pitch: nil, location: StaffLocation(type: .line, number: 2))
+	public static let neutral = Clef(pitch: nil, location: StaffLocation(.line, 2))
 
 	/// For tablature (guitar, etc.)
-	public static let tab = Clef(pitch: nil, location: StaffLocation(type: .line, number: 2))
+	public static let tab = Clef(pitch: nil, location: StaffLocation(.line, 2))
 
 	// Less common
-	public static let frenchViolin = Clef(pitch: SpelledPitch(noteLetter: .g, octave: .octave4), location: StaffLocation(type: .line, number: 0))
-	public static let soprano = Clef(pitch: SpelledPitch(noteLetter: .c, octave: .octave4), location: StaffLocation(type: .line, number: 0))
-	public static let mezzoSoprano = Clef(pitch: SpelledPitch(noteLetter: .c, octave: .octave4), location: StaffLocation(type: .line, number: 1))
-	public static let baritone = Clef(pitch: SpelledPitch(noteLetter: .f, octave: .octave3), location: StaffLocation(type: .line, number: 4))
+	public static let frenchViolin = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 0))
+	public static let soprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 0))
+	public static let mezzoSoprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 1))
+	public static let baritone = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 4))
 
 	// TODO: Is this one correct?
-	public static let suboctaveTreble = Clef(pitch: SpelledPitch(noteLetter: .g, octave: .octave3), location: StaffLocation(type: .line, number: 1))
+	public static let suboctaveTreble = Clef(pitch: SpelledPitch(.g, .octave3), location: StaffLocation(.line, 1))
 
 	///
 	/// Calculates the pitch for the given staff location for this Clef.
@@ -106,7 +102,7 @@ public struct Clef {
 		}()
 		let newOctaveValue = pitch.octave.rawValue + octaveDelta
 		guard let newOctave = Octave(rawValue: newOctaveValue) else { throw ClefError.octaveOutOfRange }
-		return SpelledPitch(noteLetter: newNoteLetter, octave: newOctave)
+		return SpelledPitch(newNoteLetter, newOctave)
 	}
 }
 

@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Accent {
+public enum Accent: Sendable {
 	case standard
 	case strong
 	case ghost

@@ -6,7 +6,9 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Striking {
-	case left, up
-	case right, down
+public enum Striking: Sendable {
+	case left
+    case up
+	case right
+    case down
 }

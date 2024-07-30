@@ -10,10 +10,10 @@
 import XCTest
 
 class MeasureRepeatTests: XCTestCase {
-	static let timeSignature = TimeSignature(topNumber: 4, bottomNumber: 4, tempo: 120)
+    static let timeSignature = TimeSignature(numerator: 4, denominator: 4, tempo: 120)
 	static let key = Key(noteLetter: .c)
-	static let note1 = Note(noteDuration: .eighth, pitch: SpelledPitch(noteLetter: .c, octave: .octave1))
-	static let note2 = Note(noteDuration: .quarter, pitch: SpelledPitch(noteLetter: .d, octave: .octave1))
+	static let note1 = Note(.eighth, pitch: SpelledPitch(.c, .octave1))
+	static let note2 = Note(.quarter, pitch: SpelledPitch(.d, .octave1))
 	let measure1 = Measure(timeSignature: timeSignature, key: key, notes: [[note1, note1]])
 	let measure2 = Measure(timeSignature: timeSignature, key: key, notes: [[note2, note2]])
 

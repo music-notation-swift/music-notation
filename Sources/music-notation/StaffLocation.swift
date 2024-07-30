@@ -10,8 +10,8 @@
 /// Represents a 0-based location on the staff where 0 is the first line/space from the bottom.
 /// Negative numbers represents ledger lines/spaces below the first line/space of the staff.
 ///
-public struct StaffLocation {
-	public enum LocationType {
+public struct StaffLocation: Sendable {
+    public enum LocationType: Sendable {
 		case line
 		case space
 	}
@@ -35,7 +35,7 @@ public struct StaffLocation {
 		}
 	}
 
-	public init(type: LocationType, number: Int) {
+	public init(_ type: LocationType, _ number: Int) {
 		locationType = type
 		self.number = number
 	}

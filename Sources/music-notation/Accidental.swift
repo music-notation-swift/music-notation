@@ -6,7 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-public enum Accidental {
+public enum Accidental: Sendable {
 	case sharp
 	case doubleSharp
 	case flat
