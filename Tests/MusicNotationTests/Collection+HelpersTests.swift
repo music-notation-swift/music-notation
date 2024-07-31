@@ -6,24 +6,21 @@
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-import MusicNotation
-import XCTest
+@testable import MusicNotation
+import Testing
 
-// swiftlint:disable implicitly_unwrapped_optional
-class CollectionHelpersTests: XCTestCase {
+@Suite final class CollectionHelpersTests {
 	var emptyArray: [Int]!
 	var singleElementArray: [Int]!
 	var multipleElementArray: [Int]!
 
-	override func setUp() {
-		super.setUp()
+	init() {
 		emptyArray = []
 		singleElementArray = [1]
 		multipleElementArray = [1, 2, 3, 4, 5]
 	}
 
-	override func tearDown() {
-		super.tearDown()
+	deinit {
 		emptyArray = nil
 		singleElementArray = nil
 		multipleElementArray = nil
@@ -33,78 +30,78 @@ class CollectionHelpersTests: XCTestCase {
 
 	// MARK: lastIndex
 
-	func testLastIndex1Item() {
-		XCTAssertEqual(singleElementArray.lastIndex, 0)
+    @Test func testLastIndex1Item() async throws {
+        #expect(singleElementArray.lastIndex == 0)
 	}
 
-	func testLastIndexEmpty() {
-		XCTAssertEqual(emptyArray.lastIndex, 0)
+    @Test func lastIndexEmpty() async throws {
+        #expect(emptyArray.lastIndex == 0)
 	}
 
-	func testLastIndexManyItems() {
-		XCTAssertEqual(multipleElementArray.lastIndex, 4)
+    @Test func lastIndexManyItems() async throws {
+        #expect(multipleElementArray.lastIndex == 4)
 	}
 
 	// MARK: isValidIndex()
 
-	func testIsValidIndexInvalid() {
-		XCTAssertFalse(emptyArray.isValidIndex(0))
-		XCTAssertFalse(emptyArray.isValidIndex(1))
-		XCTAssertFalse(singleElementArray.isValidIndex(1))
-		XCTAssertFalse(singleElementArray.isValidIndex(-1))
-		XCTAssertFalse(multipleElementArray.isValidIndex(7))
+    @Test func isValidIndexInvalid() async throws {
+        #expect(!emptyArray.isValidIndex(0))
+        #expect(!emptyArray.isValidIndex(1))
+        #expect(!singleElementArray.isValidIndex(1))
+        #expect(!singleElementArray.isValidIndex(-1))
+        #expect(!multipleElementArray.isValidIndex(7))
 	}
 
-	func testIsValidIndexValid() {
-		XCTAssertTrue(singleElementArray.isValidIndex(0))
-		XCTAssertTrue(multipleElementArray.isValidIndex(0))
-		XCTAssertTrue(multipleElementArray.isValidIndex(1))
-		XCTAssertTrue(multipleElementArray.isValidIndex(2))
-		XCTAssertTrue(multipleElementArray.isValidIndex(3))
-		XCTAssertTrue(multipleElementArray.isValidIndex(4))
+    @Test func isValidIndexValid() async throws {
+        #expect(singleElementArray.isValidIndex(0))
+        #expect(multipleElementArray.isValidIndex(0))
+        #expect(multipleElementArray.isValidIndex(1))
+        #expect(multipleElementArray.isValidIndex(2))
+        #expect(multipleElementArray.isValidIndex(3))
+        #expect(multipleElementArray.isValidIndex(4))
 	}
 
 	// MARK: isValidIndexRange()
 
-	func testIsValidIndexClosedValid() {
-		XCTAssertTrue(singleElementArray.isValidIndexRange(Range(0 ... 0)))
-		XCTAssertTrue(multipleElementArray.isValidIndexRange(Range(0 ... 4)))
+    @Test func isValidIndexClosedValid() async throws {
+        #expect(singleElementArray.isValidIndexRange(Range(0 ... 0)))
+        #expect(multipleElementArray.isValidIndexRange(Range(0 ... 4)))
 	}
 
-	func testIsValidIndexClosedInvalid() {
-		XCTAssertFalse(emptyArray.isValidIndexRange(Range(0 ... 0)))
-		XCTAssertFalse(singleElementArray.isValidIndexRange(Range(0 ... 1)))
-		XCTAssertFalse(multipleElementArray.isValidIndexRange(Range(0 ... 5)))
-		XCTAssertFalse(multipleElementArray.isValidIndexRange(Range(-1 ... 4)))
+    @Test func isValidIndexClosedInvalid() async throws {
+        #expect(!emptyArray.isValidIndexRange(Range(0 ... 0)))
+        #expect(!singleElementArray.isValidIndexRange(Range(0 ... 1)))
+        #expect(!multipleElementArray.isValidIndexRange(Range(0 ... 5)))
+        #expect(!multipleElementArray.isValidIndexRange(Range(-1 ... 4)))
 	}
 
-	func testIsValidIndexNotClosedValid() {
-		XCTAssertTrue(singleElementArray.isValidIndexRange(0 ..< 1))
-		XCTAssertTrue(multipleElementArray.isValidIndexRange(0 ..< 5))
+    @Test func isValidIndexNotClosedValid() async throws {
+        #expect(singleElementArray.isValidIndexRange(0 ..< 1))
+        #expect(multipleElementArray.isValidIndexRange(0 ..< 5))
 	}
 
-	func testIsValidIndexNotClosedInvalid() {
-		XCTAssertFalse(emptyArray.isValidIndexRange(0 ..< 1))
-		XCTAssertFalse(singleElementArray.isValidIndexRange(0 ..< 2))
-		XCTAssertFalse(multipleElementArray.isValidIndexRange(0 ..< 6))
-		XCTAssertFalse(multipleElementArray.isValidIndexRange(-1 ..< 5))
+    @Test func isValidIndexNotClosedInvalid() async throws {
+        #expect(!emptyArray.isValidIndexRange(0 ..< 1))
+        #expect(!singleElementArray.isValidIndexRange(0 ..< 2))
+        #expect(!multipleElementArray.isValidIndexRange(0 ..< 6))
+        #expect(!multipleElementArray.isValidIndexRange(-1 ..< 5))
 	}
 
 	// MARK: subscript(safe:)
 
-	func testSubscriptInvalidIndex() {
-		XCTAssertNil(emptyArray[safe: 0])
-		XCTAssertNil(singleElementArray[safe: 1])
-		XCTAssertNil(multipleElementArray[safe: 5])
-		XCTAssertNil(multipleElementArray[safe: -1])
+    @Test func subscriptInvalidIndex() async throws {
+        #expect(emptyArray[safe: 0] == nil)
+        #expect(singleElementArray[safe: 1] == nil)
+        #expect(multipleElementArray[safe: 5] == nil)
+        #expect(multipleElementArray[safe: -1] == nil)
 	}
 
-	func testSubscriptValidIndex() {
-		XCTAssertEqual(singleElementArray[safe: 0], .some(1))
-		XCTAssertEqual(multipleElementArray[safe: 0], .some(1))
-		XCTAssertEqual(multipleElementArray[safe: 1], .some(2))
-		XCTAssertEqual(multipleElementArray[safe: 2], .some(3))
-		XCTAssertEqual(multipleElementArray[safe: 3], .some(4))
-		XCTAssertEqual(multipleElementArray[safe: 4], .some(5))
+    @Test func subscriptValidIndex() async throws {
+        #expect(singleElementArray[safe: 0] == .some(1))
+        #expect(multipleElementArray[safe: 0] == .some(1))
+        #expect(multipleElementArray[safe: 1] == .some(2))
+        #expect(multipleElementArray[safe: 2] == .some(3))
+        #expect(multipleElementArray[safe: 3] == .some(4))
+        #expect(multipleElementArray[safe: 4] == .some(5))
 	}
 }
