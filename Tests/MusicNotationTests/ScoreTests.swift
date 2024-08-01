@@ -7,11 +7,9 @@
 //
 
 @testable import MusicNotation
-import XCTest
+import Testing
 
-// swiftlint:disable force_try
-// swiftlint:disable implicitly_unwrapped_optional
-class ScoreTests: XCTestCase {
+@Suite final class ScoreTests {
     enum Constant {
         static let standardClef: Clef = .treble
     }
@@ -30,8 +28,7 @@ class ScoreTests: XCTestCase {
     var repeat1: MeasureRepeat!
     var repeat2: MeasureRepeat!
 
-    override func setUp() {
-        super.setUp()
+    init() {
         staff = Staff(clef: Constant.standardClef, instrument: Instrument())
         let timeSignature = TimeSignature(numerator: 4, denominator: 4, tempo: 120)
         let key = Key(noteLetter: .c)
@@ -97,8 +94,23 @@ class ScoreTests: XCTestCase {
         score = Score(parts: [Part(staves: [staff])])
     }
 
+    deinit {
+        score = nil
+        staff = nil
+        measure1 = nil
+        measure2 = nil
+        measure3 = nil
+        measure4 = nil
+        measure5 = nil
+        measure6 = nil
+        measure7 = nil
+        measure8 = nil
+        repeat1 = nil
+        repeat2 = nil
+    }
+
     // swiftlint:disable line_length
-    func testDescription() {
-        XCTAssertEqual(staff!.debugDescription, "staff(treble Instrument(name: \"\", lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1, 1/16c1, 1/16c1]|, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 2, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 3, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16a1, 3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1]|, |4/4: [3[1/16a1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|)")
+    @Test func debugDescription() async throws {
+        #expect(staff!.debugDescription == "staff(treble Instrument(name: \"\", lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1, 1/16c1, 1/16c1]|, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 2, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 3, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16a1, 3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1]|, |4/4: [3[1/16a1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|)")
     }
 }

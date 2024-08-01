@@ -6,30 +6,30 @@
 //
 
 @testable import MusicNotation
-import XCTest
+import Testing
 
-// swiftlint:disable force_try
-// swiftlint:disable implicitly_unwrapped_optional
-final class PartTests: XCTestCase {
-    
+@Suite final class PartTests {
     let testPartName = "testPartName"
     let testPartShortName = "testShortName"
     
     var part: Part!
     
-    override func setUp() {
-        super.setUp()
+    init() {
         let staff = Staff(clef: .treble, instrument: Instrument())
         part = Part(name: testPartName, shortName: testPartShortName, staves: [staff])
     }
-    
-    func testDescription() {
-        XCTAssertEqual(part!.debugDescription, "staves(staff(treble Instrument(name: \"\", lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ))")
+
+    deinit {
+        part = nil
+    }
+
+    @Test func debugDescription() async throws {
+        #expect(part!.debugDescription == "staves(staff(treble Instrument(name: \"\", lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ))")
     }
     
-    func testPartNames() {
-        XCTAssertEqual(part!.name, testPartName)
-        XCTAssertEqual(part!.shortName, testPartShortName)
+    func partNames() async throws {
+        #expect(part!.name == testPartName)
+        #expect(part!.shortName == testPartShortName)
     }
 
 }
