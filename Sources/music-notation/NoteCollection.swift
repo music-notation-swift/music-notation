@@ -13,13 +13,13 @@
 public protocol NoteCollection {
 	/// The count of actual notes in this `NoteCollection`
 	var noteCount: Int { get }
-	///
-	/// The duration of the note that in combination with `noteTimingCount`
+
+    /// The duration of the note that in combination with `noteTimingCount`
 	/// will give you the amount of time this `NoteCollection` occupies.
 	///
 	var noteDuration: NoteDuration { get }
-	///
-	/// The number of notes to indicate the amount of time occupied by this
+
+    /// The number of notes to indicate the amount of time occupied by this
 	/// `NoteCollection`. Combine this with `noteDuration`.
 	///
 	var noteTimingCount: Int { get }

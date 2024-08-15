@@ -6,7 +6,6 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
-/// Placeholder for eventual staff layout description of a page footer.
 public struct Part {
 	// MARK: - Collection Conformance
 

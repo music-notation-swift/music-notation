@@ -31,7 +31,6 @@ public struct MeasureRepeat {
 		measureCount = MeasureRepeat.measureCount(forMeasures: measures, repeatCount: repeatCount)
 	}
 
-	///
 	/// Inserts a measure into the repeat. The index can only be within the count of original measures or
 	/// equal to the count. If it is equal to the count, the measure will be added to the end of the
 	/// measures to be repeated.
@@ -81,12 +80,8 @@ extension MeasureRepeat: NotesHolder {}
 
 extension MeasureRepeat: Equatable {
 	public static func == (lhs: MeasureRepeat, rhs: MeasureRepeat) -> Bool {
-		guard lhs.repeatCount == rhs.repeatCount else {
-			return false
-		}
-		guard lhs.measures == rhs.measures else {
-			return false
-		}
+        guard lhs.repeatCount == rhs.repeatCount else { return false }
+		guard lhs.measures == rhs.measures else { return false }
 		return true
 	}
 }

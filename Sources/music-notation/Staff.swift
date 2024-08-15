@@ -59,7 +59,6 @@ public struct Staff: RandomAccessCollection {
 		measureCount += measureRepeat.measureCount
 	}
 
-	///
 	/// Changes the Clef at the given location.
 	///
 	/// - parameter clef: The new `Clef` to change to
@@ -87,7 +86,6 @@ public struct Staff: RandomAccessCollection {
 		try propagateClefChange(clef, fromMeasureIndex: measureIndex)
 	}
 
-	///
 	/// Inserts a measure at the given index.
 	///
 	/// If the given index falls on a `MeasureRepeat`, there are 3 things that can happen:
@@ -143,7 +141,6 @@ public struct Staff: RandomAccessCollection {
 		}
 	}
 
-	///
 	/// Inserts a `MeasureRepeat` at the given index. If there is already a repeat at the given index,
 	/// this will fail.
 	///
@@ -165,13 +162,12 @@ public struct Staff: RandomAccessCollection {
 		}
 		let notesHolderIndex = try notesHolderIndexFromMeasureIndex(index)
 		guard notesHolderIndex.repeatMeasureIndex == nil || notesHolderIndex.repeatMeasureIndex == 0 else {
-			throw StaffError.cannotInsertRepeatWhereOneAlreadyExists
+            throw StaffError.cannotInsertRepeatWhereOneAlreadyExists
 		}
 		notesHolders.insert(measureRepeat, at: notesHolderIndex.notesHolderIndex)
 		measureCount += measureRepeat.measureCount
 	}
 
-	///
 	/// Replaces the measure at the given index with a new measure. The measure index takes into consideration
 	/// repeats. Therefore, the index is the actual index of the measure as it were played.
 	///
@@ -185,7 +181,6 @@ public struct Staff: RandomAccessCollection {
 		try replaceMeasure(at: measureIndex, with: newMeasure, shouldChangeClef: true)
 	}
 
-	///
 	/// Ties a note to the next note.
 	///
 	/// - parameter noteIndex: The index of the note in the specified measure to begin the tie.
@@ -205,7 +200,6 @@ public struct Staff: RandomAccessCollection {
 		try modifyTieForNote(at: noteIndex, inMeasureAt: measureIndex, removeTie: false, inSet: setIndex)
 	}
 
-	///
 	/// Removes the tie beginning at the note at the specified index.
 	///
 	/// - parameter noteIndex: The index of the note in the specified measure where the tie begins.
@@ -225,7 +219,6 @@ public struct Staff: RandomAccessCollection {
 		try modifyTieForNote(at: noteIndex, inMeasureAt: measureIndex, removeTie: true, inSet: setIndex)
 	}
 
-	///
 	/// - parameter measureIndex: The index of the measure to return.
 	/// - returns An `ImmutableMeasure` at the given index within the staff.
 	/// - throws:
@@ -243,7 +236,6 @@ public struct Staff: RandomAccessCollection {
 		throw StaffError.internalError
 	}
 
-	///
 	/// - parameters measureIndex: The index of a measure that is either repeated or is one of the repeated measures.
 	/// - returns A `MeasureRepeat` that contains the measure(s) that are repeated as well as the repeat count. Returns nil
 	/// if the measure at the specified index is not part of repeat.
@@ -266,9 +258,7 @@ public struct Staff: RandomAccessCollection {
 
 		// Ensure first measure information provided is valid for tie
 		var firstMeasure = try mutableMeasureFromNotesHolderIndex(notesHolderIndex.notesHolderIndex, repeatMeasureIndex: notesHolderIndex.repeatMeasureIndex)
-		guard noteIndex < firstMeasure.noteCount[setIndex] else {
-			throw StaffError.noteIndexOutOfRange
-		}
+		guard noteIndex < firstMeasure.noteCount[setIndex] else { throw StaffError.noteIndexOutOfRange }
 
 		if noteIndex == firstMeasure.noteCount[setIndex] - 1 {
 			let secondNotesHolderIndex: (notesHolderIndex: Int, repeatMeasureIndex: Int?)
@@ -281,9 +271,7 @@ public struct Staff: RandomAccessCollection {
 				secondNotesHolderIndex.notesHolderIndex,
 				repeatMeasureIndex: secondNotesHolderIndex.repeatMeasureIndex
 			)
-			guard secondMeasure.noteCount[setIndex] > 0 else {
-				throw StaffError.noNextNoteToTie
-			}
+			guard secondMeasure.noteCount[setIndex] > 0 else { throw StaffError.noNextNoteToTie }
 
 			if !removeTie {
 				let firstNote = try firstMeasure.note(at: noteIndex, inSet: setIndex)
@@ -374,9 +362,7 @@ public struct Staff: RandomAccessCollection {
 		} else {
 			// If repeatMeasureIndex is nil, check if the noteIndex is less than note count of measure
 			assert(notesHolder.measureCount == 1, "Index translation showed should be a single measure, but it's not")
-			guard let immutableMeasure = notesHolder as? ImmutableMeasure else {
-				throw StaffError.internalError
-			}
+			guard let immutableMeasure = notesHolder as? ImmutableMeasure else { throw StaffError.internalError }
 			if let mutableMeasure = immutableMeasure as? Measure {
 				return mutableMeasure
 			} else {
@@ -390,9 +376,7 @@ public struct Staff: RandomAccessCollection {
 		// Modify every `originalClef` and `lastClef` that follows the measure until not needed
 		for index in (measureIndex + 1) ..< measureCount {
 			do {
-				guard var measure = try self.measure(at: index) as? Measure else {
-					continue
-				}
+				guard var measure = try self.measure(at: index) as? Measure else { continue }
 				let didChangeClef = measure.changeFirstClefIfNeeded(to: clef)
 				if !didChangeClef {
 					break

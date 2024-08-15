@@ -9,7 +9,6 @@
 import Foundation
 
 public struct Clef: Sendable {
-	///
 	/// The pitch that defines the clef. This pitch is specified to be at a
 	/// certain `StaffLocation` using the `staffLocation` property.
 	///
@@ -18,7 +17,6 @@ public struct Clef: Sendable {
 	/// The location on the staff at which the pitch for the clef is located.
 	public let staffLocation: StaffLocation
 
-	///
 	/// You can create a custom clef by providing a pitch and line number.
 	///
 	/// - parameter pitch: The pitch that the clef represents. Pitch is optional to support un-pitched (i.e. drums)
@@ -49,7 +47,6 @@ public struct Clef: Sendable {
 	// TODO: Is this one correct?
 	public static let suboctaveTreble = Clef(pitch: SpelledPitch(.g, .octave3), location: StaffLocation(.line, 1))
 
-	///
 	/// Calculates the pitch for the given staff location for this Clef.
 	///
 	/// - parameter location: The location on the staff for which you would like to know the pitch.
@@ -69,8 +66,8 @@ public struct Clef: Sendable {
 
 		// Add the delta to the clef raw value
 		let newPitchRawWithDelta = clefPitchRawValue + delta
-		///
-		/// If requested location is increase (delta > 0), you are adding onto 0.
+
+        /// If requested location is increase (delta > 0), you are adding onto 0.
 		/// If it's a decrease, you are subtracting from the largestNoteLetter.
 		///
 		let startingPitchValue = newPitchRawWithDelta > 0 ? 0 : largestNoteLetter
@@ -90,10 +87,8 @@ public struct Clef: Sendable {
 			// TODO: Use `.rounded(_:)` instead of floor here and below.
 			// https://github.com/drumnkyle/music-notation-core/issues/146
 			if octaveDeltaRaw == floor(octaveDeltaRaw) {
-				///
 				/// If the value is an exact multiple, it has not crossed the octave border yet.
 				/// Therefore, subtract one from the value for the octave delta.
-				///
 				return Int(octaveDeltaRaw - 1)
 			}
 

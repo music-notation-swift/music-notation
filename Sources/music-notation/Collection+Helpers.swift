@@ -28,9 +28,7 @@ public extension Collection {
 	}
 
 	subscript(safe index: Self.Index) -> Self.Iterator.Element? {
-		guard isValidIndex(index) else {
-			return nil
-		}
+		guard isValidIndex(index) else { return nil }
 		return self[index]
 	}
 }

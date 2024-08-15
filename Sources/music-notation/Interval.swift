@@ -40,21 +40,15 @@ public struct Interval {
 	public let number: Int
 
 	public init(quality: IntervalQuality, number: Int) throws {
-		guard number > 0 else {
-			throw IntervalError.numberNotPositive
-		}
+		guard number > 0 else { throw IntervalError.numberNotPositive }
 
 		let simpleInterval = ((number - 1) % 7) + 1
 
 		switch simpleInterval {
 		case 1, 4, 5:
-			guard quality != .major, quality != .minor else {
-				throw IntervalError.invalidQuality
-			}
+			guard quality != .major, quality != .minor else { throw IntervalError.invalidQuality }
 		default:
-			guard quality != .perfect else {
-				throw IntervalError.invalidQuality
-			}
+			guard quality != .perfect else { throw IntervalError.invalidQuality }
 		}
 
 		self.quality = quality

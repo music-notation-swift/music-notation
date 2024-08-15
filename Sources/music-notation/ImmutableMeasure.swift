@@ -39,7 +39,8 @@ public func == <T: ImmutableMeasure>(lhs: T, rhs: T) -> Bool {
 		lhs.lastClef == rhs.lastClef else {
 		return false
 	}
-	for index in 0 ..< lhs.notes.count {
+
+    for index in 0 ..< lhs.notes.count {
 		guard lhs.notes[index].count == rhs.notes[index].count else { return false }
 
 		for inner in 0 ..< lhs.notes[index].count {
@@ -73,9 +74,7 @@ public extension ImmutableMeasure {
 
 	internal static func measureSlices(at position: Int, in notes: [[NoteCollection]]) -> [MeasureSlice]? {
 		notes.enumerated().compactMap { noteSetIndex, noteCollections in
-			guard let noteCollection = noteCollections[safe: position] else {
-				return nil
-			}
+			guard let noteCollection = noteCollections[safe: position] else { return nil }
 			return MeasureSlice(noteSetIndex: noteSetIndex, noteCollection: noteCollection)
 		}
 	}

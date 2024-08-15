@@ -83,7 +83,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 
 	// MARK: - Public Methods
 
-	///
 	/// Gets note stored at `index`.
 	///
 	/// - parameter index: The index of the note in the specified note set.
@@ -99,7 +98,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		return try notes[setIndex][collectionIndex.noteIndex].note(at: noteIndex)
 	}
 
-	///
 	/// Replaces note at `index` in `setIndex` with `noteCollection`.
 	///
 	/// The `Tie` state of the note being replaced is preserved in `noteCollection`.
@@ -115,7 +113,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try replaceNote(at: index, with: [noteCollection], inSet: setIndex)
 	}
 
-	///
 	/// Replaces note at `index` in `setIndex` with `noteCollections` array.
 	///
 	/// The `Tie` state of the note being replaced is preserved in the `noteCollections` array.
@@ -136,7 +133,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Replaces a notes array in `setIndex` `range` with `noteCollection`.
 	///
 	/// The `Tie` state of the notes being replaced is preserved in `noteCollection`.
@@ -153,7 +149,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try replaceNotes(in: range, with: [noteCollection], inSet: setIndex)
 	}
 
-	///
 	/// Replaces a notes array in `setIndex` `range` with `noteCollections`.
 	///
 	/// The `Tie` state of the notes being replaced is preserved in `noteCollection`.
@@ -172,7 +167,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Adds a new `noteCollection` at the end of the note set.
 	///
 	/// - parameter noteCollection: `NoteCollection` to add.
@@ -184,7 +178,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		notes[setIndex].append(noteCollection)
 	}
 
-	///
 	/// Inserts a new `noteCollection` at note `index`.
 	///
 	/// - parameter noteCollection: `NoteCollection` to insert.
@@ -199,7 +192,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try insert(noteCollection, at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
-	///
 	/// Inserts `noteCollections` at note `index`.
 	///
 	/// - parameter noteCollections: Array of `NoteCollection` to insert.
@@ -214,7 +206,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try insert(noteCollections, at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
-	///
 	/// Removes a single note from `index`.
 	///
 	/// - parameter index: The index of the note in the specified note set.
@@ -230,7 +221,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try removeNote(at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
-	///
 	/// Removes array of notes from range.
 	///
 	/// - parameter indexRange: Notes range.
@@ -244,7 +234,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try removeNotesInRange(indexRange, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
-	///
 	/// Creates a `Tuplet` from a note range. See `Tuplet.init` for more details. This function also makes sure that the
 	/// `noteRange` does not start or end across a `Tuplet` boundary.
 	///
@@ -269,14 +258,10 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 				assertionFailure("note collection should be tuplet, but case failed")
 				throw MeasureError.internalError
 			}
-			guard tuplet.noteCount == tupletIndex + 1 else {
-				throw MeasureError.invalidTupletIndex
-			}
+			guard tuplet.noteCount == tupletIndex + 1 else { throw MeasureError.invalidTupletIndex }
 		}
 
-		guard newMeasure.notes[setIndex].isValidIndexRange(Range(noteRange)) else {
-			throw MeasureError.invalidNoteRange
-		}
+		guard newMeasure.notes[setIndex].isValidIndexRange(Range(noteRange)) else { throw MeasureError.invalidNoteRange }
 		let tupletNotes = Array(newMeasure.notes[setIndex][noteRange])
 
 		let newTuplet = try Tuplet(count, baseNoteDuration, inSpaceOf: baseCount, notes: tupletNotes)
@@ -285,7 +270,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Breaks outer `Tuplet` into its `NoteCollection` components.
 	///
 	/// - parameter index: Note index.
@@ -298,9 +282,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	public mutating func breakdownTuplet(at index: Int, inSet setIndex: Int = 0) throws {
 		var newMeasure = self
 		let collectionIndex = try newMeasure.noteCollectionIndex(fromNoteIndex: index, inSet: setIndex)
-		guard collectionIndex.tupletIndex != nil else {
-			throw MeasureError.invalidTupletIndex
-		}
+		guard collectionIndex.tupletIndex != nil else { throw MeasureError.invalidTupletIndex }
 		guard let tuplet = newMeasure.notes[setIndex][collectionIndex.noteIndex] as? Tuplet else {
 			assertionFailure("note collection should be tuplet, but cast failed")
 			throw MeasureError.internalError
@@ -313,7 +295,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Returns the Clef at the given index values.
 	///
 	/// - parameter noteIndex: The index of the note for which you want the clef.
@@ -370,7 +351,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		clefs[ticks] = clef
 	}
 
-	///
 	/// This method will set the `originalClef` and `lastClef` properties if
 	/// there are no clef changes associated with this measure.
 	/// This is to be used for when a clef change is done to a measure before
@@ -380,15 +360,13 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	/// - returns: True if it changed the clef; false if it didn't change the clef.
 	///
 	internal mutating func changeFirstClefIfNeeded(to clef: Clef) -> Bool {
-		guard clefs.isEmpty else {
-			return false
-		}
-		originalClef = clef
+		guard clefs.isEmpty else { return false }
+
+        originalClef = clef
 		lastClef = clef
 		return true
 	}
 
-	///
 	/// Inserts `noteCollection` at `index`.
 	///
 	/// - parameter index: Note index.
@@ -414,9 +392,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		var newMeasure = self
 		let collectionIndex = try newMeasure.noteCollectionIndex(fromNoteIndex: index, inSet: setIndex)
 
-		guard collectionIndex.tupletIndex == nil else {
-			throw MeasureError.invalidTupletIndex
-		}
+		guard collectionIndex.tupletIndex == nil else { throw MeasureError.invalidTupletIndex }
 
 		if !skipTieConfig {
 			try newMeasure.prepTiesForInsertion(at: index, inSet: setIndex)
@@ -425,7 +401,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Inserts `noteCollections` array.
 	///
 	/// - parameter index: Note index to insert notes.
@@ -443,7 +418,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Replaces note at `collectionIndex`.
 	///
 	/// - parameter collectionIndex: Note collection index.
@@ -469,7 +443,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		notes[setIndex][collectionIndex.noteIndex] = tuplet
 	}
 
-	///
 	/// Removes note at note `index.
 	///
 	/// - parameter index: The index of the note in the specified note set.
@@ -489,14 +462,11 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		}
 
 		let collectionIndex = try newMeasure.noteCollectionIndex(fromNoteIndex: index, inSet: setIndex)
-		guard collectionIndex.tupletIndex == nil else {
-			throw MeasureError.removeNoteFromTuplet
-		}
+		guard collectionIndex.tupletIndex == nil else { throw MeasureError.removeNoteFromTuplet }
 		newMeasure.notes[setIndex].remove(at: collectionIndex.noteIndex)
 		self = newMeasure
 	}
 
-	///
 	/// Remove notes in range.
 	///
 	/// - parameter indexRange:
@@ -525,14 +495,10 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 				}
 				// Range starts with  an incomplete lower bound
 				if index == indexRange.lowerBound {
-					guard tupletIndex == 0 else {
-						throw MeasureError.tupletNotCompletelyCovered
-					}
+					guard tupletIndex == 0 else { throw MeasureError.tupletNotCompletelyCovered }
 				}
 				// Error if provided indexRange does not cover the tuple.
-				guard indexRange.upperBound - index >= tuplet.noteCount - tupletIndex - 1 else {
-					throw MeasureError.tupletNotCompletelyCovered
-				}
+				guard indexRange.upperBound - index >= tuplet.noteCount - tupletIndex - 1 else { throw MeasureError.tupletNotCompletelyCovered }
 				if tupletIndex > 0 {
 					continue
 				}
@@ -542,7 +508,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		self = newMeasure
 	}
 
-	///
 	/// Prepare notes for replacement to make sure the tie state of the notes being replaced is
 	/// preserved in the `newCollections` replacement.
 	///
@@ -617,9 +582,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		let firstOriginalTie = try note(at: range.lowerBound, inSet: setIndex).tie
 		let lastOriginalTie = try note(at: range.upperBound, inSet: setIndex).tie
 
-		guard firstOriginalTie != .beginAndEnd, lastOriginalTie != .beginAndEnd else {
-			throw MeasureError.invalidTieState
-		}
+		guard firstOriginalTie != .beginAndEnd, lastOriginalTie != .beginAndEnd else { throw MeasureError.invalidTieState }
 		if firstOriginalTie != .begin, lastOriginalTie != .end {
 			try modifyState(forTie: firstOriginalTie)
 			try modifyState(forTie: lastOriginalTie)
@@ -627,7 +590,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		return modifiedCollections
 	}
 
-	///
 	/// Check for tie state of note at index before insert. Since the new note is
 	/// inserted before the current note, we have to make sure that the tie
 	/// index is not .end or .beginend otherwise the tie state of adjacent
@@ -645,7 +607,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		}
 	}
 
-	///
 	/// Check for tie state of note at index before removal. Throws `MeasureError.invalidTieState`
 	/// if the index points to the first or last note of the measure containing a `Tie`
 	/// state other than `nil`.
@@ -657,9 +618,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	///
 	internal mutating func prepTiesForRemoval(at index: Int, inSet setIndex: Int) throws {
 		let currentIndexTieState = try tieState(for: index, inSet: setIndex)
-		guard currentIndexTieState != nil else {
-			return
-		}
+		guard currentIndexTieState != nil else { return }
 
 		// Don't allow changes for notes with cross-measure ties:
 		// - if the index points to the first note in the measure and the tie state is either
@@ -672,7 +631,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try removeTie(at: index, inSet: setIndex)
 	}
 
-	///
 	/// Starts a tie at note `index`.
 	///
 	/// - parameter index: Note index.
@@ -682,7 +640,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try modifyTie(at: index, requestedTieState: .begin, inSet: setIndex)
 	}
 
-	///
 	/// Removes tie state from note at `index`.
 	///
 	/// - parameter index: Note index.
@@ -692,7 +649,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try modifyTie(at: index, requestedTieState: nil, inSet: setIndex)
 	}
 
-	///
 	/// Modifies the tie state of the note at `index` with `requestedTieState`. The tie state of adjacent notes
 	/// may be updated as well to preserve the overall tie state of the measure.
 	///
@@ -704,9 +660,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	///	  - `MeasureError.notesMustHaveSamePitchesToTie`
 	///
 	internal mutating func modifyTie(at index: Int, requestedTieState: Tie?, inSet setIndex: Int) throws {
-		guard requestedTieState != .beginAndEnd else {
-			throw MeasureError.invalidRequestedTieState
-		}
+		guard requestedTieState != .beginAndEnd else { throw MeasureError.invalidRequestedTieState }
 		let secondaryIndex: Int
 		let secondaryRequestedTieState: Tie
 
@@ -774,9 +728,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 
 			// Before we modify the tie state for the notes, we make sure that both have
 			// the same pitch. Ignore check if the removal flag is set.
-			guard removal || firstNote.pitches == secondNote.pitches else {
-				throw MeasureError.notesMustHaveSamePitchesToTie
-			}
+			guard removal || firstNote.pitches == secondNote.pitches else { throw MeasureError.notesMustHaveSamePitchesToTie }
 
 			secondaryModificationIsRemoval ?
 				try secondNote.removeTie(secondaryRequestedTieState) :
@@ -792,7 +744,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try replaceNote(at: collectionIndex, with: [firstNote], inSet: setIndex)
 	}
 
-	///
 	/// Returns the `NoteCollectionIndex` for the note at the specified note set and index.
 	///
 	/// - parameter index: Note index.
@@ -803,13 +754,10 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	internal func noteCollectionIndex(fromNoteIndex index: Int, inSet setIndex: Int) throws -> NoteCollectionIndex {
 		// Gets the index of the given element in the notes array by translating the index of the
 		// single note within the NoteCollection array.
-		guard let value = noteCollectionIndexes[safe: setIndex]?[safe: index] else {
-			throw MeasureError.noteIndexOutOfRange
-		}
+		guard let value = noteCollectionIndexes[safe: setIndex]?[safe: index] else { throw MeasureError.noteIndexOutOfRange }
 		return value
 	}
 
-	///
 	/// Checks to see if there is a clef change that occurs after the note at the given index.
 	/// After means it occurs at any tick amount greater than the note before the given index.
 	///
@@ -870,7 +818,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		}
 	}
 
-	///
 	/// Returns tie state of note at `index`.
 	///
 	/// - parameter index: Note index.
@@ -884,7 +831,6 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 		try note(at: index, inSet: setIndex).tie
 	}
 
-	///
 	/// Returns the number of ticks that exist in the measure up to, but not including
 	/// the given note index.
 	///
@@ -913,9 +859,7 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 				assertionFailure("note collection should be tuplet, but cast failed")
 				throw MeasureError.internalError
 			}
-			guard !lastNoteCollection.isCompound else {
-				throw MeasureError.cannotCalculateTicksWithinCompoundTuplet
-			}
+			guard !lastNoteCollection.isCompound else { throw MeasureError.cannotCalculateTicksWithinCompoundTuplet }
 			let tupletTicks = lastNoteCollection.ticks / Double(lastNoteCollection.groupingOrder) * Double(tupletIndex)
 			ticks = ticksBeforeLast + tupletTicks
 		}

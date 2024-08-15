@@ -6,20 +6,14 @@
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-#if os(iOS) || os(watchOS) || os(tvOS) || os(OSX)
 import Darwin.C.math
-#else
-import Glibc
-#endif
 
-///
 /// This is a collection of static functions that will give information about the completeness of the duration of a
 /// `Measure`. A measure must have a certain number of notes according to its `TimeSignature` in order to be valid.
 /// `MeasureDurationValidator` provides information as to the validitiy of the measure and any information that can be used
 /// in order to be able to modify the measure so that it can be made valid.
 ///
 public enum MeasureDurationValidator {
-	///
 	/// This represents the state of a measure's duration. It represents whether the `Measure` is full, notFull,
 	/// overfilled, or somehow invalid. The fullness is dictated by the time signature and how many notes are in the
 	/// measure when it is checked.
@@ -53,7 +47,6 @@ public enum MeasureDurationValidator {
 		}
 	}
 
-	///
 	/// For the given measure, returns an array of `CompletionState` for each set in the measure in order.
 	///
 	/// - parameter measure: The measure for which the `CompletionState` should be calculated.
@@ -92,7 +85,6 @@ public enum MeasureDurationValidator {
 		}
 	}
 
-	///
 	/// Returns the number of a certain `NoteDuration` that will fit in a measure in the specified note set.
 	///
 	/// - parameter noteDuration: The note duration to check
@@ -113,13 +105,10 @@ public enum MeasureDurationValidator {
 			prev + currentCollection.ticks
 		}
 		let availableTicks = fullMeasureTicksBudget - alreadyFilledTicks
-		guard availableTicks > 0 else {
-			return 0
-		}
+		guard availableTicks > 0 else { return 0 }
 		return Int(availableTicks / noteDuration.ticks)
 	}
 
-	///
 	/// Calculates the `NoteDuration` that is associated with the bottom number of a `TimeSignature`.
 	/// This handles irrational time signatures.
 	///

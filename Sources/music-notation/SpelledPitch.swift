@@ -6,7 +6,6 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-///
 /// A pitch indicates the note letter (a-g), octave, and accidental.
 /// Since certain pitches are the same, but can be shown differently (like a sharp and b flat),
 /// the "spelling" of the pitch is important.

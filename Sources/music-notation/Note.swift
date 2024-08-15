@@ -52,9 +52,7 @@ public struct Note: NoteCollection, Sendable {
 	// MARK: Public
 
 	public func note(at index: Int) throws -> Note {
-		guard index == 0 else {
-			throw NoteError.invalidNoteIndex
-		}
+		guard index == 0 else { throw NoteError.invalidNoteIndex }
 		return self
 	}
 
@@ -71,7 +69,6 @@ public struct Note: NoteCollection, Sendable {
 		}
 	}
 
-	///
 	/// Remove the tie from the note.
 	///
 	/// - parameter currentTie: What part of the tie on the note the caller wants to remove. This is important if the

@@ -6,7 +6,6 @@
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-///
 /// This represents a measure that is part of a repeat. This is not one of the original measures that
 /// will be repeated. This represents a measure that is a repeat of one of the original measures to
 /// be repeated.
