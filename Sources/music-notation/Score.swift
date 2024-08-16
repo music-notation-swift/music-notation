@@ -26,6 +26,7 @@ public struct Score: RandomAccessCollection {
     // MARK: - Main Properties
 
     internal private(set) var parts: [Part] = []
+
     public var title: String = ""
     public var subTitle: String = ""
     public var artist: String = ""
@@ -47,7 +48,10 @@ public struct Score: RandomAccessCollection {
 
     public mutating func appendPart(_ part: Part) {
         parts.append(part)
-        partCount += 1
+    }
+
+    public mutating func append(contentsOf newParts: [Part]) {
+        parts.append(contentsOf: newParts)
     }
 
     /// Inserts a part at the given index.
@@ -59,8 +63,7 @@ public struct Score: RandomAccessCollection {
     ///       - `ScoreError.internalError`
     ///
     public mutating func insertPart(_ part: Part, at index: Int) throws {
-        parts.insert(part, at: partsIndex)
-        partCount += 1
+        parts.insert(part, at: index)
     }
 }
 
