@@ -28,11 +28,56 @@ public struct Part {
 	public init(
 		name: String = "",
 		shortName: String = "",
-		staves: [Staff]
+		staves: [Staff] = []
 	) {
-        self.name = name
-        self.shortName = shortName
+		self.name = name
+		self.shortName = shortName
 		self.staves = staves
+	}
+
+	/// Adds a new `staff` element at the end of the `staves` array.
+	///
+	/// Use this method to append a single element to the end of a mutable array.
+	///
+	public mutating func appendStaff(_ newStaff: Staff) {
+		staves.append(newStaff)
+	}
+
+	/// Adds the elements of a sequence to the end of the `newStaves` array.
+	///
+	/// Use this method to append the elements of a `Staff` sequence to the end of the
+	/// `newStaves` array.
+	///
+	/// - Parameter contentsOf: The `newStaves` to append to the `newStaves` array.
+	///
+	public mutating func append(contentsOf newStaves: [Staff]) {
+		staves.append(contentsOf: newStaves)
+	}
+
+	/// Inserts a `Staff` at the given index.
+	///
+	/// - parameter staff: The `Staff` to be inserted.
+	/// - parameter index: The index where the `Staff` should be inserted.
+	/// - throws:
+	///	   - `PartError.StaffIndexOutOfRange`
+	///	   - `PartError.internalError`
+	///
+	public mutating func insertStaff(_ staff: Staff, at index: Int) throws {
+		staves.insert(staff, at: index)
+	}
+
+	/// Removes and returns the `Staff` at the specified position.
+	///
+	/// All the elements following the specified position are moved up to
+	/// close the gap.
+	///
+	/// - Parameter index: The position of the `Staff` element to remove. `index` must
+	///   be a valid index of the array.
+	/// - Returns: The `Staff` element at the specified index.
+	///
+	@discardableResult
+	public mutating func remove(at index: Int) throws -> Staff {
+		staves.remove(at: index)
 	}
 }
 
