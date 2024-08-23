@@ -28,7 +28,7 @@ public struct Score: RandomAccessCollection {
 	internal private(set) var parts: [Part] = []
 
 	public var title: String = ""
-	public var subTitle: String = ""
+	public var subtitle: String = ""
 	public var artist: String = ""
 	public var album: String = ""
 	public var words: String = ""
@@ -42,7 +42,7 @@ public struct Score: RandomAccessCollection {
 	public var pageHeader: PageHeader?
 	public var pageFooter: PageFooter?
 
-	public init(parts: [Part]) {
+	public init(parts: [Part] = []) {
 		self.parts = parts
 	}
 
