@@ -1,9 +1,9 @@
 //
 //	ScoreTests.swift
-//	MusicNotationCore
+//	MusicNotation
 //
-//	Created by Steven Woolgar on 2021-01-30.
-//	Copyright © 2021 Steven Woolgar. All rights reserved.
+//	Created by Steven Woolgar on 2024-08-23.
+//	Copyright © 2024 Steven Woolgar. All rights reserved.
 //
 
 @testable import MusicNotation
@@ -112,5 +112,143 @@ import Testing
     // swiftlint:disable line_length
     @Test func debugDescription() async throws {
         #expect(staff!.debugDescription == "staff(treble Instrument(name: \"\", lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1, 1/16c1, 1/16c1]|, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 2, [ |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1]| ] × 3, |4/4: [3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|, |4/4: [1/16c1, 1/16c1, 1/16c1, 1/16c1, 3[1/16c1, 1/16c1, 1/16c1]]|, |4/4: [1/16a1, 3[1/16c1, 1/16c1, 1/16c1], 3[1/16c1, 1/16c1, 1/16c1], 1/16c1]|, |4/4: [3[1/16a1, 1/16c1, 1/16c1], 1/16c1, 1/16c1]|)")
+    }
+
+    @Test func titleSetPostInit() async throws {
+        score.title = "Xanadu"
+        #expect(score.title == "Xanadu")
+    }
+
+    @Test func titleSetDuringInit() async throws {
+        let titleScore = Score(title: "Xanadu")
+        #expect(titleScore.title == "Xanadu")
+    }
+
+    @Test func subtitleSetPostInit() async throws {
+        score.subtitle = "subtitle"
+        #expect(score.subtitle == "subtitle")
+    }
+
+    @Test func subtitleSetDuringInit() async throws {
+        let subtitleScore = Score(subtitle: "subtitle")
+        #expect(subtitleScore.subtitle == "subtitle")
+    }
+
+    @Test func titlesSetPostInit() async throws {
+        score.title = "Xanadu"
+        score.subtitle = "subtitle"
+        #expect(score.title == "Xanadu")
+        #expect(score.subtitle == "subtitle")
+    }
+
+    @Test func titlesSetDuringInit() async throws {
+        let subtitleScore = Score(title: "Xanadu", subtitle: "subtitle")
+        #expect(subtitleScore.title == "Xanadu")
+        #expect(subtitleScore.subtitle == "subtitle")
+    }
+
+    @Test func artistSetPostInit() async throws {
+        score.artist = "Rush"
+        #expect(score.artist == "Rush")
+    }
+
+    @Test func artistSetDuringInit() async throws {
+        let artistScore = Score(artist: "Rush")
+        #expect(artistScore.artist == "Rush")
+    }
+
+    @Test func albumSetPostInit() async throws {
+        score.album = "Farewell To Kings"
+        #expect(score.album == "Farewell To Kings")
+    }
+
+    @Test func albumSetDuringInit() async throws {
+        let albumScore = Score(album: "Farewell To Kings")
+        #expect(albumScore.album == "Farewell To Kings")
+    }
+
+    @Test func wordsSetPostInit() async throws {
+        score.words = "Neil Peart"
+        #expect(score.words == "Neil Peart")
+    }
+
+    @Test func wordsSetDuringInit() async throws {
+        let wordsScore = Score(words: "Neil Peart")
+        #expect(wordsScore.words == "Neil Peart")
+    }
+
+    @Test func musicSetPostInit() async throws {
+        score.music = "Alex Lifeson, Geddy Lee"
+        #expect(score.music == "Alex Lifeson, Geddy Lee")
+    }
+
+    @Test func musicSetDuringInit() async throws {
+        let musicScore = Score(music: "Alex Lifeson, Geddy Lee")
+        #expect(musicScore.music == "Alex Lifeson, Geddy Lee")
+    }
+
+    @Test func wordsAndMusicSetPostInit() async throws {
+        score.wordsAndMusic = "wordsAndMusic"
+        #expect(score.wordsAndMusic == "wordsAndMusic")
+    }
+
+    @Test func wordsAndMusicSetDuringInit() async throws {
+        let wordsAndMusicScore = Score(wordsAndMusic: "wordsAndMusic")
+        #expect(wordsAndMusicScore.wordsAndMusic == "wordsAndMusic")
+    }
+
+    @Test func transcriberSetPostInit() async throws {
+        score.transcriber = "transcriber"
+        #expect(score.transcriber == "transcriber")
+    }
+
+    @Test func transcriberSetDuringInit() async throws {
+        let transcriberScore = Score(transcriber: "transcriber")
+        #expect(transcriberScore.transcriber == "transcriber")
+    }
+
+    @Test func instructionsSetPostInit() async throws {
+        score.instructions = "instructions"
+        #expect(score.instructions == "instructions")
+    }
+
+    @Test func instructionsSetDuringInit() async throws {
+        let instructionsScore = Score(instructions: "instructions")
+        #expect(instructionsScore.instructions == "instructions")
+    }
+
+    @Test func noticesSetPostInit() async throws {
+        score.notices = "notices"
+        #expect(score.notices == "notices")
+    }
+
+    @Test func noticesSetDuringInit() async throws {
+        let noticesScore = Score(notices: "notices")
+        #expect(noticesScore.notices == "notices")
+    }
+
+    @Test func allTitlesSetDuringInit() async throws {
+        let scoreAllTitles = Score(
+            title: "title",
+            subtitle: "subtitle",
+            artist: "artist",
+            album: "album",
+            words: "words",
+            music: "music",
+            wordsAndMusic: "wordsAndMusic",
+            transcriber: "transcriber",
+            instructions: "instructions",
+            notices: "notices"
+        )
+        #expect(scoreAllTitles.title == "title")
+        #expect(scoreAllTitles.subtitle == "subtitle")
+        #expect(scoreAllTitles.artist == "artist")
+        #expect(scoreAllTitles.album == "album")
+        #expect(scoreAllTitles.words == "words")
+        #expect(scoreAllTitles.music == "music")
+        #expect(scoreAllTitles.wordsAndMusic == "wordsAndMusic")
+        #expect(scoreAllTitles.transcriber == "transcriber")
+        #expect(scoreAllTitles.instructions == "instructions")
+        #expect(scoreAllTitles.notices == "notices")
     }
 }

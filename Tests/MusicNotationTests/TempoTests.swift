@@ -1,6 +1,6 @@
 //
 //  TempoTests.swift
-//  MusicNotationCore
+//  MusicNotation
 //
 //  Created by Steven Woolgar on 07/29/2024.
 //  Copyright © 2024 Steven Woolgar. All rights reserved.

@@ -1,8 +1,9 @@
 //
 //  PartTests.swift
-//  MusicNotationCore
+//  MusicNotation
 //
-//  Created by Robert J. Sarvis Jr on 2/14/23.
+//  Created by Steven Woolgar on 2024-098-23.
+//  Copyright © 2024 Steven Woolgar. All rights reserved.
 //
 
 @testable import MusicNotation

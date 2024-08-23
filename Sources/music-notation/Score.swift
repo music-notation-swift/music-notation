@@ -42,8 +42,30 @@ public struct Score: RandomAccessCollection {
 	public var pageHeader: PageHeader?
 	public var pageFooter: PageFooter?
 
-	public init(parts: [Part] = []) {
+	public init(
+		parts: [Part] = [],
+		title: String = "",
+		subtitle: String = "",
+		artist: String = "",
+		album: String = "",
+		words: String = "",
+		music: String = "",
+		wordsAndMusic: String = "",
+		transcriber: String = "",
+		instructions: String = "",
+		notices: String = ""
+	) {
 		self.parts = parts
+		self.title = title
+		self.subtitle = subtitle
+		self.artist = artist
+		self.album = album
+		self.words = words
+		self.music = music
+		self.wordsAndMusic = wordsAndMusic
+		self.transcriber = transcriber
+		self.instructions = instructions
+		self.notices = notices
 	}
 
 	/// Adds a new `part` element at the end of the `parts` array.

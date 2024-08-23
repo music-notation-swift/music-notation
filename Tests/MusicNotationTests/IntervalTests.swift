@@ -1,6 +1,6 @@
 //
 //	IntervalTests.swift
-//	MusicNotationCore
+//	MusicNotation
 //
 //	Created by Rob Hudson on 2016-08-01.
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
