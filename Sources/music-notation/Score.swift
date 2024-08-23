@@ -53,7 +53,10 @@ public struct Score: RandomAccessCollection {
 		wordsAndMusic: String = "",
 		transcriber: String = "",
 		instructions: String = "",
-		notices: String = ""
+		notices: String = "",
+		firstPageHeader: PageHeader? = nil,
+		pageHeader: PageHeader? = nil,
+		pageFooter: PageFooter? = nil
 	) {
 		self.parts = parts
 		self.title = title
@@ -66,6 +69,9 @@ public struct Score: RandomAccessCollection {
 		self.transcriber = transcriber
 		self.instructions = instructions
 		self.notices = notices
+		self.firstPageHeader = firstPageHeader
+		self.pageHeader = pageHeader
+		self.pageFooter = pageFooter
 	}
 
 	/// Adds a new `part` element at the end of the `parts` array.
