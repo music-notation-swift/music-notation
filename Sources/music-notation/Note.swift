@@ -14,48 +14,48 @@ public struct Note: NoteCollection, Sendable {
 	public let groupingOrder = 1
 	public var first: Note? { self }
 	public var last: Note? { self }
-
+	
 	public let pitches: [SpelledPitch]
-
+	
 	public let isRest: Bool
-
+	
 	public var accent: Accent?
 	public var isStaccato = false
 	public var dynamics: Dynamics?
 	public var striking: Striking?
-
+	
 	internal var tie: Tie?
-
+	
 	/// Initialize a rest.
 	public init(_ restDuration: NoteDuration) {
 		noteDuration = restDuration
 		pitches = []
 		isRest = true
 	}
-
+	
 	/// Initialize a note with a single pitch.
 	public init(_ noteDuration: NoteDuration, pitch: SpelledPitch) {
 		self.noteDuration = noteDuration
 		pitches = [pitch]
 		isRest = false
 	}
-
+	
 	/// Initialize a note with multiple pitches (chord).
 	public init(_ noteDuration: NoteDuration, pitches: [SpelledPitch]) {
 		isRest = false
 		self.noteDuration = noteDuration
 		self.pitches = pitches
 	}
-
+	
 	// MARK: - Methods
-
+	
 	// MARK: Public
-
+	
 	public func note(at index: Int) throws -> Note {
 		guard index == 0 else { throw NoteError.invalidNoteIndex }
 		return self
 	}
-
+	
 	internal mutating func modifyTie(_ request: Tie) throws {
 		// Nothing to do if it's the same value
 		guard tie != request else { return }
@@ -68,7 +68,7 @@ public struct Note: NoteCollection, Sendable {
 			throw NoteError.invalidRequestedTieState
 		}
 	}
-
+	
 	/// Remove the tie from the note.
 	///
 	/// - parameter currentTie: What part of the tie on the note the caller wants to remove. This is important if the
@@ -97,13 +97,13 @@ public struct Note: NoteCollection, Sendable {
 extension Note: Equatable {
 	public static func == (lhs: Note, rhs: Note) -> Bool {
 		if lhs.noteDuration == rhs.noteDuration,
-			lhs.pitches == rhs.pitches,
-			lhs.isRest == rhs.isRest,
-			lhs.accent == rhs.accent,
-			lhs.isStaccato == rhs.isStaccato,
-			lhs.dynamics == rhs.dynamics,
-			lhs.striking == rhs.striking,
-			lhs.tie == rhs.tie {
+		   lhs.pitches == rhs.pitches,
+		   lhs.isRest == rhs.isRest,
+		   lhs.accent == rhs.accent,
+		   lhs.isStaccato == rhs.isStaccato,
+		   lhs.dynamics == rhs.dynamics,
+		   lhs.striking == rhs.striking,
+		   lhs.tie == rhs.tie {
 			return true
 		} else {
 			return false

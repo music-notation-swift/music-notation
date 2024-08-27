@@ -8,7 +8,7 @@
 
 public struct Part {
 	// MARK: - Collection Conformance
-
+	
 	public typealias Index = Int
 	public var startIndex: Int								{ staves.startIndex }
 	public var endIndex: Int								{ staves.endIndex }
@@ -17,14 +17,14 @@ public struct Part {
 	public func index(before index: Int) -> Int 			{ staves.index(before: index) }
 	public typealias Iterator = IndexingIterator<[Staff]>
 	public func makeIterator() -> Iterator 					{ staves.makeIterator() }
-
+	
 	// MARK: - Main Properties
-
+	
 	public let name: String
 	public let shortName: String
-
+	
 	internal private(set) var staves: [Staff] = []
-
+	
 	public init(
 		name: String = "",
 		shortName: String = "",
@@ -34,7 +34,7 @@ public struct Part {
 		self.shortName = shortName
 		self.staves = staves
 	}
-
+	
 	/// Adds a new `staff` element at the end of the `staves` array.
 	///
 	/// Use this method to append a single element to the end of a mutable array.
@@ -42,7 +42,7 @@ public struct Part {
 	public mutating func appendStaff(_ newStaff: Staff) {
 		staves.append(newStaff)
 	}
-
+	
 	/// Adds the elements of a sequence to the end of the `newStaves` array.
 	///
 	/// Use this method to append the elements of a `Staff` sequence to the end of the
@@ -53,7 +53,7 @@ public struct Part {
 	public mutating func append(contentsOf newStaves: [Staff]) {
 		staves.append(contentsOf: newStaves)
 	}
-
+	
 	/// Inserts a `Staff` at the given index.
 	///
 	/// - parameter staff: The `Staff` to be inserted.
@@ -65,7 +65,7 @@ public struct Part {
 	public mutating func insertStaff(_ staff: Staff, at index: Int) throws {
 		staves.insert(staff, at: index)
 	}
-
+	
 	/// Removes and returns the `Staff` at the specified position.
 	///
 	/// All the elements following the specified position are moved up to
@@ -84,7 +84,7 @@ public struct Part {
 extension Part: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let stavesDescription = staves.map { $0.debugDescription }.joined(separator: ", ")
-
+		
 		return "staves(\(stavesDescription))"
 	}
 }

@@ -14,36 +14,36 @@ public struct Tuplet: NoteCollection {
 			flatIndexes = recomputeFlatIndexes()
 		}
 	}
-
+	
 	/// The number of notes of the specified duration that this tuplet contains
 	public var noteCount: Int {
 		flatIndexes.count
 	}
-
+	
 	/// The duration of the notes that define this tuplet
 	public let noteDuration: NoteDuration
 	/// The number of notes that this tuplet fits in the space of
 	public let noteTimingCount: Int
-
+	
 	public let groupingOrder: Int
-
+	
 	public var first: Note? {
 		try? note(at: 0)
 	}
-
+	
 	public var last: Note? {
 		try? note(at: flatIndexes.count - 1)
 	}
-
+	
 	/// A 2-dimensional array that can be used to index into every note in the tuplet within compound tuplets as well.
 	internal var flatIndexes = [[Int]]()
-
+	
 	/// True if the tuplet is a compound tuplet; false otherwise.
 	/// A tuplet is compound if at least 1 other tuplet is inside of it.
 	internal var isCompound: Bool {
 		flatIndexes.contains { $0.count > 1 }
 	}
-
+	
 	/// This maps the standard number of notes in the tuplet (`groupingOrder`), to the number of notes the tuplet should fit
 	/// in the space of (`noteTimingCount`).
 	///
@@ -57,7 +57,7 @@ public struct Tuplet: NoteCollection {
 		8: 6,
 		9: 8
 	]
-
+	
 	/// There are two ways you can initialize a `Tuplet`:
 	///
 	/// 1) If you would like to create a tuplet with a count between
@@ -97,9 +97,9 @@ public struct Tuplet: NoteCollection {
 		}
 		flatIndexes = recomputeFlatIndexes()
 	}
-
+	
 	// MARK: - Public Methods
-
+	
 	public func note(at index: Int) throws -> Note {
 		guard flatIndexes.isValidIndex(index) else { throw TupletError.invalidIndex }
 		let fullIndexes = flatIndexes[index]
@@ -108,55 +108,55 @@ public struct Tuplet: NoteCollection {
 			assertionFailure("one of the index arrays was empty")
 			throw TupletError.internalError
 		}
-
+		
 		// nested function to get a note from the `finalTuplet` using the indexes last index
 		func note(from indexes: [Int]) throws -> Note {
 			if let lastIndex = fullIndexes.last,
-				let note = finalTuplet?.notes[lastIndex] as? Note {
+			   let note = finalTuplet?.notes[lastIndex] as? Note {
 				return note
 			} else {
 				assertionFailure("last index was not a note")
 				throw TupletError.internalError
 			}
 		}
-
+		
 		guard fullIndexes.count != 1 else { return try note(from: fullIndexes) }
 		for tupletIndex in 0 ..< fullIndexes.lastIndex {
 			finalTuplet = finalTuplet?.notes[fullIndexes[tupletIndex]] as? Tuplet
 		}
 		return try note(from: fullIndexes)
 	}
-
+	
 	// MARK: Mutating
-
+	
 	public mutating func replaceNote<T: NoteCollection>(at index: Int, with noteCollection: T) throws {
-        guard try isNote(at: index, sameDurationAs: [noteCollection]) else { throw TupletError.replacementNotSameDuration }
+		guard try isNote(at: index, sameDurationAs: [noteCollection]) else { throw TupletError.replacementNotSameDuration }
 		let flatIndex = flatIndexes[index]
 		let preservedTieStateCollection = try preserveTieStateForReplacement(in: index ... index, with: noteCollection)
 		try replaceNote(at: flatIndex, with: preservedTieStateCollection)
 	}
-
+	
 	public mutating func replaceNote<T: NoteCollection>(at index: Int, with noteCollections: [T]) throws {
 		guard try isNote(at: index, sameDurationAs: noteCollections) else { throw TupletError.replacementNotSameDuration }
 		let flatIndex = flatIndexes[index]
 		let preservedTieStateCollections = try preserveTieStateForReplacement(in: index ... index, with: noteCollections)
 		try replaceNote(at: flatIndex, with: preservedTieStateCollections)
 	}
-
+	
 	public mutating func replaceNotes<T: NoteCollection>(in range: CountableClosedRange<Int>, with noteCollection: T) throws {
 		try replaceNotes(in: range, with: [noteCollection])
 	}
-
+	
 	public mutating func replaceNotes<T: NoteCollection>(in range: CountableClosedRange<Int>, with noteCollections: [T]) throws {
 		guard try isValidReplacementRange(range) else { throw TupletError.rangeToReplaceMustFullyCoverMultipleTuplets }
-
-        let flatIndexesInRange = Array(flatIndexes[range])
+		
+		let flatIndexesInRange = Array(flatIndexes[range])
 		let preservedTieStateCollections = try preserveTieStateForReplacement(in: range, with: noteCollections)
 		try replaceNotes(at: flatIndexesInRange, with: preservedTieStateCollections, firstNoteIndex: range.lowerBound)
 	}
-
+	
 	// MARK: - Private Methods
-
+	
 	private func isNote<T: NoteCollection>(at index: Int, sameDurationAs noteCollections: [T]) throws -> Bool {
 		let replacingTicks = noteCollections.reduce(0) { prev, currentCollection in
 			prev + currentCollection.ticks
@@ -165,35 +165,35 @@ public struct Tuplet: NoteCollection {
 		let toReplaceTicks = toReplaceNote.ticks
 		return toReplaceTicks == replacingTicks
 	}
-
+	
 	private func isFlatIndex(_ first: [Int], sameTupletAs second: [Int]) -> Bool {
 		// Same tuplet: counts are equal; nextToLast indexes are equal
 		first.count == second.count && nextToLastIndex(from: first) == nextToLastIndex(from: second)
 	}
-
+	
 	private func nextToLastIndex(from flatIndex: [Int]) -> Int? {
 		flatIndex[safe: flatIndex.index(before: flatIndex.lastIndex)]
 	}
-
+	
 	private func isValidReplacementRange(_ range: CountableClosedRange<Int>) throws -> Bool {
 		guard range.lowerBound >= 0, range.lowerBound < flatIndexes.count,
-			range.upperBound >= 0, range.upperBound < flatIndexes.count else {
+			  range.upperBound >= 0, range.upperBound < flatIndexes.count else {
 			throw TupletError.invalidIndex
 		}
 		let firstFlatIndex = flatIndexes[range.lowerBound]
 		let lastFlatIndex = flatIndexes[range.upperBound]
-
+		
 		// first & last are in same tuplet
 		if isFlatIndex(firstFlatIndex, sameTupletAs: lastFlatIndex) {
 			return true
 		}
-
+		
 		// If first - 1 (tuplet) != first (tuplet) && last + 1 (tuplet) != last (tuplet): return true;
 		// OR the count is 1 (not a nested tuplet)
 		// else return false
 		let beforeFirstFlatIndex = flatIndexes[safe: range.lowerBound - 1]
 		let afterLastFlatIndex = flatIndexes[safe: range.upperBound + 1]
-
+		
 		switch (beforeFirstFlatIndex, afterLastFlatIndex) {
 		case (nil, nil):
 			return true
@@ -203,10 +203,10 @@ public struct Tuplet: NoteCollection {
 			return !isFlatIndex(beforeFirst, sameTupletAs: firstFlatIndex) || firstFlatIndex.count == 1
 		case let (beforeFirst?, afterLast?):
 			return (!isFlatIndex(beforeFirst, sameTupletAs: firstFlatIndex) || firstFlatIndex.count == 1)
-				&& (!isFlatIndex(afterLast, sameTupletAs: lastFlatIndex) || lastFlatIndex.count == 1)
+			&& (!isFlatIndex(afterLast, sameTupletAs: lastFlatIndex) || lastFlatIndex.count == 1)
 		}
 	}
-
+	
 	/// Returns a modified `NoteCollection` with the tie states correct for preserving the original tie states of the notes
 	/// being replaced. The range may also include notes with tie states that represent an invalid state for modification.
 	///
@@ -216,13 +216,13 @@ public struct Tuplet: NoteCollection {
 	) throws -> NoteCollection {
 		try preserveTieStateForReplacement(in: range, with: [newCollection])[0]
 	}
-
+	
 	private func preserveTieStateForReplacement(
 		in range: CountableClosedRange<Int>,
 		with newCollections: [NoteCollection]
 	) throws -> [NoteCollection] {
 		var modifiedCollections = newCollections
-
+		
 		func modifyCollections(atFirst first: Bool, with note: Note) throws {
 			let index = first ? 0 : modifiedCollections.lastIndex
 			if var tuplet = modifiedCollections[index] as? Tuplet {
@@ -232,7 +232,7 @@ public struct Tuplet: NoteCollection {
 				modifiedCollections[index] = note
 			}
 		}
-
+		
 		func modifyState(forTie originalTie: Tie?) throws {
 			switch originalTie {
 			case .begin?:
@@ -272,16 +272,16 @@ public struct Tuplet: NoteCollection {
 				break
 			}
 		}
-
+		
 		guard range.count != 1 else {
 			let originalTie = try note(at: range.lowerBound).tie
 			try modifyState(forTie: originalTie)
 			return modifiedCollections
 		}
-
+		
 		let firstOriginalTie = try note(at: range.lowerBound).tie
 		let lastOriginalTie = try note(at: range.upperBound).tie
-
+		
 		guard firstOriginalTie != .beginAndEnd, lastOriginalTie != .beginAndEnd else { throw TupletError.invalidTieState }
 		if firstOriginalTie != .begin, lastOriginalTie != .end {
 			try modifyState(forTie: firstOriginalTie)
@@ -289,7 +289,7 @@ public struct Tuplet: NoteCollection {
 		}
 		return modifiedCollections
 	}
-
+	
 	private func validate() -> Bool {
 		var notesTicks: Double = 0
 		let fullTupletTicks = Double(groupingOrder) * noteDuration.ticks
@@ -301,9 +301,9 @@ public struct Tuplet: NoteCollection {
 		}
 		return fullTupletTicks == notesTicks
 	}
-
+	
 	// MARK: Mutating
-
+	
 	internal mutating func replaceNote(at flatIndex: [Int], with noteCollection: NoteCollection) throws {
 		guard flatIndex.count != 1 else {
 			notes[flatIndex[0]] = noteCollection
@@ -317,7 +317,7 @@ public struct Tuplet: NoteCollection {
 		try tuplet.replaceNote(at: slice, with: noteCollection)
 		notes[flatIndex[0]] = tuplet
 	}
-
+	
 	internal mutating func replaceNote(at flatIndex: [Int], with noteCollections: [NoteCollection]) throws {
 		guard flatIndex.count != 1 else {
 			notes.remove(at: flatIndex[0])
@@ -332,13 +332,13 @@ public struct Tuplet: NoteCollection {
 		try tuplet.replaceNote(at: slice, with: noteCollections)
 		notes[flatIndex[0]] = tuplet
 	}
-
+	
 	private mutating func replaceNotes(
 		at flatIndexes: [[Int]], with noteCollections: [NoteCollection],
 		firstNoteIndex: Int
 	) throws {
 		var toModify = self
-
+		
 		try toModify.removeNotes(at: flatIndexes)
 		// Insert at the first index
 		// Need to translate the index now that notes have been removed
@@ -351,7 +351,7 @@ public struct Tuplet: NoteCollection {
 		guard toModify.validate() else { throw TupletError.replacementNotSameDuration }
 		self = toModify
 	}
-
+	
 	private mutating func insert(_ noteCollections: [NoteCollection], at flatIndex: [Int]) throws {
 		guard flatIndex.count != 1 else {
 			notes.insert(contentsOf: noteCollections, at: flatIndex[0])
@@ -366,7 +366,7 @@ public struct Tuplet: NoteCollection {
 		try tuplet.insert(noteCollections, at: sliced)
 		notes[flatIndex[0]] = tuplet
 	}
-
+	
 	private mutating func removeNotes(at flatIndexes: [[Int]]) throws {
 		let counts = Set(flatIndexes.map { $0.count })
 		let flatIndexCountGroups = counts.map { count in
@@ -374,17 +374,17 @@ public struct Tuplet: NoteCollection {
 				flatIndex.count == count
 			}
 		}.sorted(by: { $0[0][0] > $1[0][0] })
-
+		
 		for flatIndexes in flatIndexCountGroups {
 			try removeNotesRecursive(at: flatIndexes)
 		}
 		removeAllEmptyTuplets()
 	}
-
+	
 	private mutating func removeNotesRecursive(at flatIndexes: [[Int]]) throws {
 		guard let first = flatIndexes.first else { return }
-
-        // Need to get to the level where the final tuplet is
+		
+		// Need to get to the level where the final tuplet is
 		if first.count > 2 {
 			// recurse to get to actual tuplet level
 			let sliced = Array(flatIndexes.map { Array($0.dropFirst()) })
@@ -419,14 +419,14 @@ public struct Tuplet: NoteCollection {
 			notes.removeSubrange(removeRange)
 		}
 	}
-
+	
 	private mutating func removeAllEmptyTuplets() {
 		var indexesToRemove = [Int]()
 		let accumulateNoteCount: (Int, NoteCollection) -> Int = { prev, currentNoteCollection in
 			prev + currentNoteCollection.noteCount
 		}
-
-        for (index, noteCollection) in notes.enumerated() {
+		
+		for (index, noteCollection) in notes.enumerated() {
 			guard var tuplet = noteCollection as? Tuplet else { continue }
 			if tuplet.notes.isEmpty || tuplet.notes.reduce(0, accumulateNoteCount) == 0 {
 				indexesToRemove.append(index)
@@ -439,7 +439,7 @@ public struct Tuplet: NoteCollection {
 			notes.remove(at: index - alreadyRemoved)
 		}
 	}
-
+	
 	internal mutating func recomputeFlatIndexes(parentIndexes: [Int] = [Int]()) -> [[Int]] {
 		flatIndexes = [[Int]]()
 		for (index, noteCollection) in notes.enumerated() {
@@ -458,12 +458,12 @@ public struct Tuplet: NoteCollection {
 extension Tuplet: Equatable {
 	public static func == (lhs: Tuplet, rhs: Tuplet) -> Bool {
 		guard lhs.noteTimingCount == rhs.noteTimingCount,
-			lhs.noteDuration == rhs.noteDuration,
-			lhs.noteCount == rhs.noteCount else {
+			  lhs.noteDuration == rhs.noteDuration,
+			  lhs.noteCount == rhs.noteCount else {
 			return false
 		}
 		guard lhs.notes.count == rhs.notes.count else { return false }
-
+		
 		for (index, collection) in lhs.notes.enumerated() where collection != rhs.notes[index] {
 			return false
 		}

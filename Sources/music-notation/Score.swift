@@ -13,7 +13,7 @@
 /// entire score.
 public struct Score: RandomAccessCollection {
 	// MARK: - Collection Conformance
-
+	
 	public typealias Index = Int
 	public var startIndex: Int								{ parts.startIndex }
 	public var endIndex: Int								{ parts.endIndex }
@@ -22,11 +22,11 @@ public struct Score: RandomAccessCollection {
 	public func index(before index: Int) -> Int 			{ parts.index(before: index) }
 	public typealias Iterator = IndexingIterator<[Part]>
 	public func makeIterator() -> Iterator 					{ parts.makeIterator() }
-
+	
 	// MARK: - Main Properties
-
+	
 	internal private(set) var parts: [Part] = []
-
+	
 	public var title: String = ""
 	public var subtitle: String = ""
 	public var artist: String = ""
@@ -37,11 +37,13 @@ public struct Score: RandomAccessCollection {
 	public var transcriber: String = ""
 	public var instructions: String = ""
 	public var notices: String = ""
-
+	
 	public var firstPageHeader: PageHeader?
 	public var pageHeader: PageHeader?
 	public var pageFooter: PageFooter?
-
+	
+	public var masterStaff: Staff?
+	
 	public init(
 		parts: [Part] = [],
 		title: String = "",
@@ -56,7 +58,8 @@ public struct Score: RandomAccessCollection {
 		notices: String = "",
 		firstPageHeader: PageHeader? = nil,
 		pageHeader: PageHeader? = nil,
-		pageFooter: PageFooter? = nil
+		pageFooter: PageFooter? = nil,
+		masterStaff: Staff? = nil
 	) {
 		self.parts = parts
 		self.title = title
@@ -73,7 +76,7 @@ public struct Score: RandomAccessCollection {
 		self.pageHeader = pageHeader
 		self.pageFooter = pageFooter
 	}
-
+	
 	/// Adds a new `part` element at the end of the `parts` array.
 	///
 	/// Use this method to append a single element to the end of a mutable array.
@@ -81,7 +84,7 @@ public struct Score: RandomAccessCollection {
 	public mutating func appendPart(_ newPart: Part) {
 		parts.append(newPart)
 	}
-
+	
 	/// Adds the elements of a sequence to the end of the `parts` array.
 	///
 	/// Use this method to append the elements of a `Part` sequence to the end of the
@@ -92,7 +95,7 @@ public struct Score: RandomAccessCollection {
 	public mutating func append(contentsOf newParts: [Part]) {
 		parts.append(contentsOf: newParts)
 	}
-
+	
 	/// Inserts a `part` at the given index.
 	///
 	/// - parameter part: The part to be inserted.
@@ -104,7 +107,7 @@ public struct Score: RandomAccessCollection {
 	public mutating func insertPart(_ part: Part, at index: Int) throws {
 		parts.insert(part, at: index)
 	}
-
+	
 	/// Removes and returns the `Part` at the specified position.
 	///
 	/// All the elements following the specified position are moved up to
@@ -123,7 +126,7 @@ public struct Score: RandomAccessCollection {
 extension Score: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let partsDescription = parts.map { $0.debugDescription }.joined(separator: ", ")
-
+		
 		return "parts(\(partsDescription))"
 	}
 }

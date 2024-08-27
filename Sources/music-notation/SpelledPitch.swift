@@ -16,7 +16,7 @@ public struct SpelledPitch: Sendable {
 	public let noteLetter: NoteLetter
 	public let accidental: Accidental
 	public let octave: Octave
-
+	
 	public init(_ noteLetter: NoteLetter, accidental: Accidental = .natural, _ octave: Octave) {
 		self.noteLetter = noteLetter
 		self.accidental = accidental
@@ -38,8 +38,8 @@ extension SpelledPitch: CustomDebugStringConvertible {
 extension SpelledPitch: Equatable {
 	public static func == (lhs: SpelledPitch, rhs: SpelledPitch) -> Bool {
 		if lhs.accidental == rhs.accidental,
-			lhs.noteLetter == rhs.noteLetter,
-			lhs.octave == rhs.octave {
+		   lhs.noteLetter == rhs.noteLetter,
+		   lhs.octave == rhs.octave {
 			return true
 		} else {
 			return false
@@ -50,7 +50,7 @@ extension SpelledPitch: Equatable {
 public extension SpelledPitch {
 	var midiNoteNumber: Int {
 		var result = (octave.rawValue + 1) * 12
-
+		
 		switch noteLetter {
 		case .c: break
 		case .d: result += 2
@@ -60,7 +60,7 @@ public extension SpelledPitch {
 		case .a: result += 9
 		case .b: result += 11
 		}
-
+		
 		switch accidental {
 		case .natural:
 			break
@@ -73,7 +73,7 @@ public extension SpelledPitch {
 		case .doubleSharp:
 			result += 2
 		}
-
+		
 		return result
 	}
 }

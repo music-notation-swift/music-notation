@@ -8,7 +8,7 @@
 
 public enum Striking: Sendable {
 	case left
-    case up
+	case up
 	case right
-    case down
+	case down
 }

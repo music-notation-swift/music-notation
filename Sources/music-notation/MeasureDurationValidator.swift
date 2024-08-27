@@ -30,7 +30,7 @@ public enum MeasureDurationValidator {
 		case full
 		case overfilled(overflowingNotes: CountableRange<Int>)
 		case invalid
-
+		
 		public static func == (lhs: CompletionState, rhs: CompletionState) -> Bool {
 			switch (lhs, rhs) {
 			case (.full, .full):
@@ -46,7 +46,7 @@ public enum MeasureDurationValidator {
 			}
 		}
 	}
-
+	
 	/// For the given measure, returns an array of `CompletionState` for each set in the measure in order.
 	///
 	/// - parameter measure: The measure for which the `CompletionState` should be calculated.
@@ -59,8 +59,8 @@ public enum MeasureDurationValidator {
 		} catch {
 			return [.invalid]
 		}
-        let fullMeasureTicksBudget = Double(measure.timeSignature.numerator) * baseDuration.ticks
-
+		let fullMeasureTicksBudget = Double(measure.timeSignature.numerator) * baseDuration.ticks
+		
 		// Validate each set separately
 		return measure.notes.enumerated().map { setIndex, noteCollection in
 			var overFilledStartIndex: Int?
@@ -84,7 +84,7 @@ public enum MeasureDurationValidator {
 			}
 		}
 	}
-
+	
 	/// Returns the number of a certain `NoteDuration` that will fit in a measure in the specified note set.
 	///
 	/// - parameter noteDuration: The note duration to check
@@ -108,7 +108,7 @@ public enum MeasureDurationValidator {
 		guard availableTicks > 0 else { return 0 }
 		return Int(availableTicks / noteDuration.ticks)
 	}
-
+	
 	/// Calculates the `NoteDuration` that is associated with the bottom number of a `TimeSignature`.
 	/// This handles irrational time signatures.
 	///
@@ -120,11 +120,11 @@ public enum MeasureDurationValidator {
 	///
 	internal static func baseNoteDuration(from measure: ImmutableMeasure) throws -> NoteDuration {
 		let denominator = measure.timeSignature.denominator
-
+		
 		// TODO: Replace `pow`, `floor`, and `log`
 		// https://github.com/drumnkyle/music-notation-core/issues/146
 		let rationalizedDenominator = Int(pow(2, floor(log(Double(denominator)) / log(2))))
-
+		
 		// TODO: (Kyle) We should validate in TimeSignature to make sure the number
 		// isn't too large. Then I guess we can make this a force unwrap, because the math above
 		// means it will always be a power of 2 and NoteDuration is always power of 2.
@@ -134,7 +134,7 @@ public enum MeasureDurationValidator {
 			throw MeasureDurationValidatorError.invalidBottomNumber
 		}
 	}
-
+	
 	private static func availableNotes(within ticks: Double) -> [NoteDuration: Int] {
 		var ticksLeft = ticks
 		var availableNotes: [NoteDuration: Int] = [:]
@@ -146,7 +146,7 @@ public enum MeasureDurationValidator {
 		}
 		return availableNotes
 	}
-
+	
 	// TODO: Refactor - move allDurations and function findLargest(start:, end:) -> NoteDuration out of this function
 	// https://github.com/drumnkyle/music-notation-core/issues/141
 	private static func findLargestDuration(lessThan ticks: Double) -> NoteDuration {
@@ -157,7 +157,7 @@ public enum MeasureDurationValidator {
 		let allTicks = allDurations.map { $0.ticks }
 		func findLargest(start: Int, end: Int) -> NoteDuration {
 			guard end - start > 1 else { return allDurations[end] }
-
+			
 			let mid = (start + end) / 2
 			if allTicks[mid] < ticks {
 				return findLargest(start: start, end: mid)

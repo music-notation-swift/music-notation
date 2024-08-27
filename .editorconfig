@@ -1,0 +1,32 @@
+# http://editorconfig.org
+root = true
+
+# Common styles for most types of files
+[*]
+indent_size = 4
+tab_width = 4
+end_of_line = lf
+
+[*.swift]
+indent_style = tab
+insert_final_newline = true
+max_line_length = 120
+trim_trailing_whitespace = true
+
+[{*.yml,*.yaml}]
+indent_size = 2
+
+# Use tabs for property lists
+[*.plist]
+indent_style = tab
+
+# Makefiles always use tabs for indentation
+[Makefile]
+indent_style = tab
+
+# Markdown
+# Trailing whitespace means line break instead of full paragraph
+# https://arcticicestudio.github.io/styleguide-markdown/rules/whitespace.html#trailing
+[*.md]
+indent_size = 2
+trim_trailing_whitespace = false

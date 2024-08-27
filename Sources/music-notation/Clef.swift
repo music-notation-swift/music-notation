@@ -67,7 +67,7 @@ public struct Clef: Sendable {
 		// Add the delta to the clef raw value
 		let newPitchRawWithDelta = clefPitchRawValue + delta
 
-        /// If requested location is increase (delta > 0), you are adding onto 0.
+		/// If requested location is increase (delta > 0), you are adding onto 0.
 		/// If it's a decrease, you are subtracting from the largestNoteLetter.
 		///
 		let startingPitchValue = newPitchRawWithDelta > 0 ? 0 : largestNoteLetter

@@ -6,4 +6,12 @@
 --decimalgrouping 3
 
 --enable isEmpty
---disable preferKeyPath,trailingCommas,blankLinesAroundMark,consecutiveSpaces,unusedArguments,redundantFileprivate,wrapMultilineStatementBraces,wrapArguments,indent
+--disable preferKeyPath
+--disable trailingCommas
+--disable blankLinesAroundMark
+--disable consecutiveSpaces
+--disable unusedArguments
+--disable redundantFileprivate
+--disable wrapMultilineStatementBraces
+--disable wrapArguments
+--disable indent
