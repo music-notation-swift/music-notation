@@ -41,9 +41,10 @@ public struct Score: RandomAccessCollection {
 	public var firstPageHeader: PageHeader?
 	public var pageHeader: PageHeader?
 	public var pageFooter: PageFooter?
-	
-	public var masterStaff: Staff?
-	
+
+	// Holds information global to all parts of the score (for instance the sections)
+	public var masterPart: Part?
+
 	public init(
 		parts: [Part] = [],
 		title: String = "",
@@ -59,7 +60,7 @@ public struct Score: RandomAccessCollection {
 		firstPageHeader: PageHeader? = nil,
 		pageHeader: PageHeader? = nil,
 		pageFooter: PageFooter? = nil,
-		masterStaff: Staff? = nil
+		masterPart: Part? = nil
 	) {
 		self.parts = parts
 		self.title = title
@@ -75,6 +76,7 @@ public struct Score: RandomAccessCollection {
 		self.firstPageHeader = firstPageHeader
 		self.pageHeader = pageHeader
 		self.pageFooter = pageFooter
+		self.masterPart = masterPart
 	}
 	
 	/// Adds a new `part` element at the end of the `parts` array.
