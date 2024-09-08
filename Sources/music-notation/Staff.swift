@@ -35,10 +35,11 @@ public struct Staff: RandomAccessCollection {
 	public init(
 		clef: Clef = .treble,
 		instrument: Instrument,
-		measure: [Measure]
+		measure: [Measure] = []
 	) {
 		self.clef = clef
 		self.instrument = instrument
+		measure.forEach { appendMeasure($0) }
 	}
 
 	public mutating func appendMeasure(_ measure: Measure) {

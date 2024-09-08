@@ -6,6 +6,7 @@
 //	Copyright © 2021 Steven Woolgar. All rights reserved.
 //
 
+// MARK: -
 public enum Accidental: Sendable {
 	case sharp
 	case doubleSharp
@@ -14,6 +15,36 @@ public enum Accidental: Sendable {
 	case natural
 }
 
+// MARK: -
+extension Accidental: Element {
+	public var type: any Element.Type { get { Self.self } }
+
+	public var parent: (any Element)? {
+		get {
+			nil
+		}
+		set {
+		}
+	}
+	
+	public var next: (any Element)? {
+		get {
+			nil
+		}
+		set {
+		}
+	}
+	
+	public var prev: (any Element)? {
+		get {
+			nil
+		}
+		set {
+		}
+	}
+}
+
+// MARK: -
 extension Accidental: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		switch self {
