@@ -7,41 +7,12 @@
 //
 
 // MARK: -
-public enum Accidental: Sendable {
+public enum Accidental: Sendable, Element {
 	case sharp
 	case doubleSharp
 	case flat
 	case doubleFlat
 	case natural
-}
-
-// MARK: -
-extension Accidental: Element {
-	public var type: any Element.Type { get { Self.self } }
-
-	public var parent: (any Element)? {
-		get {
-			nil
-		}
-		set {
-		}
-	}
-	
-	public var next: (any Element)? {
-		get {
-			nil
-		}
-		set {
-		}
-	}
-	
-	public var prev: (any Element)? {
-		get {
-			nil
-		}
-		set {
-		}
-	}
 }
 
 // MARK: -
