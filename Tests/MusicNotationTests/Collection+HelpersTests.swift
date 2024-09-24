@@ -30,7 +30,7 @@ import Testing
 
 	// MARK: lastIndex
 
-    @Test func testLastIndex1Item() async throws {
+    @Test func lastIndex1Item() async throws {
         #expect(singleElementArray.lastIndex == 0)
 	}
 
