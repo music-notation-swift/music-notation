@@ -7,8 +7,6 @@
 //
 
 public struct Instrument: Sendable {
-	public let name: String
-	
 	public let lineCount: Int
 	
 	/// Number of steps that this instrument is transposed.
@@ -16,12 +14,10 @@ public struct Instrument: Sendable {
 	public let octaveTransposition: Int
 	
 	public init(
-		name: String = "",
 		lineCount: Int = 0,
 		chromaticTransposition: Int = 0,
 		octaveTransposition: Int = 0
 	) {
-		self.name = name
 		self.lineCount = lineCount
 		self.chromaticTransposition = chromaticTransposition
 		self.octaveTransposition = octaveTransposition

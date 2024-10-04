@@ -8,6 +8,32 @@
 
 import Foundation
 
+/// A clef (from French: clef **'key'**) is a musical symbol used to indicate which notes are represented
+/// by the lines and spaces on a musical staff. Placing a clef on a staff assigns a particular pitch
+/// to one of the five lines or four spaces, which defines the pitches on the remaining lines and spaces.
+///
+/// The three clef symbols used in modern music notation are the **G-clef**, **F-clef**, and **C-clef**.
+/// Placing these clefs on a line fixes a reference note to that line—an F-clef fixes the F below
+/// middle C, a C-clef fixes middle C, and a G-clef fixes the G above middle C.
+///
+/// In modern music notation, the G-clef is most frequently seen as treble clef (placing G4 on the
+/// second line of the staff), and the F-clef as bass clef (placing F3 on the fourth line).
+///
+/// The C-clef is mostly encountered as alto clef (placing middle C on the third line) or tenor
+/// clef (middle C on the fourth line).
+/// A clef may be placed on a space instead of a line, but this is rare.
+///
+/// The use of different clefs makes it possible to write music for all instruments and voices,
+/// regardless of differences in range. Using different clefs for different instruments and
+/// voices allows each part to be written comfortably on a staff with a minimum of ledger lines.
+/// To this end, the G-clef is used for high parts, the C-clef for middle parts, and the F-clef for
+/// low parts. Transposing instruments can be an exception to this—the same clef is generally used
+/// for all instruments in a family, regardless of their sounding pitch. For example, even the low
+/// saxophones read in treble clef.
+///
+/// - note: Please see the description as seen in the README.md file. You can see the graphic representations
+/// of each of the clefs.
+///
 public struct Clef: Sendable {
 	/// The pitch that defines the clef. This pitch is specified to be at a
 	/// certain `StaffLocation` using the `staffLocation` property.
@@ -26,26 +52,6 @@ public struct Clef: Sendable {
 		self.pitch = pitch
 		staffLocation = location
 	}
-
-	public static let treble = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 1))
-	public static let bass = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 3))
-	public static let tenor = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 3))
-	public static let alto = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 2))
-
-	/// Un-pitched (drums, percussion, etc.)
-	public static let neutral = Clef(pitch: nil, location: StaffLocation(.line, 2))
-
-	/// For tablature (guitar, etc.)
-	public static let tab = Clef(pitch: nil, location: StaffLocation(.line, 2))
-
-	// Less common
-	public static let frenchViolin = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 0))
-	public static let soprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 0))
-	public static let mezzoSoprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 1))
-	public static let baritone = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 4))
-
-	// TODO: Is this one correct?
-	public static let suboctaveTreble = Clef(pitch: SpelledPitch(.g, .octave3), location: StaffLocation(.line, 1))
 
 	/// Calculates the pitch for the given staff location for this Clef.
 	///
@@ -101,16 +107,47 @@ public struct Clef: Sendable {
 	}
 }
 
+// MARK: - Common clefs
+extension Clef {
+	// Common clef convenience constructors
+	public static let treble = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 1))
+	public static let bass = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 3))
+	public static let tenor = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 3))
+	public static let alto = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 2))
+
+	/// Un-pitched (drums, percussion, etc.)
+	public static let neutral = Clef(pitch: nil, location: StaffLocation(.line, 2))
+
+	/// For tablature (guitar, etc.)
+	public static let tab = Clef(pitch: nil, location: StaffLocation(.line, 2))
+
+	// Less common
+	public static let frenchViolin = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 0))
+	public static let soprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 0))
+	public static let mezzoSoprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 1))
+	public static let baritone = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 4))
+
+	// TODO: Is this one correct?
+	public static let suboctaveTreble = Clef(pitch: SpelledPitch(.g, .octave3), location: StaffLocation(.line, 1))
+
+}
+
+// MARK: - Errors
+
 public enum ClefError: Error {
 	case octaveOutOfRange
 	case internalError
 }
+
+// MARK: - Equality
 
 extension Clef: Equatable {
 	public static func == (lhs: Clef, rhs: Clef) -> Bool {
 		lhs.pitch == rhs.pitch && lhs.staffLocation.halfSteps == rhs.staffLocation.halfSteps
 	}
 }
+
+// MARK: - Debug
 
 extension Clef: CustomDebugStringConvertible {
 	public var debugDescription: String {
