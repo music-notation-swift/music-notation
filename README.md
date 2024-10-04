@@ -9,7 +9,7 @@
 
 # music-notation
 
-Cross-Platform Music Notation API written in Swift. It is written so that it can be used in most any operating system, such as iOS, macOS, tvOS. Windows & Linux is aspirational at this point, but since the plan is to eschew all dependencies, this should not be much of a stretch. This library is being created with the goal of having 0 dependencies; not even Foundation.
+Music Notation API written in Swift. It is written so that it can be used in most any operating system, such as iOS, macOS, tvOS. Windows & Linux is aspirational at this point, but since the plan is to eschew all dependencies it should not be much of a stretch. This library is being created with the goal of having near 0 dependencies.
 
 `music-notation` is meant to implement the model and controller layers, which understands how music notation works. It will have no render capabilities, nor input/output. Those functionalities will be implemented in add-on packages.
 
@@ -18,8 +18,6 @@ See `music-notation-render` and `music-notation-io` as well as `music-notation-i
 The goal is to provide these as [Swift Package Manager](https://github.com/apple/swift-package-manager) based packages. Cocoapods and Carthage will no longer be supported. Manually adding the package into Xcode projects will still be supported.
 
 Please consult this [Swift style guide](https://github.com/music-notation-swift/swift-style-guide) for coding style guidelines used in this repo and be sure to adhere to them.
-
-There is a Slack channel you can join if you want to see more into the development process at [Music Notation Swift Slack](https://join.slack.com/t/musicnotationswift/shared_invite/enQtOTE1NzQyMzI5MTA2LWZlN2MyNmI5MjA2Njc4MGQ5N2IxNzYzY2QxMmYwNmFlNDNmNjUwNjBlMGY1MWIzNDkxMzY2MzAwNjc4NTJkNjU).
 
 ## Contents
 
