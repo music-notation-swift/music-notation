@@ -125,9 +125,16 @@ extension Clef {
 	public static let frenchViolin = Clef(pitch: SpelledPitch(.g, .octave4), location: StaffLocation(.line, 0))
 	public static let soprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 0))
 	public static let mezzoSoprano = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 1))
-	public static let baritone = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 4))
+	public static let baritoneF = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 2))
+	public static let baritoneC = Clef(pitch: SpelledPitch(.c, .octave4), location: StaffLocation(.line, 4))
+	public static let subBase = Clef(pitch: SpelledPitch(.f, .octave3), location: StaffLocation(.line, 5))
 
 	// TODO: Is this one correct?
+	/// Starting in the 18th century, music for some instruments (such as guitar) and for the tenor voice
+	/// have used treble clef, although they sound an octave lower. To avoid ambiguity, modified clefs
+	/// are sometimes used, especially in choral writing. Using a C-clef on the third space places the
+	/// notes identically, but this notation is much less common[9][10] as it is easily confused with the
+	/// alto and tenor clefs.
 	public static let suboctaveTreble = Clef(pitch: SpelledPitch(.g, .octave3), location: StaffLocation(.line, 1))
 
 }
@@ -160,7 +167,8 @@ extension Clef: CustomDebugStringConvertible {
 		case Clef.frenchViolin: return "frenchViolin"
 		case Clef.soprano: return "soprano"
 		case Clef.mezzoSoprano: return "mezzoSoprano"
-		case Clef.baritone: return "baritone"
+		case Clef.baritoneF: return "baritoneF"
+		case Clef.baritoneC: return "baritoneC"
 		case Clef.suboctaveTreble: return "suboctaveTreble"
 		case let clef where clef.pitch == nil: return "neutral"
 		default:

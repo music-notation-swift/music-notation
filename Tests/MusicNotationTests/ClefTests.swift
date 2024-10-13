@@ -161,7 +161,8 @@ import Testing
         #expect(Clef.frenchViolin.debugDescription == "frenchViolin")
         #expect(Clef.soprano.debugDescription == "soprano")
         #expect(Clef.mezzoSoprano.debugDescription == "mezzoSoprano")
-        #expect(Clef.baritone.debugDescription == "baritone")
+        #expect(Clef.baritoneF.debugDescription == "baritoneF")
+		#expect(Clef.baritoneC.debugDescription == "baritoneC")
         #expect(Clef.suboctaveTreble.debugDescription == "suboctaveTreble")
     }
 
