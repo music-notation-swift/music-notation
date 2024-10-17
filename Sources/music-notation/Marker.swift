@@ -6,7 +6,7 @@
 //	Copyright © 2024 Steven Woolgar. All rights reserved.
 //
 
-public enum MarkerType {
+public enum MarkerType: CaseIterable {
 	case segno
 	case varSegno
 	case coda
@@ -26,7 +26,7 @@ public enum MarkerType {
 			return .segno
 		case "varsegno":
 			return .varSegno
-		case "codab":
+		case "coda":
 			return .coda
 		case "Var Coda":
 			return .varCoda
