@@ -21,8 +21,3 @@ public enum JumpType {
 	case dalDoppioSegnoAlFine
 	case userJump
 }
-
-public struct Jump: Sendable {
-	public init() {
-	}
-}
