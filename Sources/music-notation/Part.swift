@@ -63,6 +63,7 @@ public struct Part {
 	///	   - `PartError.internalError`
 	///
 	public mutating func insertStaff(_ staff: Staff, at index: Int) throws {
+		guard index >= 0, index < staves.count else { throw PartError.staffIndexOutOfRange }
 		staves.insert(staff, at: index)
 	}
 	
@@ -77,7 +78,8 @@ public struct Part {
 	///
 	@discardableResult
 	public mutating func remove(at index: Int) throws -> Staff {
-		staves.remove(at: index)
+		guard staves.count != 0 else { throw PartError.removeOutOfRange }
+		return staves.remove(at: index)
 	}
 }
 
@@ -87,4 +89,9 @@ extension Part: CustomDebugStringConvertible {
 		
 		return "staves(\(stavesDescription))"
 	}
+}
+
+enum PartError: Error {
+	case removeOutOfRange
+	case staffIndexOutOfRange
 }
