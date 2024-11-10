@@ -305,7 +305,6 @@ import Testing
 
 		try measure.insert(note3, at: 1)
 		#expect(measure.notes[0].count == 3)
-		print(measure!)
 
 		let resultNote1 = try measure.note(at: 0, inSet: 0)
 		let resultNote2 = try measure.note(at: 1, inSet: 0)
@@ -1131,7 +1130,7 @@ import Testing
 		let compoundTuplet = try Tuplet(5, .eighth, notes: [note, note, triplet, note])
 		measure.append(compoundTuplet)
 
-		print(measure.debugDescription)
+//		print(measure.debugDescription)
 		// FIXME: there is no implementation of throw MeasureError.cannotCalculateTicksWithinCompoundTuplet in cumulativeTicks
 		// https://github.com/drumnkyle/music-notation-core/issues/129
 		#expect(throws: MeasureError.cannotCalculateTicksWithinCompoundTuplet) {
@@ -1225,7 +1224,7 @@ import Testing
 		let triplet = try Tuplet(3, .eighth, notes: [note, note, note])
 		let compoundTuplet = try Tuplet(5, .eighth, notes: [note, note, triplet, note])
 		measure.append(compoundTuplet)
-		print(measure.debugDescription) // |4/4: [1/8R, 6[1/8R, 1/8R, 3[1/8R, 1/8R, 1/8R], 1/8R]]|
+//		print(measure.debugDescription) // |4/4: [1/8R, 6[1/8R, 1/8R, 3[1/8R, 1/8R, 1/8R], 1/8R]]|
 		let eighthTicks = NoteDuration.eighth.ticks
 		let eachCompoundTicks = compoundTuplet.ticks / Double(compoundTuplet.groupingOrder)
 		let eachTripletTicks = 2 * eachCompoundTicks / Double(triplet.groupingOrder)
@@ -1626,7 +1625,7 @@ import Testing
 				eighth, eighth, eighth, eighth, eighth, eighth, eighth, eighth,
 			],
 		])
-		print(measure.debugDescription)
+//		print(measure.debugDescription)
 		try measure.changeClef(.bass, at: 3, inSet: 1)
 		try measure.changeClef(.treble, at: 7, inSet: 1)
 		#expect(measure.clefs == [3072.0: .bass, 7168: .treble])
@@ -1651,7 +1650,7 @@ import Testing
 		#expect(measure.clefs == [0: .treble, 3072: .bass, 7168: .treble])
 		#expect(measure.lastClef == .treble)
 		#expect(measure.originalClef == nil)
-		print(measure.debugDescription)
+//		print(measure.debugDescription)
 	}
 
 	@Test func changeClefWithinTuplet() async throws {

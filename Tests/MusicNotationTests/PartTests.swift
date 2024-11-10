@@ -28,7 +28,6 @@ import Testing
 	}
 
 	@Test func debugDescription() async throws {
-		print("\(part!)")
 		#expect(part!.debugDescription == "staves(staff(treble Instrument(lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ), staff(bass Instrument(lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ))")
 	}
 
@@ -70,5 +69,4 @@ import Testing
 			try part.insertStaff(staff3, at: 17)
 		}
 	}
-
 }
