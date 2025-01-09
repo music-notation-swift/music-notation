@@ -13,7 +13,11 @@
 /// entire score.
 public struct Score: RandomAccessCollection {
 	// MARK: - Collection Conformance
-	
+
+	// This should be part of the io portion of the library.
+	// Note: This should be tied to the swift package, but I don't know of a way to push this into here.
+	public var version = Version(major: 0, minor: 3, revision: 0)
+
 	public typealias Index = Int
 	public var startIndex: Int								{ parts.startIndex }
 	public var endIndex: Int								{ parts.endIndex }

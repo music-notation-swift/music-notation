@@ -104,7 +104,7 @@ Please consult this [Swift style guide](https://github.com/music-notation-swift/
 
 ### 3.1 Swift Package Manager
 
-[Swift Package Manager](https://github.com/apple/swift-package-manager) requires Swift version 6.0 or higher. First, create a `Package.swift` file. It should look like:
+[Swift Package Manager](https://github.com/apple/swift-package-manager) requires Swift version 3.0 or higher, but the library itself requires Swift 6. First, create a `Package.swift` file. It should look like:
 
 ```swift
 dependencies: [

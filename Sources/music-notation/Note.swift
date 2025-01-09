@@ -23,9 +23,15 @@ public struct Note: NoteCollection, Sendable {
 	public var isStaccato = false
 	public var dynamics: Dynamics?
 	public var striking: Striking?
-	
+	public var hidden = false
+
+	// These two are used for tablature. You can not infer them from a note.
+	// ?But then fret and string without a tuning doesn't give us much?
+	public var fret: Int? = nil
+	public var string: Int? = nil
+
 	internal var tie: Tie?
-	
+
 	/// Initialize a rest.
 	public init(_ restDuration: NoteDuration) {
 		noteDuration = restDuration
