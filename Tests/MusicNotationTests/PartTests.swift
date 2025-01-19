@@ -28,7 +28,8 @@ import Testing
 	}
 
 	@Test func debugDescription() async throws {
-		#expect(part!.debugDescription == "staves(staff(treble Instrument(lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ), staff(bass Instrument(lineCount: 0, chromaticTransposition: 0, octaveTransposition: 0) ))")
+		print("\(part!.debugDescription)")
+		#expect(part!.debugDescription == "staves(staff(treble Instrument(chromaticTransposition: 0, diatonicTransposition: 0) ), staff(bass Instrument(chromaticTransposition: 0, diatonicTransposition: 0) ))")
 	}
 
 	@Test func partNames() async throws {

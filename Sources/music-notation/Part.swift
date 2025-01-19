@@ -22,16 +22,19 @@ public struct Part {
 	
 	public let name: String
 	public let shortName: String
-	
+	public let instrument: Instrument?
+
 	internal private(set) var staves: [Staff] = []
 	
 	public init(
 		name: String = "",
 		shortName: String = "",
+		instrument: Instrument? = nil,
 		staves: [Staff] = []
 	) {
 		self.name = name
 		self.shortName = shortName
+		self.instrument = instrument
 		self.staves = staves
 	}
 	

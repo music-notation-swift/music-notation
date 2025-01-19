@@ -7,19 +7,15 @@
 //
 
 public struct Instrument: Sendable {
-	public let lineCount: Int
-	
-	/// Number of steps that this instrument is transposed.
+	/// Number of steps that this instrument is transposed. `chromatic` is measured in semitones.
 	public let chromaticTransposition: Int
-	public let octaveTransposition: Int
-	
+	public let diatonicTransposition: Int
+
 	public init(
-		lineCount: Int = 0,
 		chromaticTransposition: Int = 0,
-		octaveTransposition: Int = 0
+		diatonicTransposition: Int = 0
 	) {
-		self.lineCount = lineCount
 		self.chromaticTransposition = chromaticTransposition
-		self.octaveTransposition = octaveTransposition
+		self.diatonicTransposition = diatonicTransposition
 	}
 }
