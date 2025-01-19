@@ -16,11 +16,23 @@ import Testing
 		#expect(try interval.intervalQuality() == .perfectUnison)
     }
 
+	@Test func unisonQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .unison, semitones: 0)
+		#expect(try interval.diatonicIntervalQuality() == .unison)
+		#expect(try interval.intervalQuality() == .perfectUnison)
+	}
+
     @Test func minorSecond() async throws {
 		let interval = try! Interval(diatonic: 1, semitones: 1)
 		#expect(try interval.diatonicIntervalQuality() == .second)
 		#expect(try interval.intervalQuality() == .minorSecond)
     }
+
+	@Test func minorSecondQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .second, semitones: 1)
+		#expect(try interval.diatonicIntervalQuality() == .second)
+		#expect(try interval.intervalQuality() == .minorSecond)
+	}
 
     @Test func minorThird() async throws {
 		let interval = try! Interval(diatonic: 2, semitones: 3)
@@ -28,11 +40,23 @@ import Testing
 		#expect(try interval.intervalQuality() == .minorThird)
     }
 
+	@Test func minorThirdQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .third, semitones: 3)
+		#expect(try interval.diatonicIntervalQuality() == .third)
+		#expect(try interval.intervalQuality() == .minorThird)
+	}
+
     @Test func augmentedFourth() async throws {
 		let interval = try! Interval(diatonic: 3, semitones: 6)
 		#expect(try interval.diatonicIntervalQuality() == .fourth)
 		#expect(try interval.intervalQuality() == .augmentedFourth)
     }
+
+	@Test func augmentedFourthQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .fourth, semitones: 6)
+		#expect(try interval.diatonicIntervalQuality() == .fourth)
+		#expect(try interval.intervalQuality() == .augmentedFourth)
+	}
 
     @Test func diminishedFifth() async throws {
 		let interval = try! Interval(diatonic: 4, semitones: 6)
@@ -40,11 +64,32 @@ import Testing
 		#expect(try interval.intervalQuality() == .diminishedFifth)
     }
 
-    @Test func octave() async throws {
+	@Test func diminishedFifthQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .fifth, semitones: 6)
+		#expect(try interval.diatonicIntervalQuality() == .fifth)
+		#expect(try interval.intervalQuality() == .diminishedFifth)
+	}
+
+	@Test func diminishedFifthQualityOctaves() async throws {
+		let interval = try! Interval(
+			diatonicIntervalQuality: .fifth,
+			semitones: 6 + Interval.Constants.semitonesPerOctave
+		)
+		#expect(try interval.diatonicIntervalQuality() == .fifth)
+		#expect(try interval.intervalQuality() == .diminishedFifth)
+	}
+
+	@Test func octave() async throws {
 		let interval = try! Interval(diatonic: 7, semitones: 12)
 		#expect(try interval.diatonicIntervalQuality() == .octave)
 		#expect(try interval.intervalQuality() == .perfectOctave)
     }
+
+	@Test func octaveQuality() async throws {
+		let interval = try! Interval(diatonicIntervalQuality: .octave, semitones: 12)
+		#expect(try interval.diatonicIntervalQuality() == .octave)
+		#expect(try interval.intervalQuality() == .perfectOctave)
+	}
 
     @Test func largeInterval() async throws {
 		let interval = try! Interval(diatonic: 5, semitones: 33)

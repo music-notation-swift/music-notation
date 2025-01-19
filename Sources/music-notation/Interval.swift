@@ -161,6 +161,11 @@ public enum IntervalQuality {
 }
 
 public struct Interval {
+	enum Constants {
+		static let semitonesPerOctave = 12
+		static let diatonicQualitiesPerOctave = 7
+	}
+
 	public let diatonic: Int
 	private let _semitones: Int
 
@@ -268,7 +273,7 @@ public struct Interval {
 	// Normalized number of semitones. This allows use to support multi-octal intervals and yet
 	// still know what the intra-octave values are.
 	func semitones() -> Int {
-		((_semitones - 1) % 12) + 1
+		((_semitones - 1) % Constants.semitonesPerOctave) + 1
 	}
 
 	func diatonicIntervalQuality() throws -> DiatonicIntervalQuality {
