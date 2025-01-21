@@ -10,17 +10,17 @@
 import Testing
 
 @Suite final class PartTests {
-	let testPartName = "testPartName"
-	let testPartShortName = "testShortName"
+	let testName = "testName"
+	let testShortName = "testShortName"
 
 	var staff1: Staff!
 	var staff2: Staff!
 	var part: Part!
 
 	init() {
-		staff1 = Staff(clef: .treble, instrument: Instrument())
-		staff2 = Staff(clef: .bass, instrument: Instrument())
-		part = Part(name: testPartName, shortName: testPartShortName, staves: [staff1, staff2])
+		staff1 = Staff(clef: .treble)
+		staff2 = Staff(clef: .bass)
+		part = Part(instrument: Instrument(name: testName, shortName: testShortName), staves: [staff1, staff2])
 	}
 
 	deinit {
@@ -28,13 +28,12 @@ import Testing
 	}
 
 	@Test func debugDescription() async throws {
-		print("\(part!.debugDescription)")
-		#expect(part!.debugDescription == "staves(staff(treble Instrument(chromaticTransposition: 0, diatonicTransposition: 0) ), staff(bass Instrument(chromaticTransposition: 0, diatonicTransposition: 0) ))")
+		#expect(part!.debugDescription == "staves(staff(treble ), staff(bass ))")
 	}
 
 	@Test func partNames() async throws {
-		#expect(part!.name == testPartName)
-		#expect(part!.shortName == testPartShortName)
+		#expect(part!.instrument?.name == testName)
+		#expect(part!.instrument?.shortName == testShortName)
 	}
 
 	@Test func iterator() async throws {
@@ -47,7 +46,7 @@ import Testing
 	}
 
 	@Test func appendStaff() async throws {
-		part.appendStaff(Staff(clef: .soprano, instrument: Instrument()))
+		part.appendStaff(Staff(clef: .soprano))
 		#expect(part.staves.count == 3)
 	}
 
@@ -65,7 +64,7 @@ import Testing
 	}
 
 	@Test func insertStaffInvalidIndex() async throws {
-		let staff3 = Staff(clef: .soprano, instrument: Instrument())
+		let staff3 = Staff(clef: .soprano)
 		#expect(throws: PartError.staffIndexOutOfRange) {
 			try part.insertStaff(staff3, at: 17)
 		}

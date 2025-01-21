@@ -34,7 +34,7 @@ import Testing
 
     init() {
         let key = Key(noteLetter: .c)
-        var staff = Staff(clef: .treble, instrument: Instrument())
+        var staff = Staff(clef: .treble)
         let dotted16: Note = {
             Note(try! NoteDuration(value: .sixteenth, dotCount: 1),
                  pitch: SpelledPitch(.c, .octave0))

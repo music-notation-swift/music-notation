@@ -20,20 +20,14 @@ public struct Part {
 	
 	// MARK: - Main Properties
 	
-	public let name: String
-	public let shortName: String
 	public let instrument: Instrument?
 
 	internal private(set) var staves: [Staff] = []
 	
 	public init(
-		name: String = "",
-		shortName: String = "",
 		instrument: Instrument? = nil,
 		staves: [Staff] = []
 	) {
-		self.name = name
-		self.shortName = shortName
 		self.instrument = instrument
 		self.staves = staves
 	}
@@ -94,7 +88,8 @@ extension Part: CustomDebugStringConvertible {
 	}
 }
 
-enum PartError: Error {
+public enum PartError: Error {
 	case removeOutOfRange
 	case staffIndexOutOfRange
+	case badInstrument
 }

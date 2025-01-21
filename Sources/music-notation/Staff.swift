@@ -23,7 +23,6 @@ public struct Staff: RandomAccessCollection {
 	// MARK: - Main Properties
 
 	public let clef: Clef
-	public let instrument: Instrument
 	public private(set) var measureCount: Int = 0
 
 	internal private(set) var notesHolders: [NotesHolder] = [] {
@@ -34,11 +33,9 @@ public struct Staff: RandomAccessCollection {
 
 	public init(
 		clef: Clef = .treble,
-		instrument: Instrument,
 		measure: [Measure] = []
 	) {
 		self.clef = clef
-		self.instrument = instrument
 		measure.forEach { appendMeasure($0) }
 	}
 
@@ -411,6 +408,6 @@ extension Staff: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let notesDescription = notesHolders.map { $0.debugDescription }.joined(separator: ", ")
 
-		return "staff(\(clef) \(instrument) \(notesDescription))"
+		return "staff(\(clef) \(notesDescription))"
 	}
 }
