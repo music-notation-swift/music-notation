@@ -6,17 +6,7 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
-	// MARK: - Collection Conformance
-	
-	public typealias Index = Int
-	public subscript(position: Index) -> Iterator.Element {
-		Measure.measureSlices(at: position, in: notes)!
-	}
-	
-	public typealias Iterator = MeasureIterator
-	public func makeIterator() -> Iterator { MeasureIterator(self) }
-	
+public struct Measure: ImmutableMeasure, Equatable {
 	// MARK: - Main Properties
 	
 	public let timeSignature: TimeSignature
@@ -867,7 +857,19 @@ public struct Measure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	}
 }
 
-// Debug extensions
+// MARK: - Collection Conformance
+
+extension Measure: RandomAccessCollection {
+	public typealias Index = Int
+	public subscript(position: Index) -> Iterator.Element {
+		Measure.measureSlices(at: position, in: notes)!
+	}
+
+	public typealias Iterator = MeasureIterator
+	public func makeIterator() -> Iterator { MeasureIterator(self) }
+}
+
+// MARK: - Debug extensions
 extension Measure: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let notesString = notes.map { "\($0)" }.joined(separator: ",")

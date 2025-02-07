@@ -6,20 +6,7 @@
 //	Copyright © 2015 Kyle Sherman. All rights reserved.
 //
 
-public struct Staff: RandomAccessCollection {
-	// MARK: - Collection Conformance
-
-	public typealias Index = Int
-	public var startIndex: Int { notesHolders.startIndex }
-	public var endIndex: Int { notesHolders.endIndex }
-	public subscript(position: Index) -> Iterator.Element { notesHolders[position] }
-
-	public func index(after index: Int) -> Int { notesHolders.index(after: index) }
-	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
-
-	public typealias Iterator = IndexingIterator<[NotesHolder]>
-	public func makeIterator() -> Iterator { notesHolders.makeIterator() }
-
+public struct Staff {
 	// MARK: - Main Properties
 
 	public let clef: Clef
@@ -31,10 +18,7 @@ public struct Staff: RandomAccessCollection {
 
 	private var measureIndexes: [(notesHolderIndex: Int, repeatMeasureIndex: Int?)] = []
 
-	public init(
-		clef: Clef = .treble,
-		measure: [Measure] = []
-	) {
+	public init(clef: Clef = .treble, measure: [Measure] = []) {
 		self.clef = clef
 		measure.forEach { appendMeasure($0) }
 	}
@@ -388,6 +372,24 @@ public struct Staff: RandomAccessCollection {
 	}
 }
 
+// MARK: - RandomAccessCollection Collection Conformance
+
+extension Staff: RandomAccessCollection {
+	public typealias Index = Int
+	public var startIndex: Int { notesHolders.startIndex }
+	public var endIndex: Int { notesHolders.endIndex }
+	public subscript(position: Index) -> Iterator.Element { notesHolders[position] }
+
+	public func index(after index: Int) -> Int { notesHolders.index(after: index) }
+	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
+
+	public typealias Iterator = IndexingIterator<[NotesHolder]>
+	public func makeIterator() -> Iterator { notesHolders.makeIterator() }
+
+}
+
+// MARK: - StaffErrors
+
 public enum StaffError: Error {
 	case noteIndexOutOfRange
 	case measureIndexOutOfRange
@@ -403,6 +405,8 @@ public enum StaffError: Error {
 	case hasToInsertIntoRepeatIfIndexIsNotFirstMeasureOfRepeat
 	case internalError
 }
+
+// MARK: - debugDescription
 
 extension Staff: CustomDebugStringConvertible {
 	public var debugDescription: String {

@@ -11,24 +11,13 @@
 ///
 /// A `score` will also be the container for stylesheets, as well as overall data for the
 /// entire score.
-public struct Score: RandomAccessCollection {
-	// MARK: - Collection Conformance
+public struct Score {
+	// MARK: - Main Properties
 
 	// This should be part of the io portion of the library.
 	// Note: This should be tied to the swift package, but I don't know of a way to push this into here.
 	public var version = Version(major: 0, minor: 3, revision: 0)
 
-	public typealias Index = Int
-	public var startIndex: Int								{ parts.startIndex }
-	public var endIndex: Int								{ parts.endIndex }
-	public subscript(position: Index) -> Iterator.Element	{ parts[position] }
-	public func index(after index: Int) -> Int				{ parts.index(after: index) }
-	public func index(before index: Int) -> Int 			{ parts.index(before: index) }
-	public typealias Iterator = IndexingIterator<[Part]>
-	public func makeIterator() -> Iterator 					{ parts.makeIterator() }
-	
-	// MARK: - Main Properties
-	
 	internal private(set) var parts: [Part] = []
 	
 	public var title: String = ""
@@ -129,10 +118,26 @@ public struct Score: RandomAccessCollection {
 	}
 }
 
+// MARK: - Collection Conformance
+
+extension Score: RandomAccessCollection {
+	public typealias Index = Int
+	public var startIndex: Int								{ parts.startIndex }
+	public var endIndex: Int								{ parts.endIndex }
+	public subscript(position: Index) -> Iterator.Element	{ parts[position] }
+	public func index(after index: Int) -> Int				{ parts.index(after: index) }
+	public func index(before index: Int) -> Int 			{ parts.index(before: index) }
+	public typealias Iterator = IndexingIterator<[Part]>
+	public func makeIterator() -> Iterator 					{ parts.makeIterator() }
+
+}
+
+// MARK: - Debug String
+
 extension Score: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let partsDescription = parts.map { $0.debugDescription }.joined(separator: ", ")
 		
-		return "parts(\(partsDescription))"
+		return "Score version: \(version.major).\(version.minor).\(version.revision), parts(\(partsDescription))"
 	}
 }
