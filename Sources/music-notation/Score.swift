@@ -118,7 +118,7 @@ public struct Score {
 	}
 }
 
-// MARK: - Collection Conformance
+// MARK: - RandomAccessCollection Conformance
 
 extension Score: RandomAccessCollection {
 	public typealias Index = Int
@@ -126,10 +126,29 @@ extension Score: RandomAccessCollection {
 	public var endIndex: Int								{ parts.endIndex }
 	public subscript(position: Index) -> Iterator.Element	{ parts[position] }
 	public func index(after index: Int) -> Int				{ parts.index(after: index) }
-	public func index(before index: Int) -> Int 			{ parts.index(before: index) }
 	public typealias Iterator = IndexingIterator<[Part]>
 	public func makeIterator() -> Iterator 					{ parts.makeIterator() }
 
+}
+
+// MARK: - BidirectionalCollection Conformance
+
+extension Score: BidirectionalCollection {
+	public func index(before index: Int) -> Int 			{ parts.index(before: index) }
+}
+
+// MARK: - RangeReplaceableCollection Conformance
+
+extension Score: RangeReplaceableCollection {
+	public init() {
+		self.init(parts: [])
+	}
+
+	mutating public func replaceSubrange<C>(
+		_ subrange: Range<Self.Index>,
+		with newElements: C) where C : Collection, Self.Element == C.Element {
+			parts.replaceSubrange(subrange.relative(to: parts), with: newElements)
+	}
 }
 
 // MARK: - Debug String
