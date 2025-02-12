@@ -82,9 +82,14 @@ public struct Part {
 
 extension Part: CustomDebugStringConvertible {
 	public var debugDescription: String {
-		let stavesDescription = staves.map { $0.debugDescription }.joined(separator: ", ")
-		
-		return "staves(\(stavesDescription))"
+		let stavesDescription = staves.map { $0.debugDescription }.joined(separator: "\n")
+		let instrumentName = if let name = instrument?.name {
+			"instrument `\(name)`"
+		} else {
+			""
+		}
+
+		return "Part(\(instrumentName)), staves(\(stavesDescription))"
 	}
 }
 
