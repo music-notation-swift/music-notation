@@ -28,7 +28,7 @@ import Testing
 	}
 
 	@Test func debugDescription() async throws {
-		#expect(part!.debugDescription == "staves(staff(treble ), staff(bass ))")
+		#expect(part!.debugDescription == "Part(instrument `testName`), staves(staff(treble )\nstaff(bass ))")
 	}
 
 	@Test func partNames() async throws {
