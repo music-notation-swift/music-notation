@@ -9,6 +9,8 @@
 /// A `score` can contain 0 or more parts. Each part can have a name, color, and position
 /// within the score.
 ///
+/// `score` is also full collection of parts. See the extensions for the comformances.
+///
 /// A `score` will also be the container for stylesheets, as well as overall data for the
 /// entire score.
 public struct Score {
@@ -71,51 +73,6 @@ public struct Score {
 		self.pageFooter = pageFooter
 		self.masterPart = masterPart
 	}
-	
-	/// Adds a new `part` element at the end of the `parts` array.
-	///
-	/// Use this method to append a single element to the end of a mutable array.
-	///
-	public mutating func appendPart(_ newPart: Part) {
-		parts.append(newPart)
-	}
-	
-	/// Adds the elements of a sequence to the end of the `parts` array.
-	///
-	/// Use this method to append the elements of a `Part` sequence to the end of the
-	/// `parts` array.
-	///
-	/// - Parameter newParts: The `parts` to append to the `parts` array.
-	///
-	public mutating func append(contentsOf newParts: [Part]) {
-		parts.append(contentsOf: newParts)
-	}
-	
-	/// Inserts a `part` at the given index.
-	///
-	/// - parameter part: The part to be inserted.
-	/// - parameter index: The index where the part should be inserted.
-	/// - throws:
-	///	   - `ScoreError.partIndexOutOfRange`
-	///	   - `ScoreError.internalError`
-	///
-	public mutating func insertPart(_ part: Part, at index: Int) throws {
-		parts.insert(part, at: index)
-	}
-	
-	/// Removes and returns the `Part` at the specified position.
-	///
-	/// All the elements following the specified position are moved up to
-	/// close the gap.
-	///
-	/// - Parameter index: The position of the `part` element to remove. `index` must
-	///   be a valid index of the array.
-	/// - Returns: The `part` element at the specified index.
-	///
-	@discardableResult
-	public mutating func remove(at index: Int) -> Part {
-		parts.remove(at: index)
-	}
 }
 
 // MARK: - RandomAccessCollection Conformance
@@ -124,11 +81,9 @@ extension Score: RandomAccessCollection {
 	public typealias Index = Int
 	public var startIndex: Int								{ parts.startIndex }
 	public var endIndex: Int								{ parts.endIndex }
-	public subscript(position: Index) -> Iterator.Element	{ parts[position] }
 	public func index(after index: Int) -> Int				{ parts.index(after: index) }
 	public typealias Iterator = IndexingIterator<[Part]>
 	public func makeIterator() -> Iterator 					{ parts.makeIterator() }
-
 }
 
 // MARK: - BidirectionalCollection Conformance
@@ -151,12 +106,19 @@ extension Score: RangeReplaceableCollection {
 	}
 }
 
-// MARK: - Debug String
+// MARK: - MutableCollection Conformance
+
+extension Score: MutableCollection {
+	public subscript(position: Int) -> Part {
+		get { parts[position] }
+		set(newValue) { parts[position] = newValue }
+	}
+}
+
+// MARK: - CustomDebugStringConvertible Conformance
 
 extension Score: CustomDebugStringConvertible {
 	public var debugDescription: String {
-		let partsDescription = parts.map { $0.debugDescription }.joined(separator: ", ")
-		
-		return "Score version: \(version.major).\(version.minor).\(version.revision), parts(\(partsDescription))"
+		"Score version: \(version.major).\(version.minor).\(version.revision), parts(\(parts.map { $0.debugDescription }.joined(separator: ", ")))"
 	}
 }
