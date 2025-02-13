@@ -7,21 +7,9 @@
 //
 
 public struct Part {
-	// MARK: - Collection Conformance
-	
-	public typealias Index = Int
-	public var startIndex: Int								{ staves.startIndex }
-	public var endIndex: Int								{ staves.endIndex }
-	public subscript(position: Index) -> Iterator.Element	{ staves[position] }
-	public func index(after index: Int) -> Int				{ staves.index(after: index) }
-	public func index(before index: Int) -> Int 			{ staves.index(before: index) }
-	public typealias Iterator = IndexingIterator<[Staff]>
-	public func makeIterator() -> Iterator 					{ staves.makeIterator() }
-	
 	// MARK: - Main Properties
 	
 	public let instrument: Instrument?
-
 	internal private(set) var staves: [Staff] = []
 	
 	public init(
@@ -31,52 +19,46 @@ public struct Part {
 		self.instrument = instrument
 		self.staves = staves
 	}
-	
-	/// Adds a new `staff` element at the end of the `staves` array.
-	///
-	/// Use this method to append a single element to the end of a mutable array.
-	///
-	public mutating func appendStaff(_ newStaff: Staff) {
-		staves.append(newStaff)
+}
+
+// MARK: - Collection Conformance
+
+extension Part: RandomAccessCollection {
+	public typealias Index = Int
+	public var startIndex: Int								{ staves.startIndex }
+	public var endIndex: Int								{ staves.endIndex }
+
+	public func index(after index: Int) -> Index			{ staves.index(after: index) }
+	public typealias Iterator = IndexingIterator<[Staff]>
+	public func makeIterator() -> Iterator 					{ staves.makeIterator() }
+}
+
+// MARK: - BidirectionalCollection Conformance
+
+extension Part: BidirectionalCollection {
+	public func index(before index: Int) -> Index 			{ staves.index(before: index) }
+}
+
+// MARK: - RangeReplaceableCollection Conformance
+
+extension Part: RangeReplaceableCollection {
+	public init() {
+		self.init(instrument: nil)
 	}
-	
-	/// Adds the elements of a sequence to the end of the `newStaves` array.
-	///
-	/// Use this method to append the elements of a `Staff` sequence to the end of the
-	/// `newStaves` array.
-	///
-	/// - Parameter contentsOf: The `newStaves` to append to the `newStaves` array.
-	///
-	public mutating func append(contentsOf newStaves: [Staff]) {
-		staves.append(contentsOf: newStaves)
+
+	mutating public func replaceSubrange<C>(
+		_ subrange: Range<Self.Index>,
+		with newElements: C) where C : Collection, Self.Element == C.Element {
+			staves.replaceSubrange(subrange.relative(to: staves), with: newElements)
 	}
-	
-	/// Inserts a `Staff` at the given index.
-	///
-	/// - parameter staff: The `Staff` to be inserted.
-	/// - parameter index: The index where the `Staff` should be inserted.
-	/// - throws:
-	///	   - `PartError.StaffIndexOutOfRange`
-	///	   - `PartError.internalError`
-	///
-	public mutating func insertStaff(_ staff: Staff, at index: Int) throws {
-		guard index >= 0, index < staves.count else { throw PartError.staffIndexOutOfRange }
-		staves.insert(staff, at: index)
-	}
-	
-	/// Removes and returns the `Staff` at the specified position.
-	///
-	/// All the elements following the specified position are moved up to
-	/// close the gap.
-	///
-	/// - Parameter index: The position of the `Staff` element to remove. `index` must
-	///   be a valid index of the array.
-	/// - Returns: The `Staff` element at the specified index.
-	///
-	@discardableResult
-	public mutating func remove(at index: Int) throws -> Staff {
-		guard staves.count != 0 else { throw PartError.removeOutOfRange }
-		return staves.remove(at: index)
+}
+
+// MARK: - MutableCollection Conformance
+
+extension Part: MutableCollection {
+	public subscript(position: Int) -> Iterator.Element {
+		get { staves[position] }
+		set(newValue) { staves[position] = newValue }
 	}
 }
 

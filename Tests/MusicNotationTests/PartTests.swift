@@ -46,27 +46,12 @@ import Testing
 	}
 
 	@Test func appendStaff() async throws {
-		part.appendStaff(Staff(clef: .soprano))
+		part.append(Staff(clef: .soprano))
 		#expect(part.staves.count == 3)
 	}
 
 	@Test func remove() async throws {
-		try part.remove(at: 0)
+		part.remove(at: 0)
 		#expect(part.staves.count == 1)
-	}
-
-	@Test func removeThrowAtEmpty() async throws {
-		try part.remove(at: 0)
-		try part.remove(at: 0)
-		#expect(throws: PartError.self) {
-			try part.remove(at: 0)
-		}
-	}
-
-	@Test func insertStaffInvalidIndex() async throws {
-		let staff3 = Staff(clef: .soprano)
-		#expect(throws: PartError.staffIndexOutOfRange) {
-			try part.insertStaff(staff3, at: 17)
-		}
 	}
 }
