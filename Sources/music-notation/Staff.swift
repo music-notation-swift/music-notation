@@ -378,14 +378,40 @@ extension Staff: RandomAccessCollection {
 	public typealias Index = Int
 	public var startIndex: Int { notesHolders.startIndex }
 	public var endIndex: Int { notesHolders.endIndex }
-	public subscript(position: Index) -> Iterator.Element { notesHolders[position] }
 
 	public func index(after index: Int) -> Int { notesHolders.index(after: index) }
-	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
 
 	public typealias Iterator = IndexingIterator<[NotesHolder]>
 	public func makeIterator() -> Iterator { notesHolders.makeIterator() }
+}
 
+// MARK: - BidirectionalCollection Conformance
+
+extension Staff: BidirectionalCollection {
+	public func index(before index: Int) -> Int { notesHolders.index(before: index) }
+}
+
+// MARK: - RangeReplaceableCollection Conformance
+
+extension Staff: RangeReplaceableCollection {
+	public init() {
+		self.init(clef: .treble)
+	}
+
+	mutating public func replaceSubrange<C>(
+		_ subrange: Range<Self.Index>,
+		with newElements: C) where C : Collection, Self.Element == C.Element {
+			notesHolders.replaceSubrange(subrange.relative(to: notesHolders), with: newElements)
+	}
+}
+
+// MARK: - MutableCollection Conformance
+
+extension Staff: MutableCollection {
+	public subscript(position: Index) -> Iterator.Element {
+		get { notesHolders[position] }
+		set(newValue) { notesHolders[position] = newValue }
+	}
 }
 
 // MARK: - StaffErrors
