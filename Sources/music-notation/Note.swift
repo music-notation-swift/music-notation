@@ -14,11 +14,11 @@ public struct Note: NoteCollection, Sendable {
 	public let groupingOrder = 1
 	public var first: Note? { self }
 	public var last: Note? { self }
-	
+
 	public let pitches: [SpelledPitch]
-	
+
 	public let isRest: Bool
-	
+
 	public var accent: Accent?
 	public var isStaccato = false
 	public var dynamics: Dynamics?
@@ -29,6 +29,9 @@ public struct Note: NoteCollection, Sendable {
 	// ?But then fret and string without a tuning doesn't give us much?
 	public var fret: Int? = nil
 	public var string: Int? = nil
+
+	// Which voice will this note be a part of.
+	public var voice: Int = 1
 
 	internal var tie: Tie?
 

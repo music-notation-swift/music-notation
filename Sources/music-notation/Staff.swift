@@ -98,11 +98,13 @@ public struct Staff {
 		let measureBefore = try? self.measure(at: index - 1)
 		let clefChange = measureBefore?.lastClef ?? clef
 		let didChangeClef = measure.changeFirstClefIfNeeded(to: clefChange)
+
 		// Need to propagate lastClef if there are clef changes already in the measure
 		if let newClef = measure.lastClef, !didChangeClef {
 			try propagateClefChange(newClef, fromMeasureIndex: index)
 		}
 		let notesHolderIndex = try notesHolderIndexFromMeasureIndex(index)
+
 		// Not a repeat, just insert
 		if notesHolderIndex.repeatMeasureIndex == nil {
 			notesHolders.insert(measure, at: notesHolderIndex.notesHolderIndex)
@@ -113,6 +115,7 @@ public struct Staff {
 				measureCount += measure.measureCount
 				return
 			}
+
 			// Is a repeat, so insert if it is one of the measures to be repeated
 			guard var measureRepeat = notesHolders[notesHolderIndex.notesHolderIndex] as? MeasureRepeat,
 				let repeatMeasureIndex = notesHolderIndex.repeatMeasureIndex else {
