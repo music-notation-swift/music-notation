@@ -21,19 +21,19 @@
 ///
 public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollection {
 	// MARK: - Collection Conformance
-	
+
 	public typealias Index = Int
 	public subscript(position: Index) -> Iterator.Element {
 		Measure.measureSlices(at: position, in: notes)!
 	}
-	
+
 	public typealias Iterator = MeasureIterator
 	public func makeIterator() -> Iterator {
 		MeasureIterator(self)
 	}
-	
+
 	// MARK: - Main Properties
-	
+
 	public let timeSignature: TimeSignature
 	public let key: Key?
 	public let notes: [[NoteCollection]]
@@ -42,7 +42,7 @@ public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollecti
 	public let clefs: [Double: Clef]
 	public let lastClef: Clef?
 	public let originalClef: Clef?
-	
+
 	public init(
 		timeSignature: TimeSignature,
 		key: Key? = nil,
@@ -63,11 +63,11 @@ public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollecti
 			}
 		}
 	}
-	
+
 	public init(timeSignature: TimeSignature, key: Key? = nil) {
 		self.init(timeSignature: timeSignature, key: key, notes: [[]])
 	}
-	
+
 	public init(timeSignature: TimeSignature, key: Key? = nil, notes: [[NoteCollection]]) {
 		self.timeSignature = timeSignature
 		self.key = key
@@ -81,7 +81,7 @@ public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollecti
 		lastClef = nil
 		originalClef = nil
 	}
-	
+
 	internal init(immutableMeasure: ImmutableMeasure) {
 		timeSignature = immutableMeasure.timeSignature
 		key = immutableMeasure.key
@@ -96,7 +96,7 @@ public struct RepeatedMeasure: ImmutableMeasure, Equatable, RandomAccessCollecti
 extension RepeatedMeasure: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let notesString = notes.map { "\($0)" }.joined(separator: ",")
-		
+	
 		return "|\(timeSignature): \(notesString)|"
 	}
 }

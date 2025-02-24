@@ -23,14 +23,14 @@ import Testing
     @Test func modifyTieBeginAndEndTryBegin() async throws {
         note.tie = .beginAndEnd
         #expect(throws: NoteError.invalidRequestedTieState) {
-            try note.modifyTie(.begin)
+			try self.note.modifyTie(.begin)
         }
     }
 
     @Test func modifyTieBeginAndEndTryEnd() async throws {
         note.tie = .beginAndEnd
-        #expect(throws: NoteError.invalidRequestedTieState) {
-            try note.modifyTie(.end)
+		#expect(throws: NoteError.invalidRequestedTieState) {
+			try self.note.modifyTie(.end)
         }
     }
 
@@ -92,7 +92,7 @@ import Testing
         note.tie = nil
 
         #expect(throws: NoteError.invalidRequestedTieState) {
-            try note.removeTie(.beginAndEnd)
+			try self.note.removeTie(.beginAndEnd)
         }
     }
 
@@ -100,7 +100,7 @@ import Testing
         // Requested state doesn't match
         note.tie = .end
         #expect(throws: NoteError.invalidRequestedTieState) {
-            try note.removeTie(.begin)
+			try self.note.removeTie(.begin)
         }
     }
 
@@ -108,7 +108,7 @@ import Testing
         // Requested state doesn't match
         note.tie = .begin
         #expect(throws: NoteError.invalidRequestedTieState) {
-            try note.removeTie(.end)
+			try self.note.removeTie(.end)
         }
     }
 

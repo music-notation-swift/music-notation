@@ -20,7 +20,7 @@ public struct NoteDuration: Hashable, Sendable {
 		case sixtyFourth
 		case oneTwentyEighth
 		case twoFiftySixth
-		
+	
 		public var debugDescription: String {
 			switch self {
 			case .large: return "8"
@@ -38,7 +38,7 @@ public struct NoteDuration: Hashable, Sendable {
 			}
 		}
 	}
-	
+
 	/// This holds the value for the bottom number of the time signature and relates the `NoteDuration.Value` to this
 	/// number or nil if it cannot be used for the bottom number of a time signature.
 	///
@@ -52,7 +52,7 @@ public struct NoteDuration: Hashable, Sendable {
 		case sixtyFourth = 64
 		case oneTwentyEighth = 128
 		// As far as I can tell, 128th note is the largest allowed
-		
+	
 		init?(value: Value) {
 			switch value {
 			case .whole: self = .whole
@@ -66,7 +66,7 @@ public struct NoteDuration: Hashable, Sendable {
 			default: return nil
 			}
 		}
-		
+	
 		fileprivate var duration: NoteDuration {
 			switch self {
 			case .whole: return .whole
@@ -80,16 +80,16 @@ public struct NoteDuration: Hashable, Sendable {
 			}
 		}
 	}
-	
+
 	/// The duration value of the `NoteDuration`. i.e. eighth, sixteenth, etc.
 	public let value: Value
 	/// The number of dots for this `NoteDuration`.
 	public let dotCount: Int
-	
+
 	/// The value for which the bottom number of time signature will be if this duration value is used.
 	///
 	public let timeSignatureValue: TimeSignatureValue?
-	
+
 	/// This is the number of ticks for the duration with the `dotCount` taken into account. This is a mathematical
 	/// representation of a `NoteDuration` that can be used for different calculations of equivalence.
 	///
@@ -119,13 +119,13 @@ public struct NoteDuration: Hashable, Sendable {
 		}
 		return ticks
 	}
-	
+
 	private init(value: Value) {
 		self.value = value
 		dotCount = 0
 		timeSignatureValue = TimeSignatureValue(value: value)
 	}
-	
+
 	/// Use this initializer if you would like to create a `NoteDuration` with 1 or more dots.
 	/// Otherwise, use the static properties if you do not need any dots.
 	///
@@ -140,12 +140,12 @@ public struct NoteDuration: Hashable, Sendable {
 		self.dotCount = dotCount
 		timeSignatureValue = TimeSignatureValue(value: value)
 	}
-	
+
 	/// Initialize a `NoteDuration` from a `TimeSignatureValue` which encapsulates the bottom number of a `TimeSignature`.
 	public init(timeSignatureValue: TimeSignatureValue) {
 		self = timeSignatureValue.duration
 	}
-	
+
 	public static let large = NoteDuration(value: .large)
 	public static let long = NoteDuration(value: .long)
 	public static let doubleWhole = NoteDuration(value: .doubleWhole)
@@ -158,7 +158,7 @@ public struct NoteDuration: Hashable, Sendable {
 	public static let sixtyFourth = NoteDuration(value: .sixtyFourth)
 	public static let oneTwentyEighth = NoteDuration(value: .oneTwentyEighth)
 	public static let twoFiftySixth = NoteDuration(value: .twoFiftySixth)
-	
+
 	/// This can be used to find out how many of a certain duration fits within another a duration. This takes into account
 	/// the `dotCount` as well.
 	///

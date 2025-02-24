@@ -21,7 +21,7 @@ public struct Score {
 	public var version = Version(major: 0, minor: 3, revision: 0)
 
 	internal private(set) var parts: [Part] = []
-	
+
 	public var title: String = ""
 	public var subtitle: String = ""
 	public var artist: String = ""
@@ -32,7 +32,7 @@ public struct Score {
 	public var transcriber: String = ""
 	public var instructions: String = ""
 	public var notices: String = ""
-	
+
 	public var firstPageHeader: PageHeader?
 	public var pageHeader: PageHeader?
 	public var pageFooter: PageFooter?

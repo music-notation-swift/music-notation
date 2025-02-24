@@ -102,7 +102,7 @@ import Testing
         )
 
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            try staff.insertMeasure(measure, at: 17)
+			try self.staff.insertMeasure(measure, at: 17)
         }
     }
 
@@ -113,7 +113,7 @@ import Testing
         )
 
         #expect(throws: MeasureRepeatError.cannotModifyRepeatedMeasures) {
-            try staff.insertMeasure(measure, at: 10, beforeRepeat: true)
+			try self.staff.insertMeasure(measure, at: 10, beforeRepeat: true)
         }
     }
 
@@ -234,15 +234,15 @@ import Testing
 
     @Test func insertRepeatInvalidIndex() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            let measureRepeat = try MeasureRepeat(measures: [measure4])
-            try staff.insertRepeat(measureRepeat, at: 50)
+			let measureRepeat = try MeasureRepeat(measures: [self.measure4])
+			try self.staff.insertRepeat(measureRepeat, at: 50)
         }
     }
 
     @Test func insertRepeatInRepeat() async throws {
         #expect(throws: StaffError.cannotInsertRepeatWhereOneAlreadyExists) {
-            let measureRepeat = try MeasureRepeat(measures: [measure5])
-            try staff.insertRepeat(measureRepeat, at: 6)
+			let measureRepeat = try MeasureRepeat(measures: [self.measure5])
+			try self.staff.insertRepeat(measureRepeat, at: 6)
         }
     }
 
@@ -278,50 +278,50 @@ import Testing
 
     @Test func startTieFailIfNoteIndexInvalid() async throws {
         #expect(throws: StaffError.noteIndexOutOfRange) {
-            try staff.startTieFromNote(at: 10, inMeasureAt: 0)
+			try self.staff.startTieFromNote(at: 10, inMeasureAt: 0)
         }
     }
 
     @Test func startTieFailIfMeasureIndexInvalid() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            try staff.startTieFromNote(at: 0, inMeasureAt: 25)
+			try self.staff.startTieFromNote(at: 0, inMeasureAt: 25)
         }
     }
 
     @Test func startTieFailIfNoNextNote() async throws {
         #expect(throws: StaffError.noNextNoteToTie) {
-            try staff.startTieFromNote(at: 4, inMeasureAt: 16)
+			try self.staff.startTieFromNote(at: 4, inMeasureAt: 16)
         }
     }
 
     @Test func startTieFailIfLastNoteOfSingleMeasureRepeat() async throws {
         // Reason: can't finish in the next measure
         #expect(throws: StaffError.repeatedMeasureCannotHaveTie) {
-            try staff.startTieFromNote(at: 3, inMeasureAt: 5)
+			try self.staff.startTieFromNote(at: 3, inMeasureAt: 5)
         }
     }
 
     @Test func startTieFailIfLastNoteInLastMeasureOfMultiMeasureRepeat() async throws {
         #expect(throws: StaffError.repeatedMeasureCannotHaveTie) {
-            try staff.startTieFromNote(at: 3, inMeasureAt: 8)
+			try self.staff.startTieFromNote(at: 3, inMeasureAt: 8)
         }
     }
 
     @Test func startTieFailIfNotesWithinRepeatAfterTheFirstCount() async throws {
         #expect(throws: StaffError.repeatedMeasureCannotHaveTie) {
-            try staff.startTieFromNote(at: 0, inMeasureAt: 9)
+			try self.staff.startTieFromNote(at: 0, inMeasureAt: 9)
         }
     }
 
     @Test func startTieAcrossMeasuresTupletToNoteDiffPitch() async throws {
         #expect(throws: StaffError.notesMustHaveSamePitchesToTie) {
-            try staff.startTieFromNote(at: 6, inMeasureAt: 14)
+			try self.staff.startTieFromNote(at: 6, inMeasureAt: 14)
         }
     }
 
     @Test func startTieAcrossMeasuresNoteToTupletDiffPitch() async throws {
         #expect(throws: StaffError.notesMustHaveSamePitchesToTie) {
-            try staff.startTieFromNote(at: 7, inMeasureAt: 15)
+			try self.staff.startTieFromNote(at: 7, inMeasureAt: 15)
         }
     }
 
@@ -452,13 +452,13 @@ import Testing
 
     @Test func removeTieFailIfNoteIndexInvalid() async throws {
         #expect(throws: StaffError.noteIndexOutOfRange) {
-            try staff.removeTieFromNote(at: 10, inMeasureAt: 0)
+			try self.staff.removeTieFromNote(at: 10, inMeasureAt: 0)
         }
     }
 
     @Test func removeTieFailIfMeasureIndexInvalid() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            try staff.removeTieFromNote(at: 0, inMeasureAt: 25)
+			try self.staff.removeTieFromNote(at: 0, inMeasureAt: 25)
         }
     }
 
@@ -587,7 +587,7 @@ import Testing
 
     @Test func notesHolderIndexForOutOfRangeMeasureIndex() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.notesHolderIndexFromMeasureIndex(20)
+			_ = try self.staff.notesHolderIndexFromMeasureIndex(20)
         }
     }
 
@@ -623,13 +623,13 @@ import Testing
 
     @Test func notesHolderAtMeasureIndexForInvalidIndexNegative() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.notesHolderAtMeasureIndex(-3)
+			_ = try self.staff.notesHolderAtMeasureIndex(-3)
         }
     }
 
     @Test func notesHolderAtMeasureIndexForInvalidIndexTooLarge() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.notesHolderAtMeasureIndex(99)
+			_ = try self.staff.notesHolderAtMeasureIndex(99)
         }
     }
 
@@ -671,13 +671,13 @@ import Testing
 
     @Test func measureAtIndexForInvalidIndexNegative() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.measure(at: -1)
+			_ = try self.staff.measure(at: -1)
         }
     }
 
     @Test func measureAtIndexForInvalidIndexTooLarge() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.measure(at: staff.notesHolders.count + 10)
+			_ = try self.staff.measure(at: self.staff.notesHolders.count + 10)
         }
     }
 
@@ -708,13 +708,13 @@ import Testing
 
     @Test func measureRepeatAtIndexForInvalidIndexNegative() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.measureRepeat(at: -1)
+			_ = try self.staff.measureRepeat(at: -1)
         }
     }
 
     @Test func measureRepeatAtIndexForInvalidIndexTooLarge() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            _ = try staff.measureRepeat(at: staff.notesHolders.count + 10)
+			_ = try self.staff.measureRepeat(at: self.staff.notesHolders.count + 10)
         }
     }
 
@@ -755,7 +755,7 @@ import Testing
 
     @Test func replaceRepeatedMeasure() async throws {
         #expect(throws: StaffError.repeatedMeasureCannotBeModified) {
-            try staff.replaceMeasure(at: 6, with: measure1)
+			try self.staff.replaceMeasure(at: 6, with: self.measure1)
         }
     }
 
@@ -781,13 +781,13 @@ import Testing
 
     @Test func changeClefInvalidMeasureIndex() async throws {
         #expect(throws: StaffError.measureIndexOutOfRange) {
-            try staff.changeClef(.bass, in: 17, atNote: 0, inSet: 0)
+			try self.staff.changeClef(.bass, in: 17, atNote: 0, inSet: 0)
         }
     }
 
     @Test func changeClefRepeatedMeasure() async throws {
         #expect(throws: StaffError.repeatedMeasureCannotBeModified) {
-            try staff.changeClef(.bass, in: 6, atNote: 0, inSet: 0)
+			try self.staff.changeClef(.bass, in: 6, atNote: 0, inSet: 0)
         }
     }
 

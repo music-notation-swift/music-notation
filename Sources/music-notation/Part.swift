@@ -8,10 +8,10 @@
 
 public struct Part {
 	// MARK: - Main Properties
-	
+
 	public let instrument: Instrument?
 	internal private(set) var staves: [Staff] = []
-	
+
 	public init(
 		instrument: Instrument? = nil,
 		staves: [Staff] = []

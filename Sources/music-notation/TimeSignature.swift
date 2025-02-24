@@ -84,12 +84,12 @@
 ///	division of the beat, and thus the bottom number of the time signature is 4. Note that because the beat is
 ///	divided into three in a compound meter, the beat is always three times as long as the division note, and
 ///	_the beat is always dotted_.
-///	
+///
 public struct TimeSignature: Sendable {
 	public let numerator: Int
 	public let denominator: Int
 	public let tempo: Int
-	
+
 	public init(numerator: Int, denominator: Int, tempo: Int) {
 		// TODO: Check the validity of all these values
 		self.numerator = numerator

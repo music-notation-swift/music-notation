@@ -52,25 +52,25 @@ public struct Stylesheet {
 	public var rightMargin: Int
 	public var bottomMargin: Int
 	public var leftMargin: Int
-	
+
 	/// 	Size settings
 	public var globalScoreProportions: Double	// In millimeters
 	public var affectsFontsAndChordSizes: Bool
 	public var rhythmProportions: Double
-	
+
 	/// 	Tuning settings
 	public var displayTunings: Bool
 	public var tuningPosition: TuningPosition
 	public var columns: ColumnsLayout
-	
+
 	///	Systems & Staves
 	public var firstSystemIndented: Bool
 	public var firstSystemIndentedValue: Int	// In millimeters
-	
+
 	///	Header & Footer
-	
+
 	///	Texts & Styles
-	
+
 	///	Notation
 	public var hideRhythmInTrblatureWhenUsingStandardNotation: Bool
 }

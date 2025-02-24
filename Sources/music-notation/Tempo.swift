@@ -22,7 +22,7 @@ public struct Tempo: Sendable {
 		case linear
 		case ramp
 	}
-	
+
 	public enum NoteUnit: Int, Sendable {
 		case eight = 1
 		case quarter
@@ -30,13 +30,13 @@ public struct Tempo: Sendable {
 		case half
 		case dottedHalf
 	}
-	
+
 	public let type: TempoType
 	public let position: Double
 	public let value: Int
 	public let unit: NoteUnit
 	public let text: String?
-	
+
 	public init(
 		type: TempoType,
 		position: Double,

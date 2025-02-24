@@ -13,16 +13,16 @@ public struct MeasureRepeat {
 			recalculateMeasureCount()
 		}
 	}
-	
+
 	public var measures: [Measure] {
 		didSet {
 			recalculateMeasureCount()
 		}
 	}
-	
+
 	/// The number of measures, including repeated measures
 	public private(set) var measureCount: Int
-	
+
 	public init(measures: [Measure], repeatCount: Int = 1) throws {
 		guard !measures.isEmpty else { throw MeasureRepeatError.noMeasures }
 		guard repeatCount > 0 else { throw MeasureRepeatError.invalidRepeatCount }
@@ -30,7 +30,7 @@ public struct MeasureRepeat {
 		self.repeatCount = repeatCount
 		measureCount = MeasureRepeat.measureCount(forMeasures: measures, repeatCount: repeatCount)
 	}
-	
+
 	/// Inserts a measure into the repeat. The index can only be within the count of original measures or
 	/// equal to the count. If it is equal to the count, the measure will be added to the end of the
 	/// measures to be repeated.
@@ -46,7 +46,7 @@ public struct MeasureRepeat {
 		guard index <= measures.count else { throw MeasureRepeatError.cannotModifyRepeatedMeasures }
 		measures.insert(measure, at: index)
 	}
-	
+
 	internal func expand() -> [ImmutableMeasure] {
 		let repeatedMeasuresHolders = measures.map {
 			RepeatedMeasure(immutableMeasure: $0) as ImmutableMeasure
@@ -58,11 +58,11 @@ public struct MeasureRepeat {
 		}
 		return allMeasures
 	}
-	
+
 	private mutating func recalculateMeasureCount() {
 		measureCount = MeasureRepeat.measureCount(forMeasures: measures, repeatCount: repeatCount)
 	}
-	
+
 	private static func measureCount(forMeasures measures: [Measure], repeatCount: Int) -> Int {
 		measures.count + repeatCount * measures.count
 	}
@@ -71,7 +71,7 @@ public struct MeasureRepeat {
 extension MeasureRepeat: CustomDebugStringConvertible {
 	public var debugDescription: String {
 		let measuresDescription = measures.map { $0.debugDescription }.joined(separator: ", ")
-		
+	
 		return "[ \(measuresDescription) ] × \(repeatCount + 1)"
 	}
 }

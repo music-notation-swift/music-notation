@@ -7,7 +7,6 @@
 //
 
 public struct Note: NoteCollection, Sendable {
-	// NoteCollection
 	public let noteCount = 1
 	public let noteDuration: NoteDuration
 	public let noteTimingCount = 1
@@ -41,30 +40,30 @@ public struct Note: NoteCollection, Sendable {
 		pitches = []
 		isRest = true
 	}
-	
+
 	/// Initialize a note with a single pitch.
 	public init(_ noteDuration: NoteDuration, pitch: SpelledPitch) {
 		self.noteDuration = noteDuration
 		pitches = [pitch]
 		isRest = false
 	}
-	
+
 	/// Initialize a note with multiple pitches (chord).
 	public init(_ noteDuration: NoteDuration, pitches: [SpelledPitch]) {
 		isRest = false
 		self.noteDuration = noteDuration
 		self.pitches = pitches
 	}
-	
+
 	// MARK: - Methods
-	
+
 	// MARK: Public
-	
+
 	public func note(at index: Int) throws -> Note {
 		guard index == 0 else { throw NoteError.invalidNoteIndex }
 		return self
 	}
-	
+
 	internal mutating func modifyTie(_ request: Tie) throws {
 		// Nothing to do if it's the same value
 		guard tie != request else { return }
@@ -77,7 +76,7 @@ public struct Note: NoteCollection, Sendable {
 			throw NoteError.invalidRequestedTieState
 		}
 	}
-	
+
 	/// Remove the tie from the note.
 	///
 	/// - parameter currentTie: What part of the tie on the note the caller wants to remove. This is important if the

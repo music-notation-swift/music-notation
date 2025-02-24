@@ -19,7 +19,7 @@ public enum MarkerType: CaseIterable {
 	case dalDoppioSegnoAlCoda
 	case daDoppiaCoda
 	case userMarker
-	
+
 	static func marker(from string: String) throws -> MarkerType {
 		switch string {
 		case "segno":

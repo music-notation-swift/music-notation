@@ -79,7 +79,7 @@ import Testing
 	@Test func replaceNoteWithInvalidNoteCollection() async throws {
 		measure.append(Note(.whole))
 		#expect(throws: MeasureError.invalidNoteCollection) {
-			try measure.replaceNote(at: 0, with: [Note]())
+			try self.measure.replaceNote(at: 0, with: [Note]())
 		}
 	}
 
@@ -206,7 +206,7 @@ import Testing
 		measure.append(note2)
 		#expect(measure.noteCount[0] == 2)
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.replaceNotes(in: 0 ... 1, with: [note1, note2])
+			try self.measure.replaceNotes(in: 0 ... 1, with: [note1, note2])
 		}
 	}
 
@@ -222,7 +222,7 @@ import Testing
 		measure.append(note)
 		#expect(measure.noteCount[0] == 4)
 		#expect(throws: MeasureError.tupletNotCompletelyCovered) {
-			try measure.replaceNotes(in: 2 ... 3, with: [note, note])
+			try self.measure.replaceNotes(in: 2 ... 3, with: [note, note])
 		}
 	}
 
@@ -272,7 +272,7 @@ import Testing
 	@Test func insertNoteIndexOutOfRange() async throws {
 		#expect(measure.notes[0].count == 0)
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			try measure.insert(Note(.whole), at: 1)
+			try self.measure.insert(Note(.whole), at: 1)
 		}
 	}
 
@@ -288,8 +288,8 @@ import Testing
 		]
 		#expect(throws: MeasureError.invalidTupletIndex) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
-			try measure.insert(tuplet, at: 1)
-			try measure.insert(tuplet, at: 2)
+			try self.measure.insert(tuplet, at: 1)
+			try self.measure.insert(tuplet, at: 2)
 		}
 	}
 
@@ -346,8 +346,8 @@ import Testing
 		measure.append(note1)
 		#expect(throws: MeasureError.removeNoteFromTuplet)  {
 			let tuplet = try Tuplet(3, .eighth, notes: [note1, note1, note1])
-			measure.append(tuplet)
-			try measure.removeNote(at: 1)
+			self.measure.append(tuplet)
+			try self.measure.removeNote(at: 1)
 		}
 	}
 
@@ -357,7 +357,7 @@ import Testing
 		measure.append(note)
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.removeNote(at: 0)
+			try self.measure.removeNote(at: 0)
 		}
 	}
 
@@ -368,7 +368,7 @@ import Testing
 		measure.append(note)
 		#expect(measure.noteCount[0] == 2)
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.removeNote(at: 1)
+			try self.measure.removeNote(at: 1)
 		}
 	}
 
@@ -414,7 +414,7 @@ import Testing
 		measure.append(note2)
 		#expect(measure.noteCount[0] == 2)
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.removeNotesInRange(0 ... 1)
+			try self.measure.removeNotesInRange(0 ... 1)
 		}
 	}
 
@@ -427,7 +427,7 @@ import Testing
 		measure.append(note2)
 		#expect(measure.noteCount[0] == 2)
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.removeNotesInRange(0 ... 1)
+			try self.measure.removeNotesInRange(0 ... 1)
 		}
 	}
 
@@ -442,7 +442,7 @@ import Testing
 		measure.append(tuplet)
 		#expect(measure.noteCount[0] == 4)
 		#expect(throws: MeasureError.tupletNotCompletelyCovered) {
-			try measure.removeNotesInRange(0 ... 1)
+			try self.measure.removeNotesInRange(0 ... 1)
 		}
 	}
 
@@ -457,7 +457,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(measure.noteCount[0] == 4)
 		#expect(throws: MeasureError.tupletNotCompletelyCovered) {
-			try measure.removeNotesInRange(2 ... 3)
+			try self.measure.removeNotesInRange(2 ... 3)
 		}
 	}
 
@@ -533,9 +533,9 @@ import Testing
 		let note3 = Note(.eighth, pitch: SpelledPitch(.c, .octave1))
 		#expect(throws: MeasureError.invalidTupletIndex)  {
 			let tuplet = try Tuplet(3, .eighth, notes: [note1, note2, note3])
-			measure.append(tuplet)
-			measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
-			try measure.createTuplet(3, .quarter, fromNotesInRange: 1 ... 3)
+			self.measure.append(tuplet)
+			self.measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
+			try self.measure.createTuplet(3, .quarter, fromNotesInRange: 1 ... 3)
 		}
 	}
 
@@ -546,8 +546,8 @@ import Testing
 		measure.append(note1)
 		#expect(throws: MeasureError.invalidTupletIndex)  {
 			let tuplet = try Tuplet(3, .eighth, notes: [note1, note2, note3])
-			measure.append(tuplet)
-			try measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 2)
+			self.measure.append(tuplet)
+			try self.measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 2)
 		}
 	}
 
@@ -556,7 +556,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.b, .octave1)))
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.noteIndexOutOfRange)  {
-			try measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 3)
+			try self.measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 3)
 		}
 	}
 
@@ -565,7 +565,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.b, .octave1)))
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.noteIndexOutOfRange)  {
-			try measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 3)
+			try self.measure.createTuplet(3, .quarter, fromNotesInRange: 0 ... 3)
 		}
 	}
 
@@ -591,7 +591,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.a, .octave1)))
 		#expect(measure.noteCount[0] == 1)
 		#expect(throws: MeasureError.invalidTupletIndex) {
-			try measure.breakdownTuplet(at: 0)
+			try self.measure.breakdownTuplet(at: 0)
 		}
 	}
 
@@ -625,9 +625,9 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.invalidTieState) {
-			try measure.startTie(at: 0, inSet: 0)
+			try self.measure.startTie(at: 0, inSet: 0)
 			let note = Note(.quarter, pitch: SpelledPitch(.c, .octave1))
-			try measure.insert(note, at: 1, inSet: 0)
+			try self.measure.insert(note, at: 1, inSet: 0)
 		}
 	}
 
@@ -814,7 +814,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.a, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.notesMustHaveSamePitchesToTie) {
-			try measure.startTie(at: 0, inSet: 0)
+			try self.measure.startTie(at: 0, inSet: 0)
 		}
 	}
 
@@ -829,8 +829,8 @@ import Testing
 		]
 		#expect(throws: MeasureError.notesMustHaveSamePitchesToTie) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
-			measure.append(tuplet)
-			try measure.startTie(at: 2, inSet: 0)
+			self.measure.append(tuplet)
+			try self.measure.startTie(at: 2, inSet: 0)
 		}
 	}
 
@@ -845,7 +845,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			try measure.removeTie(at: 4, inSet: 0)
+			try self.measure.removeTie(at: 4, inSet: 0)
 		}
 	}
 
@@ -1111,7 +1111,7 @@ import Testing
 		let note = Note(.quarter)
 		measure.append(note)
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			_ = try measure.cumulativeTicks(at: 2, inSet: 0)
+			_ = try self.measure.cumulativeTicks(at: 2, inSet: 0)
 		}
 	}
 
@@ -1119,7 +1119,7 @@ import Testing
 		let note = Note(.quarter)
 		measure.append(note)
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			_ = try measure.cumulativeTicks(at: 0, inSet: 1)
+			_ = try self.measure.cumulativeTicks(at: 0, inSet: 1)
 		}
 	}
 
@@ -1134,7 +1134,7 @@ import Testing
 		// FIXME: there is no implementation of throw MeasureError.cannotCalculateTicksWithinCompoundTuplet in cumulativeTicks
 		// https://github.com/drumnkyle/music-notation-core/issues/129
 		#expect(throws: MeasureError.cannotCalculateTicksWithinCompoundTuplet) {
-			_ = try measure.cumulativeTicks(at: 4)
+			_ = try self.measure.cumulativeTicks(at: 4)
 		}
 	}
 

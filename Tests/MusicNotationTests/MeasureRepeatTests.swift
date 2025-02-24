@@ -23,7 +23,7 @@ import Testing
 
     @Test func initInvalidRepeatCount() async throws {
         #expect(throws: MeasureRepeatError.invalidRepeatCount) {
-            _ = try MeasureRepeat(measures: [measure1], repeatCount: -2)
+			_ = try MeasureRepeat(measures: [self.measure1], repeatCount: -2)
         }
     }
 
