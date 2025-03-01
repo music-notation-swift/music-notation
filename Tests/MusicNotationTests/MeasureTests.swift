@@ -46,7 +46,7 @@ import Testing
 		let notes = [
 			Note(.sixteenth, pitch: SpelledPitch(.c, .octave1)),
 			Note(.sixteenth, pitch: SpelledPitch(.c, .octave1)),
-			Note(.sixteenth, pitch: SpelledPitch(.a, .octave1)),
+			Note(.sixteenth, pitch: SpelledPitch(.a, .octave1))
 		]
 
 		let tuplet = try Tuplet(3, .sixteenth, notes: notes)
@@ -66,8 +66,8 @@ import Testing
 
 		#expect(measure.noteCount[0] == 2)
 		try measure.replaceNote(at: 1, with: note1)
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
 		#expect(resultNote1 == note1)
 		#expect(resultNote2 == note1)
 	}
@@ -94,12 +94,12 @@ import Testing
 
 		#expect(measure.noteCount[0] == 2)
 
-		try measure.modifyTie(at: 0, requestedTieState: .begin, inSet: 0)
+		try measure.modifyTie(at: 0, requestedTieState: .begin)
 		try measure.replaceNote(at: 0, with: [note2, note1])
 		#expect(measure.noteCount[0] == 3)
 
-		var resultNote1 = try measure.note(at: 0, inSet: 0)
-		var resultNote2 = try measure.note(at: 1, inSet: 0)
+		var resultNote1 = try measure.note(at: 0)
+		var resultNote2 = try measure.note(at: 1)
 
 		#expect(resultNote1 == note2)
 		#expect(resultNote2.tie == .begin)
@@ -110,12 +110,12 @@ import Testing
 
 		// Note replace the note and index 1, which should
 		// have a .beginAndEnd tie state.
-		try measure.modifyTie(at: 0, requestedTieState: .begin, inSet: 0)
+		try measure.modifyTie(at: 0, requestedTieState: .begin)
 		try measure.replaceNote(at: 1, with: [note2])
 		#expect(measure.noteCount[0] == 3)
 
-		resultNote1 = try measure.note(at: 1, inSet: 0)
-		resultNote2 = try measure.note(at: 2, inSet: 0)
+		resultNote1 = try measure.note(at: 1)
+		resultNote2 = try measure.note(at: 2)
 		#expect(resultNote1.tie == .beginAndEnd)
 		#expect(resultNote2.tie == .end)
 
@@ -126,8 +126,8 @@ import Testing
 
 		// Make sure we end up with 2 separate ties now.
 		for note in [0, 2] {
-			resultNote1 = try measure.note(at: note, inSet: 0)
-			resultNote2 = try measure.note(at: note + 1, inSet: 0)
+			resultNote1 = try measure.note(at: note)
+			resultNote2 = try measure.note(at: note + 1)
 			#expect(resultNote1.tie == .begin)
 			#expect(resultNote2.tie == .end)
 		}
@@ -146,14 +146,15 @@ import Testing
 
 		let tuplet = try Tuplet(3, .sixteenth, notes: notes)
 		#expect(measure.noteCount[0] == 2)
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
 
 		try measure.replaceNote(at: 1, with: [tuplet])
 		#expect(measure.noteCount[0] == 4)
 
-		var resultNote = try measure.note(at: 1, inSet: 0)
+		var resultNote = try measure.note(at: 1)
 
 		#expect(resultNote.tie == .end)
+
 		// Clear tie result before compare
 		resultNote.tie = nil
 		#expect(resultNote == notes[0])
@@ -237,8 +238,8 @@ import Testing
 
 		#expect(measure.noteCount[0] == 2)
 		try measure.replaceNotes(in: 0 ... 1, with: [note2, note1])
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
 		#expect(measure.noteCount[0] == 2)
 		#expect(resultNote1 == note2)
 		#expect(resultNote2 == note1)
@@ -253,11 +254,11 @@ import Testing
 		let tuplet = try Tuplet(3, .eighth, notes: [note1, note2, note3])
 		measure.append(note3)
 		measure.append(tuplet)
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
 		#expect(measure.noteCount[0] == 4)
 		try measure.replaceNotes(in: 1 ... 3, with: [note2, note1])
-		var resultNote1 = try measure.note(at: 1, inSet: 0)
-		let resultNote2 = try measure.note(at: 2, inSet: 0)
+		var resultNote1 = try measure.note(at: 1)
+		let resultNote2 = try measure.note(at: 2)
 		#expect(measure.noteCount[0] == 3)
 		#expect(resultNote1.tie == .end)
 		resultNote1.tie = nil
@@ -306,15 +307,16 @@ import Testing
 		try measure.insert(note3, at: 1)
 		#expect(measure.notes[0].count == 3)
 
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
-		let resultNote3 = try measure.note(at: 2, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
+		let resultNote3 = try measure.note(at: 2)
 		#expect(resultNote1 == note1)
 		#expect(resultNote2 == note3)
 		#expect(resultNote3 == note2)
 	}
 
 	@Test func insertTuplet() async throws {
+		#expect(measure.notes[0].count == 0)
 		let note1 = Note(.quarter, pitch: SpelledPitch(.a, .octave1))
 		let note2 = Note(.quarter, pitch: SpelledPitch(.b, .octave1))
 		measure.append(note1)
@@ -386,8 +388,8 @@ import Testing
 		try measure.removeNote(at: 1)
 		#expect(measure.notes[0].count == 2)
 
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
 
 		#expect(resultNote1 == note1)
 		#expect(resultNote2 == note3)
@@ -397,7 +399,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
 		try measure.removeNote(at: 1)
 	}
 
@@ -480,9 +482,9 @@ import Testing
 		try measure.removeNotesInRange(1 ... 4)
 		#expect(measure.notes[0].count == 3)
 
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
-		let resultNote3 = try measure.note(at: 2, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
+		let resultNote3 = try measure.note(at: 2)
 
 		#expect(resultNote1 == note1)
 		#expect(resultNote2 == note2)
@@ -514,9 +516,9 @@ import Testing
 		try measure.removeNotesInRange(1 ... 7)
 		#expect(measure.notes[0].count == 3)
 
-		let resultNote1 = try measure.note(at: 0, inSet: 0)
-		let resultNote2 = try measure.note(at: 1, inSet: 0)
-		let resultNote3 = try measure.note(at: 2, inSet: 0)
+		let resultNote1 = try measure.note(at: 0)
+		let resultNote2 = try measure.note(at: 1)
+		let resultNote3 = try measure.note(at: 2)
 
 		#expect(resultNote1 == note1)
 		#expect(resultNote2 == note2)
@@ -625,9 +627,9 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.invalidTieState) {
-			try self.measure.startTie(at: 0, inSet: 0)
+			try self.measure.startTie(at: 0)
 			let note = Note(.quarter, pitch: SpelledPitch(.c, .octave1))
-			try self.measure.insert(note, at: 1, inSet: 0)
+			try self.measure.insert(note, at: 1)
 		}
 	}
 
@@ -638,13 +640,13 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 
-		try measure.startTie(at: 1, inSet: 0)
+		try measure.startTie(at: 1)
 		let note = Note(.quarter, pitch: SpelledPitch(.a, .octave1))
-		try measure.insert(note, at: 1, inSet: 0)
+		try measure.insert(note, at: 1)
 
-		let note1 = try measure.note(at: 1, inSet: 0)
-		let note2 = try measure.note(at: 2, inSet: 0)
-		let note3 = try measure.note(at: 3, inSet: 0)
+		let note1 = try measure.note(at: 1)
+		let note2 = try measure.note(at: 2)
+		let note3 = try measure.note(at: 3)
 
 		#expect(note1.tie == nil)
 		#expect(note2.tie != nil)
@@ -661,7 +663,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 
 		// Only change note to .begin
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
 		let note = measure.notes[0][0] as! Note
 		#expect(note.tie != nil)
 		#expect(note.tie == .begin)
@@ -671,7 +673,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
 		let note1 = measure.notes[0][0] as! Note
 		let note2 = measure.notes[0][1] as! Note
 		#expect(note1.tie != nil)
@@ -684,8 +686,8 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
-		try measure.startTie(at: 0, inSet: 0)
-		try measure.startTie(at: 0, inSet: 0)
+		try measure.startTie(at: 0)
+		try measure.startTie(at: 0)
 		let note1 = measure.notes[0][0] as! Note
 		let note2 = measure.notes[0][1] as! Note
 		#expect(note1.tie == .begin)
@@ -707,7 +709,7 @@ import Testing
 		measure.append(tuplet)
 
 		// test
-		try measure.startTie(at: 2, inSet: 0)
+		try measure.startTie(at: 2)
 		let note1 = measure.notes[0][2] as! Note
 		let tuplet2 = measure.notes[0][3] as! Tuplet
 		#expect(note1.tie == .begin)
@@ -730,8 +732,8 @@ import Testing
 		measure.append(tupletSetup)
 
 		// test
-		try measure.startTie(at: 2, inSet: 0)
-		try measure.startTie(at: 5, inSet: 0)
+		try measure.startTie(at: 2)
+		try measure.startTie(at: 5)
 		let tuplet = measure.notes[0][3] as! Tuplet
 		#expect(try tuplet.note(at: 2).tie == .begin)
 	}
@@ -749,10 +751,10 @@ import Testing
 		// setup
 		let tupletSetup = try Tuplet(3, .eighth, notes: notes)
 		measure.append(tupletSetup)
-		try measure.startTie(at: 2, inSet: 0)
+		try measure.startTie(at: 2)
 
 		// test
-		try measure.startTie(at: 3, inSet: 0)
+		try measure.startTie(at: 3)
 		let tuplet = measure.notes[0][3] as! Tuplet
 		#expect(try tuplet.note(at: 0).tie == .beginAndEnd)
 		#expect(try tuplet.note(at: 1).tie == .end)
@@ -771,10 +773,10 @@ import Testing
 		// setup
 		let tupletSetup = try Tuplet(3, .eighth, notes: notes)
 		measure.append(tupletSetup)
-		try measure.startTie(at: 2, inSet: 0)
+		try measure.startTie(at: 2)
 
 		// test
-		try measure.startTie(at: 5, inSet: 0)
+		try measure.startTie(at: 5)
 		let tuplet = measure.notes[0][3] as! Tuplet
 		#expect(try tuplet.note(at: 2).tie == .begin)
 	}
@@ -785,7 +787,7 @@ import Testing
 		let tuplet2 = try Tuplet(5, .sixteenth, notes: [note, note, note, note, note])
 		measure.append(tuplet1)
 		measure.append(tuplet2)
-		try measure.startTie(at: 2, inSet: 0)
+		try measure.startTie(at: 2)
 		let note1 = noteFromMeasure(measure, noteIndex: 0, tupletIndex: 2)
 		let note2 = noteFromMeasure(measure, noteIndex: 1, tupletIndex: 0)
 		#expect(note1.tie == .begin)
@@ -799,7 +801,7 @@ import Testing
 		let tuplet = try Tuplet(3, .eighth, notes: [triplet, note])
 		measure.append(tuplet)
 		measure.append(note)
-		try measure.startTie(at: 3, inSet: 0)
+		try measure.startTie(at: 3)
 		let note1 = try measure.note(at: 3)
 		let note2 = try measure.note(at: 4)
 		#expect(note1.tie == .begin)
@@ -814,7 +816,7 @@ import Testing
 		measure.append(Note(.quarter, pitch: SpelledPitch(.a, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		#expect(throws: MeasureError.notesMustHaveSamePitchesToTie) {
-			try self.measure.startTie(at: 0, inSet: 0)
+			try self.measure.startTie(at: 0)
 		}
 	}
 
@@ -830,7 +832,7 @@ import Testing
 		#expect(throws: MeasureError.notesMustHaveSamePitchesToTie) {
 			let tuplet = try Tuplet(3, .eighth, notes: notes)
 			self.measure.append(tuplet)
-			try self.measure.startTie(at: 2, inSet: 0)
+			try self.measure.startTie(at: 2)
 		}
 	}
 
@@ -845,7 +847,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			try self.measure.removeTie(at: 4, inSet: 0)
+			try self.measure.removeTie(at: 4)
 		}
 	}
 
@@ -857,7 +859,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
-		try measure.removeTie(at: 0, inSet: 0)
+		try measure.removeTie(at: 0)
 		let firstNote = noteFromMeasure(measure, noteIndex: 0, tupletIndex: nil)
 		let secondNote = noteFromMeasure(measure, noteIndex: 1, tupletIndex: nil)
 		#expect(firstNote.tie == nil)
@@ -871,7 +873,7 @@ import Testing
 		measure.append(Note(.eighth, pitch: SpelledPitch(.c, .octave1)))
 
 		try setTie(at: 0)
-		try measure.removeTie(at: 0, inSet: 0)
+		try measure.removeTie(at: 0)
 		let firstNote = noteFromMeasure(measure, noteIndex: 0, tupletIndex: nil)
 		let secondNote = noteFromMeasure(measure, noteIndex: 1, tupletIndex: nil)
 		#expect(firstNote.tie == nil)
@@ -886,7 +888,7 @@ import Testing
 
 		try setTie(at: 0)
 		try setTie(at: 1)
-		try measure.removeTie(at: 1, inSet: 0)
+		try measure.removeTie(at: 1)
 		let firstNote = noteFromMeasure(measure, noteIndex: 1, tupletIndex: nil)
 		let secondNote = noteFromMeasure(measure, noteIndex: 2, tupletIndex: nil)
 		#expect(firstNote.tie == .end)
@@ -906,7 +908,7 @@ import Testing
 		measure.append(note)
 
 		try setTie(at: 6)
-		try measure.removeTie(at: 6, inSet: 0)
+		try measure.removeTie(at: 6)
 		let firstNote = noteFromMeasure(measure, noteIndex: 4, tupletIndex: 2)
 		let secondNote = noteFromMeasure(measure, noteIndex: 5, tupletIndex: nil)
 		#expect(firstNote.tie == nil)
@@ -925,7 +927,7 @@ import Testing
 		measure.append(note)
 
 		try setTie(at: 5)
-		try measure.removeTie(at: 5, inSet: 0)
+		try measure.removeTie(at: 5)
 		let firstNote = noteFromMeasure(measure, noteIndex: 4, tupletIndex: 1)
 		let secondNote = noteFromMeasure(measure, noteIndex: 4, tupletIndex: 2)
 		#expect(firstNote.tie == nil)
@@ -944,7 +946,7 @@ import Testing
 		measure.append(note)
 
 		try setTie(at: 4)
-		try measure.removeTie(at: 4, inSet: 0)
+		try measure.removeTie(at: 4)
 		let firstNote = noteFromMeasure(measure, noteIndex: 4, tupletIndex: 0)
 		let secondNote = noteFromMeasure(measure, noteIndex: 4, tupletIndex: 1)
 		#expect(firstNote.tie == nil)
@@ -967,7 +969,7 @@ import Testing
 		measure.append(tuplet1)
 		measure.append(tuplet2)
 		try setTie(at: 11)
-		try measure.removeTie(at: 11, inSet: 0)
+		try measure.removeTie(at: 11)
 		let firstNote = noteFromMeasure(measure, noteIndex: 6, tupletIndex: 3)
 		let secondNote = noteFromMeasure(measure, noteIndex: 7, tupletIndex: 0)
 		#expect(firstNote.tie == nil)
@@ -984,7 +986,7 @@ import Testing
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
 
-		let index = try measure.noteCollectionIndex(fromNoteIndex: 2, inSet: 0)
+		let index = try measure.noteCollectionIndex(fromNoteIndex: 2)
 		#expect(index.noteIndex == 2)
 		#expect(index.tupletIndex == nil)
 	}
@@ -998,14 +1000,14 @@ import Testing
 		let note2 = Note(.eighth, pitch: SpelledPitch(.b, .octave1))
 		let note3 = Note(.eighth, pitch: SpelledPitch(.c, .octave1))
 		measure.append(try Tuplet(3, .eighth, notes: [note1, note2, note3]))
-		let index = try measure.noteCollectionIndex(fromNoteIndex: 2, inSet: 0)
+		let index = try measure.noteCollectionIndex(fromNoteIndex: 2)
 		#expect(index.noteIndex == 1)
 		#expect(index.tupletIndex != nil)
 		#expect(index.tupletIndex! == 1)
 
 		// Properly address regular note coming after a tuplet
 		measure.append(Note(.eighth))
-		let index2 = try measure.noteCollectionIndex(fromNoteIndex: 4, inSet: 0)
+		let index2 = try measure.noteCollectionIndex(fromNoteIndex: 4)
 		#expect(index2.noteIndex == 2)
 		#expect(index2.tupletIndex == nil)
 	}
@@ -1017,20 +1019,20 @@ import Testing
 	@Test func hasClefAfterNoteInvalidIndex() async throws {
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		#expect(!measure.hasClefAfterNote(at: 3, inSet: 0))
+		#expect(!measure.hasClefAfterNote(at: 3))
 	}
 
 	@Test func hasClefAfterNoteNoClefsFirstIndex() async throws {
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		#expect(!measure.hasClefAfterNote(at: 1, inSet: 0))
+		#expect(!measure.hasClefAfterNote(at: 1))
 	}
 
 	@Test func hasClefAfterNoteNoClefsMiddleIndex() async throws {
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 0, inSet: 0)
-		#expect(!measure.hasClefAfterNote(at: 1, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 0)
+		#expect(!measure.hasClefAfterNote(at: 1))
 	}
 
 	@Test func hasClefAfterNoteMiddleOfTuplet() async throws {
@@ -1042,8 +1044,8 @@ import Testing
 		measure.append(tuplet)
 		measure.append(eighth)
 		measure.append(eighth)
-		try measure.changeClef(Clef.treble, at: 3, inSet: 0)
-		#expect(!measure.hasClefAfterNote(at: 3, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 3)
+		#expect(!measure.hasClefAfterNote(at: 3))
 	}
 
 	func KNOWNISSUEtestHasClefAfterNoteMiddleOfCompoundTuplet() async throws {
@@ -1054,23 +1056,23 @@ import Testing
 		let triplet = try Tuplet(3, .eighth, notes: [note, note, note])
 		let compoundTuplet = try Tuplet(5, .eighth, notes: [note, note, triplet, note])
 		measure.append(compoundTuplet)
-		try measure.changeClef(Clef.treble, at: 3, inSet: 0)
-		#expect(!measure.hasClefAfterNote(at: 4, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 3)
+		#expect(!measure.hasClefAfterNote(at: 4))
 	}
 
 	@Test func hasClefAfterNoteNoteOfClefChange() async throws {
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 1, inSet: 0)
-		#expect(!measure.hasClefAfterNote(at: 1, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 1)
+		#expect(!measure.hasClefAfterNote(at: 1))
 	}
 
 	@Test func hasClefAfterNoteNoteAfterClefChange() async throws {
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 1, inSet: 0)
-		#expect(!measure.hasClefAfterNote(at: 2, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 1)
+		#expect(!measure.hasClefAfterNote(at: 2))
 	}
 
 	// MARK: True
@@ -1079,8 +1081,8 @@ import Testing
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 2, inSet: 0)
-		#expect(measure.hasClefAfterNote(at: 1, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 2)
+		#expect(measure.hasClefAfterNote(at: 1))
 	}
 
 	@Test func hasClefAfterNoteMultipleClefsNoteBefore() async throws {
@@ -1088,9 +1090,9 @@ import Testing
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 2, inSet: 0)
-		try measure.changeClef(Clef.treble, at: 3, inSet: 0)
-		#expect(measure.hasClefAfterNote(at: 1, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 2)
+		try measure.changeClef(Clef.treble, at: 3)
+		#expect(measure.hasClefAfterNote(at: 1))
 	}
 
 	@Test func hasClefAfterNoteMultipleClefsNoteInMiddle() async throws {
@@ -1098,9 +1100,9 @@ import Testing
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
 		measure.append(Note(.quarter))
-		try measure.changeClef(Clef.treble, at: 1, inSet: 0)
-		try measure.changeClef(Clef.treble, at: 3, inSet: 0)
-		#expect(measure.hasClefAfterNote(at: 2, inSet: 0))
+		try measure.changeClef(Clef.treble, at: 1)
+		try measure.changeClef(Clef.treble, at: 3)
+		#expect(measure.hasClefAfterNote(at: 2))
 	}
 
 	// MARK: - cumulativeTicks(at:inSet:) throws -> Int
@@ -1111,7 +1113,7 @@ import Testing
 		let note = Note(.quarter)
 		measure.append(note)
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			_ = try self.measure.cumulativeTicks(at: 2, inSet: 0)
+			_ = try self.measure.cumulativeTicks(at: 2)
 		}
 	}
 
@@ -1146,7 +1148,7 @@ import Testing
 		measure.append(note)
 		measure.append(note)
 		measure.append(note, inSet: 1)
-		#expect(try measure.cumulativeTicks(at: 0, inSet: 0) == 0)
+		#expect(try measure.cumulativeTicks(at: 0) == 0)
 		#expect(try measure.cumulativeTicks(at: 0, inSet: 1) == 0)
 	}
 
@@ -1167,21 +1169,21 @@ import Testing
 		let eighthTicks = NoteDuration.eighth.ticks
 
 		var currentValue = quarterTicks
-		#expect(try measure.cumulativeTicks(at: 1, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 1) == currentValue)
 		currentValue += quarterTicks
-		#expect(try measure.cumulativeTicks(at: 2, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 2) == currentValue)
 		currentValue += eighthTicks
-		#expect(try measure.cumulativeTicks(at: 3, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 3) == currentValue)
 		currentValue += eighthTicks
-		#expect(try measure.cumulativeTicks(at: 4, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 4) == currentValue)
 		currentValue += eighthTicks
-		#expect(try measure.cumulativeTicks(at: 5, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 5) == currentValue)
 		currentValue += quarterTicks
-		#expect(try measure.cumulativeTicks(at: 6, inSet: 0) == currentValue)
+		#expect(try measure.cumulativeTicks(at: 6) == currentValue)
 		var currentSet1Value = quarterTicks
-		#expect(try measure.cumulativeTicks(at: 1, inSet: 0) == currentSet1Value)
+		#expect(try measure.cumulativeTicks(at: 1) == currentSet1Value)
 		currentSet1Value += quarterTicks
-		#expect(try measure.cumulativeTicks(at: 2, inSet: 0) == currentSet1Value)
+		#expect(try measure.cumulativeTicks(at: 2) == currentSet1Value)
 	}
 
 	@Test func cumulativeTicksBeginningOfTuplet() async throws {
@@ -1196,12 +1198,12 @@ import Testing
 		measure.append(eighth)
 		let quarterTicks = NoteDuration.quarter.ticks
 		let eighthTicks = NoteDuration.eighth.ticks
-		#expect(try measure.cumulativeTicks(at: 1, inSet: 0) == quarterTicks)
-		#expect(try measure.cumulativeTicks(at: 2, inSet: 0) == 2 * quarterTicks)
-		#expect(try measure.cumulativeTicks(at: 3, inSet: 0) == 2 * quarterTicks + 1 / 3 * tuplet.ticks)
-		#expect(try measure.cumulativeTicks(at: 4, inSet: 0) == 2 * quarterTicks + 2 / 3 * tuplet.ticks)
-		#expect(try measure.cumulativeTicks(at: 5, inSet: 0) == 2 * quarterTicks + tuplet.ticks)
-		#expect(try measure.cumulativeTicks(at: 6, inSet: 0) == 2 * quarterTicks + tuplet.ticks + eighthTicks)
+		#expect(try measure.cumulativeTicks(at: 1) == quarterTicks)
+		#expect(try measure.cumulativeTicks(at: 2) == 2 * quarterTicks)
+		#expect(try measure.cumulativeTicks(at: 3) == 2 * quarterTicks + 1 / 3 * tuplet.ticks)
+		#expect(try measure.cumulativeTicks(at: 4) == 2 * quarterTicks + 2 / 3 * tuplet.ticks)
+		#expect(try measure.cumulativeTicks(at: 5) == 2 * quarterTicks + tuplet.ticks)
+		#expect(try measure.cumulativeTicks(at: 6) == 2 * quarterTicks + tuplet.ticks + eighthTicks)
 	}
 
 	@Test func cumulativeTicksMiddleOfTuplet() async throws {
@@ -1229,17 +1231,17 @@ import Testing
 		let eachCompoundTicks = compoundTuplet.ticks / Double(compoundTuplet.groupingOrder)
 		let eachTripletTicks = 2 * eachCompoundTicks / Double(triplet.groupingOrder)
 		var currentTicks = eighthTicks
-		#expect(try measure.cumulativeTicks(at: 1, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 1) == currentTicks)
 		currentTicks += eachCompoundTicks
-		#expect(try measure.cumulativeTicks(at: 2, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 2) == currentTicks)
 		currentTicks += eachCompoundTicks
-		#expect(try measure.cumulativeTicks(at: 3, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 3) == currentTicks)
 		currentTicks += eachTripletTicks
-		#expect(try measure.cumulativeTicks(at: 4, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 4) == currentTicks)
 		currentTicks += eachTripletTicks
-		#expect(try measure.cumulativeTicks(at: 5, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 5) == currentTicks)
 		currentTicks += eachTripletTicks
-		#expect(try measure.cumulativeTicks(at: 6, inSet: 0) == currentTicks)
+		#expect(try measure.cumulativeTicks(at: 6) == currentTicks)
 	}
 
 	// MARK: - clef(at:inSet:)
@@ -1252,10 +1254,10 @@ import Testing
 
 		let newClef: Clef = .bass
 		try testMeasure.changeClef(newClef, at: 0)
-		#expect(try testMeasure.clef(at: 0, inSet: 0) == newClef)
+		#expect(try testMeasure.clef(at: 0) == newClef)
 		(1 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef)
+				#expect(try testMeasure.clef(at: $0) == newClef)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1274,10 +1276,10 @@ import Testing
 
 		let newClef: Clef = .bass
 		try testMeasure.changeClef(newClef, at: 0)
-		#expect(try testMeasure.clef(at: 0, inSet: 0) == newClef)
+		#expect(try testMeasure.clef(at: 0) == newClef)
 		(1 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef)
+				#expect(try testMeasure.clef(at: $0) == newClef)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1293,12 +1295,12 @@ import Testing
 		let newClef2: Clef = .alto
 		try testMeasure.changeClef(newClef1, at: 0)
 		try testMeasure.changeClef(newClef2, at: 2)
-		#expect(try testMeasure.clef(at: 0, inSet: 0) == newClef1)
-		#expect(try testMeasure.clef(at: 1, inSet: 0) == newClef1)
-		#expect(try testMeasure.clef(at: 2, inSet: 0) == newClef2)
+		#expect(try testMeasure.clef(at: 0) == newClef1)
+		#expect(try testMeasure.clef(at: 1) == newClef1)
+		#expect(try testMeasure.clef(at: 2) == newClef2)
 		(2 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef2)
+				#expect(try testMeasure.clef(at: $0) == newClef2)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1314,10 +1316,10 @@ import Testing
 		let newClef: Clef = .bass
 		try testMeasure.changeClef(newClef, at: 3)
 		for index in 0 ..< 3 {
-			#expect(try testMeasure.clef(at: index, inSet: 0) == originalClef)
+			#expect(try testMeasure.clef(at: index) == originalClef)
 		}
 		for index in 3 ..< testMeasure.noteCount[0] {
-			#expect(try testMeasure.clef(at: index, inSet: 0) == newClef)
+			#expect(try testMeasure.clef(at: index) == newClef)
 		}
 	}
 
@@ -1335,12 +1337,12 @@ import Testing
 		let newClef1: Clef = .bass
 		let newClef2: Clef = .alto
 		try testMeasure.changeClef(newClef1, at: 2, inSet: 1) // Set 0: 5th note changes. Set 1: 3rd note changes.
-		try testMeasure.changeClef(newClef2, at: 7, inSet: 0) // Set 0: 8th note changes. Set 1: No change.
+		try testMeasure.changeClef(newClef2, at: 7) // Set 0: 8th note changes. Set 1: No change.
 
 		// set 0
 		(0 ..< 4).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == originalClef)
+				#expect(try testMeasure.clef(at: $0) == originalClef)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1348,14 +1350,14 @@ import Testing
 		}
 		(4 ..< 7).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef1)
+				#expect(try testMeasure.clef(at: $0) == newClef1)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
 		}
 		(7 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef2)
+				#expect(try testMeasure.clef(at: $0) == newClef2)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1363,7 +1365,7 @@ import Testing
 		// set 1
 		(0 ..< 2).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == originalClef)
+				#expect(try testMeasure.clef(at: $0) == originalClef)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1389,24 +1391,24 @@ import Testing
 		let newClef1: Clef = .bass
 		let newClef2: Clef = .alto
 		try testMeasure.changeClef(newClef1, at: 2, inSet: 1) // Set 0: 5th note changes. Set 1: 3rd note changes.
-		try testMeasure.changeClef(newClef2, at: 7, inSet: 0) // Set 0: 8th note changes. Set 1: No change.
+		try testMeasure.changeClef(newClef2, at: 7) // Set 0: 8th note changes. Set 1: No change.
 
 		// set 0
 		(0 ..< 4).forEach { index in
 			#expect(throws: MeasureError.noClefSpecified) {
-				_ = try testMeasure.clef(at: index, inSet: 0)
+				_ = try testMeasure.clef(at: index)
 			}
 		}
 		(4 ..< 7).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef1)
+				#expect(try testMeasure.clef(at: $0) == newClef1)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
 		}
 		(7 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef2)
+				#expect(try testMeasure.clef(at: $0) == newClef2)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1434,7 +1436,7 @@ import Testing
 		])
 		(0 ..< testMeasure.noteCount[0]).forEach { index in
 			#expect(throws: MeasureError.noClefSpecified) {
-				_ = try testMeasure.clef(at: index, inSet: 0)
+				_ = try testMeasure.clef(at: index)
 			}
 		}
 	}
@@ -1449,14 +1451,14 @@ import Testing
 		let newClef: Clef = .alto
 		try testMeasure.changeClef(.alto, at: 2)
 		#expect(throws: MeasureError.noClefSpecified) {
-			_ = try testMeasure.clef(at: 0, inSet: 0)
+			_ = try testMeasure.clef(at: 0)
 		}
 		#expect(throws: MeasureError.noClefSpecified) {
-			_ = try testMeasure.clef(at: 1, inSet: 0)
+			_ = try testMeasure.clef(at: 1)
 		}
 		(2 ..< testMeasure.noteCount[0]).forEach {
 			do {
-				#expect(try testMeasure.clef(at: $0, inSet: 0) == newClef)
+				#expect(try testMeasure.clef(at: $0) == newClef)
 			} catch {
 				Issue.record("Should not have thrown")
 			}
@@ -1471,7 +1473,7 @@ import Testing
 			],
 		])
 		#expect(throws: MeasureError.noteIndexOutOfRange) {
-			_ = try testMeasure.clef(at: 17, inSet: 0)
+			_ = try testMeasure.clef(at: 17)
 		}
 	}
 
@@ -1535,7 +1537,7 @@ import Testing
 			],
 		])
 
-		try measure.changeClef(.bass, at: 0, inSet: 0)
+		try measure.changeClef(.bass, at: 0)
 		#expect(measure.clefs == [0: .bass])
 		#expect(measure.lastClef == .bass)
 		#expect(measure.originalClef == nil)
@@ -1662,7 +1664,7 @@ import Testing
 		measure.append(tuplet)
 		measure.append(eighth)
 		measure.append(eighth)
-		try measure.changeClef(.bass, at: 5, inSet: 0)
+		try measure.changeClef(.bass, at: 5)
 		#expect(measure.clefs == [6144: .bass])
 		#expect(measure.lastClef == .bass)
 		#expect(measure.originalClef == nil)
@@ -1765,15 +1767,15 @@ import Testing
 	}
 
 	@Test func mapMultipleNoteSets() async throws {
-		measure.append(Note(.quarter), inSet: 0)
+		measure.append(Note(.quarter))
 		measure.append(Note(.sixteenth), inSet: 1)
-		measure.append(Note(.quarter), inSet: 0)
+		measure.append(Note(.quarter))
 		measure.append(Note(.thirtySecond), inSet: 1)
-		measure.append(Note(.eighth), inSet: 0)
+		measure.append(Note(.eighth))
 		measure.append(Note(.quarter), inSet: 1)
-		measure.append(Note(.eighth), inSet: 0)
+		measure.append(Note(.eighth))
 		measure.append(Note(.quarter), inSet: 1)
-		measure.append(Note(.quarter), inSet: 0)
+		measure.append(Note(.quarter))
 		measure.append(Note(.quarter), inSet: 1)
 		measure.append(Note(.whole), inSet: 1)
 		measure.append(Note(.whole), inSet: 1)
@@ -1848,13 +1850,13 @@ import Testing
 	}
 
 	@Test func reversed() async throws {
-		measure.append(Note(.whole), inSet: 0)
+		measure.append(Note(.whole))
 		measure.append(Note(.thirtySecond), inSet: 1)
-		measure.append(Note(.quarter), inSet: 0)
+		measure.append(Note(.quarter))
 		measure.append(Note(.sixtyFourth), inSet: 1)
-		measure.append(Note(.eighth), inSet: 0)
+		measure.append(Note(.eighth))
 		measure.append(Note(.oneTwentyEighth), inSet: 1)
-		measure.append(Note(.sixteenth), inSet: 0)
+		measure.append(Note(.sixteenth))
 		measure.append(Note(.twoFiftySixth), inSet: 1)
 
 		let repeatedMeasure = RepeatedMeasure(
@@ -1912,9 +1914,9 @@ import Testing
 	}
 
 	@Test func iterator() async throws {
-		measure.append(Note(.whole), inSet: 0)
+		measure.append(Note(.whole))
 		measure.append(Note(.thirtySecond), inSet: 1)
-		measure.append(Note(.quarter), inSet: 0)
+		measure.append(Note(.quarter))
 		measure.append(Note(.eighth), inSet: 1)
 
 		let repeatedMeasure = RepeatedMeasure(
@@ -1954,9 +1956,9 @@ import Testing
 	// MARK: - Helpers
 
 	private func setTie(at index: Int, functionName: String = #function, lineNum: Int = #line) throws {
-		try measure.startTie(at: index, inSet: 0)
-		let noteCollectionIndex1 = try measure.noteCollectionIndex(fromNoteIndex: index, inSet: 0)
-		let noteCollectionIndex2 = try measure.noteCollectionIndex(fromNoteIndex: index + 1, inSet: 0)
+		try measure.startTie(at: index)
+		let noteCollectionIndex1 = try measure.noteCollectionIndex(fromNoteIndex: index)
+		let noteCollectionIndex2 = try measure.noteCollectionIndex(fromNoteIndex: index + 1)
 		let firstNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex1.noteIndex,
 										tupletIndex: noteCollectionIndex1.tupletIndex)
 		let secondNote = noteFromMeasure(measure, noteIndex: noteCollectionIndex2.noteIndex,

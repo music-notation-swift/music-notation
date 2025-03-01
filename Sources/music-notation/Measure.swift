@@ -99,7 +99,11 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///	  - `MeasureError.internalError`
 	///
-	public mutating func replaceNote(at index: Int, with noteCollection: NoteCollection, inSet setIndex: Int = 0) throws {
+	public mutating func replaceNote(
+		at index: Int,
+		with noteCollection: NoteCollection,
+		inSet setIndex: Int = 0
+	) throws {
 		try replaceNote(at: index, with: [noteCollection], inSet: setIndex)
 	}
 
@@ -149,7 +153,11 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - throws:
 	///	  - `MeasureError.invalidNoteCollection` if `noteCollections` is empty.
 	///
-	public mutating func replaceNotes(in range: CountableClosedRange<Int>, with noteCollections: [NoteCollection], inSet setIndex: Int = 0) throws {
+	public mutating func replaceNotes(
+		in range: CountableClosedRange<Int>,
+		with noteCollections: [NoteCollection],
+		inSet setIndex: Int = 0
+	) throws {
 		var newMeasure = self
 		let newNoteCollections = try newMeasure.prepTiesForReplacement(in: range, with: noteCollections, inSet: setIndex)
 		try newMeasure.removeNotesInRange(range, inSet: setIndex, shouldIgnoreTieStates: true)
@@ -162,9 +170,14 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - parameter noteCollection: `NoteCollection` to add.
 	/// - parameter setIndex: Note set index.
 	///
-	public mutating func append(_ noteCollection: NoteCollection, inSet setIndex: Int = 0) {
+	public mutating func append(
+		_ noteCollection: NoteCollection,
+		inSet setIndex: Int = 0
+	) {
 		// Fill with empty arrays up to the specified set index
-		while !notes.isValidIndex(setIndex) { notes.append([]) }
+		while !notes.isValidIndex(setIndex) {
+			notes.append([])
+		}
 		notes[setIndex].append(noteCollection)
 	}
 
@@ -178,7 +191,11 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///	  - `MeasureError.invalidTieState`
 	///
-	public mutating func insert(_ noteCollection: NoteCollection, at index: Int, inSet setIndex: Int = 0) throws {
+	public mutating func insert(
+		_ noteCollection: NoteCollection,
+		at index: Int,
+		inSet setIndex: Int = 0
+	) throws {
 		try insert(noteCollection, at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
@@ -192,7 +209,11 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///	  - `MeasureError.invalidTieState`
 	///
-	internal mutating func insert(_ noteCollections: [NoteCollection], at index: Int, inSet setIndex: Int = 0) throws {
+	internal mutating func insert(
+		_ noteCollections: [NoteCollection],
+		at index: Int,
+		inSet setIndex: Int = 0
+	) throws {
 		try insert(noteCollections, at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
@@ -207,7 +228,10 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `TupletError.invalidIndex`
 	///	  - `TupletError.internalError`
 	///
-	public mutating func removeNote(at index: Int, inSet setIndex: Int = 0) throws {
+	public mutating func removeNote(
+		at index: Int,
+		inSet setIndex: Int = 0
+	) throws {
 		try removeNote(at: index, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
@@ -220,7 +244,10 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.tupletNotCompletelyCovered`
 	///	  - `MeasureError.invalidTieState`
 	///
-	public mutating func removeNotesInRange(_ indexRange: CountableClosedRange<Int>, inSet setIndex: Int = 0) throws {
+	public mutating func removeNotesInRange(
+		_ indexRange: CountableClosedRange<Int>,
+		inSet setIndex: Int = 0
+	) throws {
 		try removeNotesInRange(indexRange, inSet: setIndex, shouldIgnoreTieStates: false)
 	}
 
@@ -235,7 +262,13 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.invalidTupletIndex`
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///
-	public mutating func createTuplet(_ count: Int, _ baseNoteDuration: NoteDuration, inSpaceOf baseCount: Int? = nil, fromNotesInRange noteRange: CountableClosedRange<Int>, inSet setIndex: Int = 0) throws {
+	public mutating func createTuplet(
+		_ count: Int,
+		_ baseNoteDuration: NoteDuration,
+		inSpaceOf baseCount: Int? = nil,
+		fromNotesInRange noteRange: CountableClosedRange<Int>,
+		inSet setIndex: Int = 0
+	) throws {
 		var newMeasure = self
 		let startCollectionIndex = try newMeasure.noteCollectionIndex(fromNoteIndex: noteRange.lowerBound, inSet: setIndex)
 		if let tupletIndex = startCollectionIndex.tupletIndex, tupletIndex != 0 {
@@ -295,7 +328,7 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.internalError`
 	///	   - `MeasureError.noteIndexOutOfRange`
 	///
-	public func clef(at noteIndex: Int, inSet setIndex: Int) throws -> Clef {
+	public func clef(at noteIndex: Int, inSet setIndex: Int = 0) throws -> Clef {
 		guard !clefs.isEmpty else {
 			// Check for invalid index
 			guard noteCollectionIndexes[safe: setIndex]?[safe: noteIndex] != nil else { throw MeasureError.noteIndexOutOfRange }
@@ -361,12 +394,18 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///
 	/// - parameter index: Note index.
 	/// - parameter setIndex: Note set index.
+	/// - parameter skipTieConfig: don't call `prepTiesForInsertion()`
 	/// - throws:
 	///	  - `MeasureError.invalidTupletIndex`
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///	  - `MeasureError.invalidTieState`
 	///
-	internal mutating func insert(_ noteCollection: NoteCollection, at index: Int, inSet setIndex: Int = 0, shouldIgnoreTieStates skipTieConfig: Bool) throws {
+	internal mutating func insert(
+		_ noteCollection: NoteCollection,
+		at index: Int,
+		inSet setIndex: Int = 0,
+		shouldIgnoreTieStates skipTieConfig: Bool
+	) throws {
 		if index == 0, notes[setIndex].isEmpty {
 			append(noteCollection, inSet: setIndex)
 			return
@@ -626,7 +665,7 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - parameter index: Note index.
 	/// - parameter setIndex: Note set index.
 	///
-	internal mutating func startTie(at index: Int, inSet setIndex: Int) throws {
+	internal mutating func startTie(at index: Int, inSet setIndex: Int = 0) throws {
 		try modifyTie(at: index, requestedTieState: .begin, inSet: setIndex)
 	}
 
@@ -635,7 +674,7 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - parameter index: Note index.
 	/// - parameter setIndex: Note set index.
 	///
-	internal mutating func removeTie(at index: Int, inSet setIndex: Int) throws {
+	internal mutating func removeTie(at index: Int, inSet setIndex: Int = 0) throws {
 		try modifyTie(at: index, requestedTieState: nil, inSet: setIndex)
 	}
 
@@ -649,7 +688,11 @@ public struct Measure: ImmutableMeasure, Equatable {
 	///	  - `MeasureError.invalidRequestedTieState`
 	///	  - `MeasureError.notesMustHaveSamePitchesToTie`
 	///
-	internal mutating func modifyTie(at index: Int, requestedTieState: Tie?, inSet setIndex: Int) throws {
+	internal mutating func modifyTie(
+		at index: Int,
+		requestedTieState: Tie?,
+		inSet setIndex: Int = 0
+	) throws {
 		guard requestedTieState != .beginAndEnd else { throw MeasureError.invalidRequestedTieState }
 		let secondaryIndex: Int
 		let secondaryRequestedTieState: Tie
@@ -741,7 +784,7 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - throws:
 	///	  - `MeasureError.noteIndexOutOfRange`
 	///
-	internal func noteCollectionIndex(fromNoteIndex index: Int, inSet setIndex: Int) throws -> NoteCollectionIndex {
+	internal func noteCollectionIndex(fromNoteIndex index: Int, inSet setIndex: Int = 0) throws -> NoteCollectionIndex {
 		// Gets the index of the given element in the notes array by translating the index of the
 		// single note within the NoteCollection array.
 		guard let value = noteCollectionIndexes[safe: setIndex]?[safe: index] else { throw MeasureError.noteIndexOutOfRange }
@@ -760,7 +803,7 @@ public struct Measure: ImmutableMeasure, Equatable {
 	/// - returns: True if there is a clef change occuring after the given note; false if there are no clef
 	///	   changes after the given index.
 	///
-	internal func hasClefAfterNote(at noteIndex: Int, inSet setIndex: Int) -> Bool {
+	internal func hasClefAfterNote(at noteIndex: Int, inSet setIndex: Int = 0) -> Bool {
 		func checkClefs(at noteIndex: Int, inSet setIndex: Int) throws -> Bool {
 			let ticksForRequest = try cumulativeTicks(at: noteIndex, inSet: setIndex)
 			return clefs.contains { key, _ in
