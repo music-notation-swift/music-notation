@@ -9,6 +9,12 @@
 
 # music-notation
 
+This library is OBSOLETE. Please see the new home:
+
+https://codeberg.org/music-notation-swift/music-notation
+
+> DEPRECATED
+> 
 Music Notation API written in Swift. It is written so that it can be used in most any operating system, such as iOS, macOS, tvOS. Windows & Linux is aspirational at this point, but since the plan is to eschew all dependencies it should not be much of a stretch. This library is being created with the goal of having near 0 dependencies.
 
 `music-notation` is meant to implement the model and controller layers, which understands how music notation works. It will have no render capabilities, nor input/output. Those functionalities will be implemented in add-on packages.
