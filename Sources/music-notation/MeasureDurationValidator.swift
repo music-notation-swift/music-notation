@@ -6,7 +6,7 @@
 //	Copyright © 2016 Kyle Sherman. All rights reserved.
 //
 
-import Darwin.C.math
+import Foundation
 
 /// This is a collection of static functions that will give information about the completeness of the duration of a
 /// `Measure`. A measure must have a certain number of notes according to its `TimeSignature` in order to be valid.
